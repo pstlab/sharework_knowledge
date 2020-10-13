@@ -50,8 +50,8 @@ subprojects {
     /*
      * Some IDE support if you use it.
      */
-    /* apply plugin: "eclipse" */
-    /* apply plugin: "idea"    */
+    apply plugin: "eclipse"
+    apply plugin: "idea"
 }
 
 /*
