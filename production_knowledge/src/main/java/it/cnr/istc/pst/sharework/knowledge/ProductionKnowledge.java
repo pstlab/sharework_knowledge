@@ -4,11 +4,14 @@ import it.cnr.istc.pst.sharework.knowledge.owl.dictionary.SOHO;
 import org.apache.jena.ontology.Individual;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
-import org.apache.jena.rdf.model.InfModel;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.reasoner.Reasoner;
+import org.apache.jena.reasoner.ReasonerFactory;
 import org.apache.jena.reasoner.rulesys.GenericRuleReasoner;
+import org.apache.jena.reasoner.rulesys.RDFSRuleReasoner;
+import org.apache.jena.reasoner.rulesys.RDFSRuleReasonerFactory;
 import org.apache.jena.reasoner.rulesys.Rule;
+import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.vocabulary.ReasonerVocabulary;
 
 import java.util.ArrayList;
@@ -20,6 +23,9 @@ import java.util.List;
  */
 public class ProductionKnowledge
 {
+    private static final String SHAREWORK_KNOWLEDGE_HOME = System.getenv("SHAREWORK_KNOWLEDGE_HOME") != null ?
+            System.getenv("SHAREWORK_KNOWLEDGE_HOME") + "/" : "";
+
     private String ontoFile;        // file with the ontology
     private String ruleFile;        // file with the inference rules
 
@@ -27,31 +33,20 @@ public class ProductionKnowledge
     private InfModel infModel;          // the actual knowledge performing inference
 
     /**
-     * Load Production Knowledge on default ontoloy file
-     */
-    public ProductionKnowledge() {
-        // set ontology file
-        this.ontoFile = "etc/soho_core_v1.owl";
-        this.ruleFile = "etc/soho_rules_v1.0.rules";
-    }
-
-    /**
-     * Load Production Knowledge on the specified ontology file
+     * Create the element responsible for actually managing production knowledge.
      *
-     * @param ontoFile
-     * @param ruleFile
+     * This object encapsulates Apache Jena functionalities to build an OWL model
+     * of the dataset. On top of this model, a rule-based inference engine extends
+     * OWL semantics (OWLMini) to refine the internal knowledge graph.
+     *
      */
-    public ProductionKnowledge(String ontoFile, String ruleFile) {
+    public ProductionKnowledge()
+    {
         // set ontology file
-        this.ontoFile = ontoFile;
-        this.ruleFile = ruleFile;
-    }
+        this.ontoFile = SHAREWORK_KNOWLEDGE_HOME + "etc/soho_core_v1.owl";
+        this.ruleFile = SHAREWORK_KNOWLEDGE_HOME + "etc/soho_rules_v1.0.rules";
 
-    /**
-     * Setup OWL Model
-     */
-    private void setupModel() {
-        // create a model schema from the ontology
+        // create an ontological model from SOHO
         this.ontoModel = ModelFactory.createOntologyModel(
                 OntModelSpec.RDFS_MEM_TRANS_INF
         );
@@ -66,8 +61,9 @@ public class ProductionKnowledge
         List<Rule> rules = Rule.rulesFromURL("file:" + this.ruleFile);
         // create a generic rule-based reasoner
         GenericRuleReasoner reasoner = new GenericRuleReasoner(rules);
-        // configure reasoner - use forward chaining RETE rule engine
-        reasoner.setParameter(ReasonerVocabulary.PROPruleMode, "forwardRETE");
+        reasoner.setOWLTranslation(true);
+        reasoner.setTransitiveClosureCaching(true);
+
         // create an inference model attached to the ontological model schema
         this.infModel = ModelFactory.createInfModel(reasoner, this.ontoModel);
     }
@@ -110,5 +106,47 @@ public class ProductionKnowledge
     public void rebind() {
         // bind the inference model to the underlying data/ontological model
         this.infModel.rebind();
+    }
+
+    /**
+     *
+     * @param s
+     * @param p
+     * @param o
+     * @return
+     */
+    public List<Statement> listStatements(String s, String p, String o)
+    {
+        // check statement subject
+        Resource subject = null;
+        if (s != null) {
+            // retrieve resource from the model
+            subject = this.ontoModel.getResource(s);
+        }
+
+        // check statement property
+        Property property = null;
+        if (p != null) {
+            // retrieve resource from the model
+            property = this.ontoModel.getProperty(p);
+        }
+
+        // check statement object
+        RDFNode object = null;
+        if (o != null) {
+            // retrieve object from the model
+            object = this.ontoModel.getRDFNode(this.ontoModel.getResource(o).asNode());
+        }
+
+        // list of statement found
+        List<Statement> list = new ArrayList<>();
+        // iterate over found statements
+        Iterator<Statement> it = this.infModel.listStatements(subject, property, object);
+        while (it.hasNext()) {
+            list.add(it.next());
+        }
+
+        // get list of statements
+        return list;
     }
 }
