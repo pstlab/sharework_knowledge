@@ -5,11 +5,12 @@ package it.cnr.istc.pst.sharework.knowledge.owl.dictionary;
  */
 public enum SOHO
 {
-    RDF_MS("http://www.w3.org/1999/02/22-rdf-syntax-ns#"),
+    RDF_NS("http://www.w3.org/1999/02/22-rdf-syntax-ns#"),
 
     RDFS_NS("http://www.w3.org/2000/01/rdf-schema#"),
 
-    DUL_NS("http://ontologydesignpatterns.org/ont/dul/DUL.owl#"),
+    //DUL_NS("http://ontologydesignpatterns.org/ont/dul/DUL.owl#"),
+    DUL_NS("http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#"),
 
     SSN_NS("http://purl.oclc.org/NET/ssnx/ssn#"),
 

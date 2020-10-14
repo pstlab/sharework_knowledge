@@ -58,8 +58,8 @@ public class KnowledgeService extends AbstractNodeMain
 
                     /**
                      *
-                     * @param knowledgeRDFTripleEndPointRequest
-                     * @param knowledgeRDFTripleEndPointResponse
+                     * @param request
+                     * @param response
                      * @throws ServiceException
                      */
                     @Override
@@ -111,7 +111,6 @@ public class KnowledgeService extends AbstractNodeMain
                         response.setResult(triples);
                     }
                 });
-
     }
 
     /**

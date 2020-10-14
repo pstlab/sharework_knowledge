@@ -14,7 +14,8 @@ import org.apache.jena.tdb.TDBFactory;
  * can therefore information can be retrieved using standard
  * SPARQL queries
  */
-public class TDBKnowledgeGraphFacade {
+public class TDBKnowledgeGraphFacade
+{
     private String dbName;              // persistence storage name
     private Dataset dataset;            // knowledge graph dataset
 

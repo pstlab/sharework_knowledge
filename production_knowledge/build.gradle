@@ -38,6 +38,7 @@ dependencies {
   compile 'org.ros.rosjava_core:rosjava:[0.3,0.4)'
   compile 'org.apache.jena:jena-core:3.15.0'
   compile 'org.apache.jena:jena-tdb:3.1.0'
+  compile 'junit:junit:4.12'
   /* Example of a local subproject dependency */
   /* compile project(':sibling_gradle_project') */
   compile 'org.ros.rosjava_messages:sharework_knowledge_msgs:0.1.0'

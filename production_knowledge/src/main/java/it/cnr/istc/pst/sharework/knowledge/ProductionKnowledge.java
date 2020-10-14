@@ -37,13 +37,14 @@ public class ProductionKnowledge
      *
      * This object encapsulates Apache Jena functionalities to build an OWL model
      * of the dataset. On top of this model, a rule-based inference engine extends
-     * OWL semantics (OWLMini) to refine the internal knowledge graph.
+     * OWL semantics (OWLMicro) to refine the internal knowledge graph.
      *
+     * @param ontoFile
      */
-    public ProductionKnowledge()
+    public ProductionKnowledge(String ontoFile)
     {
         // set ontology file
-        this.ontoFile = SHAREWORK_KNOWLEDGE_HOME + "etc/soho_core_v1.owl";
+        this.ontoFile = ontoFile;
         this.ruleFile = SHAREWORK_KNOWLEDGE_HOME + "etc/soho_rules_v1.0.rules";
 
         // create an ontological model from SOHO
@@ -56,7 +57,6 @@ public class ProductionKnowledge
         // actually load the ontology
         this.ontoModel.read(SOHO.getNS());
 
-
         // parse the list of inference rules for knowledge processing
         List<Rule> rules = Rule.rulesFromURL("file:" + this.ruleFile);
         // create a generic rule-based reasoner
@@ -68,6 +68,17 @@ public class ProductionKnowledge
         this.infModel = ModelFactory.createInfModel(reasoner, this.ontoModel);
     }
 
+    /**
+     * Create the element responsible for actually managing production knowledge.
+     *
+     * This object encapsulates Apache Jena functionalities to build an OWL model
+     * of the dataset. On top of this model, a rule-based inference engine extends
+     * OWL semantics (OWLMicro) to refine the internal knowledge graph.
+     */
+    public ProductionKnowledge() {
+        // set default ontology model
+        this(SHAREWORK_KNOWLEDGE_HOME + "etc/soho_core_v1.owl");
+    }
 
     /**
      * This method returns a list of Resource representing individuals of
@@ -106,6 +117,17 @@ public class ProductionKnowledge
     public void rebind() {
         // bind the inference model to the underlying data/ontological model
         this.infModel.rebind();
+    }
+
+    /**
+     *
+     * @param uri
+     * @return
+     */
+    public Property getProperty(String uri)
+    {
+        // retrieve the property from the model
+        return this.ontoModel.getProperty(uri);
     }
 
     /**
@@ -149,4 +171,39 @@ public class ProductionKnowledge
         // get list of statements
         return list;
     }
+
+    /**
+     * Check if a resource has the specified type
+     *
+     * @param resource
+     * @param classURI
+     * @return
+     */
+    public boolean hasResourceType(Resource resource, String classURI)
+    {
+        // result flag
+        boolean hasType = false;
+        // get RDF:type property
+        Property rdfType = this.getProperty(SOHO.RDF_NS + "type");
+        // get all types
+        List<Statement> list = this.listStatements(
+                resource.getURI(), rdfType.getURI(), null);
+        // check statements
+        for (Statement s : list)
+        {
+            // get statement type
+            Resource type = s.getObject().asResource();
+            // check if it corresponds to the desired type
+            if (type.getURI().toLowerCase().equals(classURI.toLowerCase())) {
+               // found
+               hasType = true;
+               // exit the loop
+               break;
+            }
+        }
+
+        // get result
+        return hasType;
+    }
+
 }
