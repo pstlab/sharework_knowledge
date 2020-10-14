@@ -83,22 +83,28 @@ public class KnowledgeService extends AbstractNodeMain
                         List<Statement> list = knowledge.listStatements(subject, property, object);
                         for (Statement stat : list)
                         {
-                            // print statement information
-                            log.info("Found statement - " + stat + "\n");
+                            // check null values
+                            if (stat.getSubject() != null && stat.getPredicate() != null && stat.getObject() != null)
+                            {
+                                // print statement information
+                                log.info("Found statement - " + stat + "\n");
+                                // create message triple object
+                                sharework_knowledge_msgs.KnowledgeRDFTriple triple = connectedNode
+                                        .getTopicMessageFactory()
+                                          .newFromType(sharework_knowledge_msgs.KnowledgeRDFTriple._TYPE);
 
-                            // TODO - Check creation of message objects 
+                                // set attributes
+                                triple.setSubject(stat.getSubject().getLocalName());
+                                triple.setProperty(stat.getPredicate().getLocalName());
+                                triple.setObject(stat.getObject().asResource().getLocalName());
 
-                            // create message object
-                            sharework_knowledge_msgs.KnowledgeRDFTriple triple = connectedNode.getServiceResponseMessageFactory()
-                                    .newFromType(sharework_knowledge_msgs.KnowledgeRDFTriple._TYPE);
+                                // add triple to the result list
+                                triples.add(triple);
 
-                            // set attributes
-                            triple.setSubject(stat.getSubject().getURI());
-                            triple.setProperty(stat.getPredicate().getLocalName());
-                            triple.setObject(stat.getObject().toString());
-
-                            // add triple to the result list
-                            triples.add(triple);
+                            }
+                            else {
+                                // print a warning
+                            }
                         }
 
                         // set result
