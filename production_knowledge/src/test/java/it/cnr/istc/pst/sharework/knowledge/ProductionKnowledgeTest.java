@@ -1,6 +1,6 @@
 package it.cnr.istc.pst.sharework.knowledge;
 
-import it.cnr.istc.pst.sharework.knowledge.owl.dictionary.SOHO;
+import it.cnr.istc.pst.sharework.knowledge.dictionary.KnowledgeDictionary;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
@@ -57,7 +57,7 @@ public class ProductionKnowledgeTest
         try
         {
             // get instances of simple tasks
-            List<Resource> list = knowledge.getIndividuals(SOHO.getNS() + "SimpleTask");
+            List<Resource> list = knowledge.getIndividuals(KnowledgeDictionary.getNS() + "SimpleTask");
             // check list of individuals
             Assert.assertNotNull(list);
             Assert.assertFalse(list.isEmpty());
@@ -89,7 +89,7 @@ public class ProductionKnowledgeTest
         try
         {
             // get instances of production goals
-            List<Resource> goals = knowledge.getIndividuals(SOHO.getNS() + "ProductionGoal");
+            List<Resource> goals = knowledge.getIndividuals(KnowledgeDictionary.getNS() + "ProductionGoal");
             // check list of individuals
             Assert.assertNotNull(goals);
             Assert.assertFalse(goals.isEmpty());
@@ -102,7 +102,7 @@ public class ProductionKnowledgeTest
                 System.out.println("ProductionGoal: " + g.getLocalName() + " (" + g.getURI() + ")");
 
                 // get property
-                Property hasPart = knowledge.getProperty(SOHO.getNS() + "hasPart");
+                Property hasPart = knowledge.getProperty(KnowledgeDictionary.getNS() + "hasPart");
                 Assert.assertNotNull(hasPart);
 
                 // check associated production methods
@@ -117,7 +117,7 @@ public class ProductionKnowledgeTest
                     System.out.println("\tProduction method: " + method.getLocalName() + " (" + method.getURI() + ")");
 
                     // check constituent property
-                    Property hasConstituent = knowledge.getProperty(SOHO.DUL_NS + "hasConstituent");
+                    Property hasConstituent = knowledge.getProperty(KnowledgeDictionary.DUL_NS + "hasConstituent");
                     Assert.assertNotNull(hasConstituent);
 
                     // check statements describing the structure of the method
@@ -134,7 +134,7 @@ public class ProductionKnowledgeTest
                         System.out.println("\t\tComplex task: " + ctask.getLocalName() + " (" + ctask.getURI() + ")");
 
                         // check if complex
-                        boolean isComplex = knowledge.hasResourceType(ctask, SOHO.getNS() + "ComplexTask");
+                        boolean isComplex = knowledge.hasResourceType(ctask, KnowledgeDictionary.getNS() + "ComplexTask");
                         // check complex type
                         Assert.assertTrue(isComplex);
                         // if complex retrieve internal structure

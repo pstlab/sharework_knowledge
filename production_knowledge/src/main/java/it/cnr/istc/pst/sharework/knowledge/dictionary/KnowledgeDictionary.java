@@ -1,9 +1,9 @@
-package it.cnr.istc.pst.sharework.knowledge.owl.dictionary;
+package it.cnr.istc.pst.sharework.knowledge.dictionary;
 
 /**
- * Dictionary of the Sharework ontology for Human-Robot Collaboration
+ * Dictionary of the Sharework Production Knwolledge for Human-Robot Collaboration
  */
-public enum SOHO
+public enum KnowledgeDictionary
 {
     RDF_NS("http://www.w3.org/1999/02/22-rdf-syntax-ns#"),
 
@@ -14,7 +14,7 @@ public enum SOHO
 
     SSN_NS("http://purl.oclc.org/NET/ssnx/ssn#"),
 
-    NS("http://pst.istc.cnr.it/ontologies/2019/01/soho#");
+    SOHO_NS("http://pst.istc.cnr.it/ontologies/2019/01/soho#");
 
 
     private String value;
@@ -23,7 +23,7 @@ public enum SOHO
      *
      * @param value
      */
-    private SOHO(String value) {
+    private KnowledgeDictionary(String value) {
         this.value = value;
     }
 
@@ -41,6 +41,6 @@ public enum SOHO
      * @return
      */
     public static String getNS() {
-        return SOHO.NS.value;
+        return KnowledgeDictionary.SOHO_NS.value;
     }
 }

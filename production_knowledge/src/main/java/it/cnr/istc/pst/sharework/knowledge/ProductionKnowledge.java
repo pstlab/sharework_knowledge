@@ -1,18 +1,12 @@
 package it.cnr.istc.pst.sharework.knowledge;
 
-import it.cnr.istc.pst.sharework.knowledge.owl.dictionary.SOHO;
+import it.cnr.istc.pst.sharework.knowledge.dictionary.KnowledgeDictionary;
 import org.apache.jena.ontology.Individual;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.*;
-import org.apache.jena.reasoner.Reasoner;
-import org.apache.jena.reasoner.ReasonerFactory;
 import org.apache.jena.reasoner.rulesys.GenericRuleReasoner;
-import org.apache.jena.reasoner.rulesys.RDFSRuleReasoner;
-import org.apache.jena.reasoner.rulesys.RDFSRuleReasonerFactory;
 import org.apache.jena.reasoner.rulesys.Rule;
-import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.vocabulary.ReasonerVocabulary;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -53,9 +47,9 @@ public class ProductionKnowledge
         );
 
         // use DocumentManager API to specify that onto is replicated locally on disk
-        this.ontoModel.getDocumentManager().addAltEntry(SOHO.getNS(), "file:" + this.ontoFile);
+        this.ontoModel.getDocumentManager().addAltEntry(KnowledgeDictionary.getNS(), "file:" + this.ontoFile);
         // actually load the ontology
-        this.ontoModel.read(SOHO.getNS());
+        this.ontoModel.read(KnowledgeDictionary.getNS());
 
         // parse the list of inference rules for knowledge processing
         List<Rule> rules = Rule.rulesFromURL("file:" + this.ruleFile);
@@ -184,7 +178,7 @@ public class ProductionKnowledge
         // result flag
         boolean hasType = false;
         // get RDF:type property
-        Property rdfType = this.getProperty(SOHO.RDF_NS + "type");
+        Property rdfType = this.getProperty(KnowledgeDictionary.RDF_NS + "type");
         // get all types
         List<Statement> list = this.listStatements(
                 resource.getURI(), rdfType.getURI(), null);
