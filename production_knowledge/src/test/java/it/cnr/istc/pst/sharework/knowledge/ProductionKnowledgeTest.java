@@ -7,7 +7,7 @@ import org.apache.jena.rdf.model.Statement;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * JUnit class to test knowledge access and knowledge reasoning functionalities
@@ -43,10 +43,10 @@ public class ProductionKnowledgeTest
     }
 
     /**
-     * Test extraction of individuals
+     * Test extraction of individuals and structures
      */
     @Test
-    public void checkIndividualTest()
+    public void checkIndividualAndStructuresTest()
     {
         // set ontological model
         String ontoModel = System.getenv("SHAREWORK_KNOWLEDGE_HOME") + "/etc/soho_demo_v1.1.owl";
@@ -114,48 +114,109 @@ public class ProductionKnowledgeTest
                 {
                     // get the method
                     Resource method = ms.getObject().asResource();
-                    System.out.println("\tProduction method: " + method.getLocalName() + " (" + method.getURI() + ")");
+                    System.out.println("Production method: " + method.getLocalName() + " (" + method.getURI() + ")");
 
-                    // check constituent property
-                    Property hasConstituent = knowledge.getProperty(KnowledgeDictionary.DUL_NS + "hasConstituent");
-                    Assert.assertNotNull(hasConstituent);
+                    // get method structure
+                    Map<Resource, Set<Resource>> structure = knowledge.retrieveResourceStructure(method);
+                    Assert.assertNotNull(structure);
+                    Assert.assertTrue(structure.containsKey(method));
+                    Assert.assertTrue(structure.size() > 1);
 
-                    // check statements describing the structure of the method
-                    List<Statement> clist = knowledge.listStatements(
-                            method.getURI(), hasConstituent.getURI(), null);
-                    // check statements
-                    Assert.assertNotNull(clist);
-                    Assert.assertTrue(clist.size() == 1);       // only one complex task expected
-                    for (Statement cs : clist)
+                    // get all tasks
+                    Set<Resource> tasks = structure.keySet();
+                    Assert.assertNotNull(tasks);
+                    // set of complex tasks
+                    Set<Resource> ctasks = new HashSet<>();
+                    // set of simple tasks
+                    Set<Resource> stasks = new HashSet<>();
+                    // set of functions
+                    Set<Resource> funcs = new HashSet<>();
+                    // set of "unknown" resources
+                    Set<Resource> unks = new HashSet<>();
+                    // check tasks
+                    for (Resource task : tasks)
                     {
-                        // get constituent
-                        Resource ctask = cs.getObject().asResource();
-                        Assert.assertNotNull(ctask);
-                        System.out.println("\t\tComplex task: " + ctask.getLocalName() + " (" + ctask.getURI() + ")");
-
-                        // check if complex
-                        boolean isComplex = knowledge.hasResourceType(ctask, KnowledgeDictionary.getNS() + "ComplexTask");
-                        // check complex type
-                        Assert.assertTrue(isComplex);
-                        // if complex retrieve internal structure
-                        if (isComplex)
-                        {
-                            // extract information about internal tasks
-
-                            /*
-                             * TODO : check if able to read pick_place_x as subclasses of SOHO:Function
-                             *  and not just as instances of SOHO:PickPlace
-                             *
-                             * (Check transitive relationships of individuals to upper classes of their type)
-                             */
+                        // check task type
+                        if (knowledge.hasResourceType(task, KnowledgeDictionary.SOHO_NS + "ComplexTask")) {
+                            // complex task
+                            ctasks.add(task);
+                        }
+                        else if (knowledge.hasResourceType(task, KnowledgeDictionary.SOHO_NS + "SimpleTask")) {
+                            // simple task
+                            stasks.add(task);
+                        }
+                        else if (knowledge.hasResourceType(task, KnowledgeDictionary.SOHO_NS + "Function")) {
+                            // function
+                            funcs.add(task);
+                        }
+                        else {
+                            // unknown
+                            unks.add(task);
                         }
                     }
 
+                    // check extracted information
+                    Assert.assertFalse(ctasks.isEmpty());
+                    Assert.assertTrue(ctasks.size() == 1);
+                    // print complex tasks
+                    System.out.println("\tComplex tasks");
+                    for (Resource ctask : ctasks) {
+                        System.out.println("\t- " + ctask.getLocalName() + " (" + ctask.getURI() + ")");
+                    }
+
+                    Assert.assertFalse(stasks.isEmpty());
+                    Assert.assertTrue(stasks.size() == 5);
+                    // print simple tasks
+                    System.out.println("\t\tSimple tasks");
+                    for (Resource stask : stasks) {
+                        System.out.println("\t\t- " + stask.getLocalName() + " (" + stask.getURI() + ")");
+                    }
+
+                    Assert.assertFalse(funcs.isEmpty());
+                    // print functions
+                    System.out.println("\t\t\tFunctions");
+                    for (Resource func : funcs) {
+                        System.out.println("\t\t\t- " + func.getLocalName() + " (" + func.getURI() + ")");
+                    }
+
+                    // only the method is expected in this set
+                    Assert.assertFalse(unks.isEmpty());
+                    Assert.assertTrue(unks.size() == 1);
+                    Assert.assertTrue(new ArrayList<>(unks).get(0).equals(method));
                 }
             }
         }
         catch(Exception ex) {
             System.err.println(ex.getMessage());
+            Assert.assertTrue(false);
+        }
+    }
+
+
+    /**
+     * Test the extraction of known production goals
+     */
+    @Test
+    public void getProductionGoalsTest()
+    {
+        // set ontological model
+        String ontoModel = System.getenv("SHAREWORK_KNOWLEDGE_HOME") + "/etc/soho_demo_v1.1.owl";
+
+        // create production knowledge
+        ProductionKnowledge knowledge = new ProductionKnowledge(ontoModel);
+        Assert.assertNotNull(knowledge);
+        try
+        {
+            // get the goals
+            List<Resource> goals = knowledge.getProductionGoals();
+            Assert.assertNotNull(goals);
+            Assert.assertFalse(goals.isEmpty());
+            Assert.assertTrue(goals.size() == 1);
+        }
+        catch (Exception ex) {
+            // print error message
+            System.err.println(ex.getMessage());
+            Assert.assertTrue(false);
         }
     }
 }

@@ -8,9 +8,7 @@ import org.apache.jena.rdf.model.*;
 import org.apache.jena.reasoner.rulesys.GenericRuleReasoner;
 import org.apache.jena.reasoner.rulesys.Rule;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Apache Jena-based implementation of Production Knowledge interface
@@ -188,7 +186,9 @@ public class ProductionKnowledge
             // get statement type
             Resource type = s.getObject().asResource();
             // check if it corresponds to the desired type
-            if (type.getURI().toLowerCase().equals(classURI.toLowerCase())) {
+            if (type != null && type.getURI() != null &&
+                    type.getURI().toLowerCase().equals(classURI.toLowerCase()))
+            {
                // found
                hasType = true;
                // exit the loop
@@ -198,6 +198,95 @@ public class ProductionKnowledge
 
         // get result
         return hasType;
+    }
+
+    /**
+     * This method analyzes the knowledge graph to extract the ontological structure of
+     * a given resource (i.e., an individual of the knowledge base).
+     *
+     * The structure is extracted by taking into account the semantics of the
+     * property DUL:hasConstituent which associates an individual to individuals
+     * that characterize its structure.
+     *
+     *
+     * @param resource
+     * @return
+     */
+    public Map<Resource, Set<Resource>> retrieveResourceStructure(Resource resource) {
+        // set result structure
+        HashMap<Resource, Set<Resource>> structure = new HashMap<>();
+        // navigate knowledge to extract structure
+        this.retrieveResourceStructure(resource, structure);
+        // get result
+        return structure;
+    }
+
+    /**
+     * Retrieves from the knowledge base the list of defined production
+     * goals. The method retrieves all known individuals of class
+     * SOHO:ProductionGoal
+     *
+     * @return
+     */
+    public List<Resource> getProductionGoals() {
+        // list of production goals
+        List<Resource> goals = new ArrayList<>();
+
+        // retrieve known individuals of SOHO:ProductionGoal
+        List<Statement> list = this.listStatements(
+                null,
+                KnowledgeDictionary.RDF_NS + "type",
+                KnowledgeDictionary.SOHO_NS + "ProductionGoal");
+        // get resource
+        for (Statement s : list) {
+            // add the subject of the statement
+            goals.add(s.getSubject());
+        }
+
+        // get the list
+        return goals;
+    }
+
+
+    /**
+     * This method recursively navigates the property DUL:hasConstituent to
+     * extract the internal structure of an individual of the knowledge base.
+     *
+     * The method navigates the individuals of the knowledge base (i.e., the
+     * knowledge graph)
+     *
+     * @param resource
+     * @param subtree
+     */
+    private void retrieveResourceStructure(Resource resource, Map<Resource, Set<Resource>> subtree)
+    {
+        // get constituent property
+        Property hasConstituent = this.getProperty(KnowledgeDictionary.DUL_NS + "hasConstituent");
+
+        // retrieve elements
+        List<Statement> list = this.listStatements(resource.getURI(), hasConstituent.getURI(), null);
+        // check results
+        if (list == null || list.isEmpty()) {
+            // stop recursive call
+            subtree.put(resource, new HashSet<Resource>());
+        }
+        else {
+            // set of children
+            HashSet<Resource> children = new HashSet<>();
+            // a recursive call is needed
+            for (Statement s : list)
+            {
+                // get child resource
+                Resource child = s.getObject().asResource();
+                // add to children
+                children.add(child);
+                // recursive call on children
+                this.retrieveResourceStructure(child, subtree);
+            }
+
+            // add subtree entry associated to the current resource
+            subtree.put(resource, children);
+        }
     }
 
 }
