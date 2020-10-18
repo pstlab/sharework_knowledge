@@ -45,9 +45,9 @@ public class ProductionKnowledge
         );
 
         // use DocumentManager API to specify that onto is replicated locally on disk
-        this.ontoModel.getDocumentManager().addAltEntry(KnowledgeDictionary.getNS(), "file:" + this.ontoFile);
+        this.ontoModel.getDocumentManager().addAltEntry(KnowledgeDictionary.SOHO_NS.get(), "file:" + this.ontoFile);
         // actually load the ontology
-        this.ontoModel.read(KnowledgeDictionary.getNS());
+        this.ontoModel.read(KnowledgeDictionary.SOHO_NS.get());
 
         // parse the list of inference rules for knowledge processing
         List<Rule> rules = Rule.rulesFromURL("file:" + this.ruleFile);
@@ -222,11 +222,12 @@ public class ProductionKnowledge
     }
 
     /**
-     * Retrieves from the knowledge base the list of defined production
-     * goals. The method retrieves all known individuals of class
-     * SOHO:ProductionGoal
+     * The method reads the knowledge base to retrieve the list of
+     * known production goals.
      *
-     * @return
+     * The method retrieves all known individuals of type SOHO:ProductionGoal
+     *
+     * @return a list of resource of type SOHO:ProductionGoal
      */
     public List<Resource> getProductionGoals() {
         // list of production goals
@@ -247,6 +248,58 @@ public class ProductionKnowledge
         return goals;
     }
 
+    /**
+     * The method reads the knowledge base to retrieve production graphs associated
+     * to a production goal.
+     *
+     * The method extract a list of SOHO:ProductionMethod each of which describes a
+     * production procedure as a hierarchical structure of SOHO:ComplexTask,
+     * SOHO:SimpleTask and SOHO:Function.
+     *
+     * @param pGoal a resource of type SOHO:ProductionGoal
+     * @return a list of maps representing production graphs as hierarchical decompositions
+     * of SOHO:ComplexTask, SOHO:SimpleTask and SOHO:Function
+     * @throws throws an exception in case that the type of the parameter is wrong
+     *
+     */
+    public List<Map<Resource, Set<Resource>>> getProductionGraph(Resource pGoal)
+            throws Exception
+    {
+        // check parameter type
+        if (!this.hasResourceType(pGoal, KnowledgeDictionary.SOHO_NS + "ProductionGoal")) {
+            // wrong parameter type
+            throw new Exception("Wrong parameter type, a resource/individual of type <" + KnowledgeDictionary.SOHO_NS + "ProductionGoal> expected:" +
+                    "\n- received parameter " + pGoal.getLocalName() + " (" + pGoal.getURI() + ")");
+        }
+        
+        // set result data
+        List<Map<Resource, Set<Resource>>> result = new ArrayList<>();
+        // get methods associated to the production goal
+        List<Statement> stats = this.listStatements(
+                pGoal.getURI(),
+                KnowledgeDictionary.SOHO_NS + "hasPart",
+                null);
+
+        // extract production graphs
+        for (Statement s : stats)
+        {
+            // get statement's object
+            Resource method = s.getObject().asResource();
+            // check if method
+            if (this.hasResourceType(method, KnowledgeDictionary.SOHO_NS + "ProductionMethod"))
+            {
+                // retrieve resource structure
+                Map<Resource, Set<Resource>> graph = this.retrieveResourceStructure(method);
+                // remove the entry associated to the method
+                graph.remove(method);
+                // add the graph to the result list
+                result.add(graph);
+            }
+        }
+
+        // get result
+        return result;
+    }
 
     /**
      * This method recursively navigates the property DUL:hasConstituent to

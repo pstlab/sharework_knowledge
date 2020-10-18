@@ -57,7 +57,7 @@ public class ProductionKnowledgeTest
         try
         {
             // get instances of simple tasks
-            List<Resource> list = knowledge.getIndividuals(KnowledgeDictionary.getNS() + "SimpleTask");
+            List<Resource> list = knowledge.getIndividuals(KnowledgeDictionary.SOHO_NS + "SimpleTask");
             // check list of individuals
             Assert.assertNotNull(list);
             Assert.assertFalse(list.isEmpty());
@@ -89,7 +89,7 @@ public class ProductionKnowledgeTest
         try
         {
             // get instances of production goals
-            List<Resource> goals = knowledge.getIndividuals(KnowledgeDictionary.getNS() + "ProductionGoal");
+            List<Resource> goals = knowledge.getIndividuals(KnowledgeDictionary.SOHO_NS + "ProductionGoal");
             // check list of individuals
             Assert.assertNotNull(goals);
             Assert.assertFalse(goals.isEmpty());
@@ -102,7 +102,7 @@ public class ProductionKnowledgeTest
                 System.out.println("ProductionGoal: " + g.getLocalName() + " (" + g.getURI() + ")");
 
                 // get property
-                Property hasPart = knowledge.getProperty(KnowledgeDictionary.getNS() + "hasPart");
+                Property hasPart = knowledge.getProperty(KnowledgeDictionary.SOHO_NS + "hasPart");
                 Assert.assertNotNull(hasPart);
 
                 // check associated production methods
@@ -212,6 +212,98 @@ public class ProductionKnowledgeTest
             Assert.assertNotNull(goals);
             Assert.assertFalse(goals.isEmpty());
             Assert.assertTrue(goals.size() == 1);
+        }
+        catch (Exception ex) {
+            // print error message
+            System.err.println(ex.getMessage());
+            Assert.assertTrue(false);
+        }
+    }
+
+    /**
+     * Test the extraction of production graphs associated to production goals
+     *
+     */
+    @Test
+    public void getProductionGraphsTest()
+    {
+        // set ontological model
+        String ontoModel = System.getenv("SHAREWORK_KNOWLEDGE_HOME") + "/etc/soho_demo_v1.1.owl";
+
+        // create production knowledge
+        ProductionKnowledge knowledge = new ProductionKnowledge(ontoModel);
+        Assert.assertNotNull(knowledge);
+        try
+        {
+            // get the goals
+            List<Resource> goals = knowledge.getProductionGoals();
+            Assert.assertNotNull(goals);
+            Assert.assertFalse(goals.isEmpty());
+            Assert.assertTrue(goals.size() == 1);
+
+            // get the only production goal expected
+            Resource goal = goals.get(0);
+            // get production graphs
+            List<Map<Resource, Set<Resource>>> graphs = knowledge.getProductionGraph(goal);
+            Assert.assertNotNull(graphs);
+            Assert.assertFalse(graphs.isEmpty());
+            // only one production graph expected
+            Assert.assertTrue(graphs.size() == 1);
+
+            // get the only graph expected
+            Map<Resource, Set<Resource>> graph = graphs.get(0);
+            // get set of tasks
+            Set<Resource> tasks = graph.keySet();
+            Assert.assertNotNull(tasks);
+            Assert.assertFalse(tasks.isEmpty());
+            // list of complex tasks
+            List<Resource> ctasks = new ArrayList<>();
+            // list of simple tasks
+            List<Resource> stasks = new ArrayList<>();
+            // list of functions
+            List<Resource> funcs = new ArrayList<>();
+            // check structure
+            for (Resource task : tasks)
+            {
+                // check type
+                if (knowledge.hasResourceType(task, KnowledgeDictionary.SOHO_NS + "ComplexTask")) {
+                    // complex task
+                    ctasks.add(task);
+                }
+                else if (knowledge.hasResourceType(task, KnowledgeDictionary.SOHO_NS + "SimpleTask")) {
+                    // simple tasks
+                    stasks.add(task);
+                }
+                else if (knowledge.hasResourceType(task, KnowledgeDictionary.SOHO_NS + "Function")) {
+                    // function
+                    funcs.add(task);
+                }
+                else {
+                    // no task expected
+                    Assert.assertFalse(true);
+                }
+            }
+
+            // check retrieved data
+            Assert.assertFalse(ctasks.isEmpty());
+            Assert.assertTrue(ctasks.size() == 1);
+            Assert.assertFalse(stasks.isEmpty());
+            Assert.assertTrue(stasks.size() == 5);
+            Assert.assertFalse(funcs.isEmpty());
+            Assert.assertTrue(funcs.size() > 1);
+
+
+            try
+            {
+                // check behavior in case of wrong parameter
+                knowledge.getProductionGraph(ctasks.get(0));
+                // error
+                Assert.assertTrue(false);
+            }
+            catch (Exception ex) {
+                // error expected
+                Assert.assertTrue(true);
+            }
         }
         catch (Exception ex) {
             // print error message

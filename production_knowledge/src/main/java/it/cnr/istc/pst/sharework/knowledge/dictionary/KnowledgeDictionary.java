@@ -31,16 +31,17 @@ public enum KnowledgeDictionary
      *
      * @return
      */
-    @Override
-    public String toString() {
-        return value;
+    public String get() {
+        return this.value;
     }
 
     /**
      *
      * @return
      */
-    public static String getNS() {
-        return KnowledgeDictionary.SOHO_NS.value;
+    @Override
+    public String toString() {
+        return value;
     }
+
 }
