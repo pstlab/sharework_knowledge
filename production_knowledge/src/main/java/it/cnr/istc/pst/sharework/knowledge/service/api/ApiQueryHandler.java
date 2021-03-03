@@ -1,6 +1,7 @@
 package it.cnr.istc.pst.sharework.knowledge.service.api;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
+import it.cnr.istc.pst.sharework.knowledge.service.api.ex.ApiQueryHandlingException;
 
 /**
  *
@@ -30,7 +31,9 @@ public abstract class ApiQueryHandler<T extends ApiQueryResult>
 
     /**
      *
+     * @param request
      * @return
      */
-    public abstract T handle();
+    public abstract T handle(sharework_knowledge_msgs.KnowledgeAPIEndPointRequest request)
+            throws ApiQueryHandlingException;
 }

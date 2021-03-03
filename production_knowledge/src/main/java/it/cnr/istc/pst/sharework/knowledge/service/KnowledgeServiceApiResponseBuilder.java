@@ -4,6 +4,7 @@ import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import it.cnr.istc.pst.sharework.knowledge.service.api.ApiQueryHandler;
 import it.cnr.istc.pst.sharework.knowledge.service.api.ApiQueryResult;
 import it.cnr.istc.pst.sharework.knowledge.service.api.ApiQueryType;
+import it.cnr.istc.pst.sharework.knowledge.service.api.ex.ApiQueryHandlingException;
 import org.apache.commons.logging.Log;
 import org.ros.exception.ServiceException;
 import org.ros.node.ConnectedNode;
@@ -56,9 +57,15 @@ public class KnowledgeServiceApiResponseBuilder implements ServiceResponseBuilde
         // check query
         if (queryType == null || queryType.equals("")) {
             // missing query type
-            response.setResult("FAILURE");
+            response.setResult("ERROR");
             response.setExplanation("Missing query type... available queries:\n" +
                     "" + Arrays.toString(ApiQueryType.values()) + "\n" );
+        }
+        else if (!ApiQueryType.exists(queryType)) {
+            // unknown query type
+            response.setResult("ERROR");
+            response.setExplanation("Unknown query type \"" + queryType + "\"... available queries:\n" +
+                            "" + Arrays.toString(ApiQueryType.values()) + "\n");
         }
         else
         {
@@ -76,15 +83,23 @@ public class KnowledgeServiceApiResponseBuilder implements ServiceResponseBuilde
                 ApiQueryHandler<?> qHandler = (ApiQueryHandler<?>) c.newInstance(this.knowledge);
 
                 // do handle query and get query result
-                ApiQueryResult result = qHandler.handle();
+                ApiQueryResult result = qHandler.handle(request);
                 // prepare service response
                 result.prepare(response, this.cNode);
             }
-            catch (Exception ex) {
+            catch (ApiQueryHandlingException ex) {
                 // unknown query
                 response.setResult("FAILURE");
                 // set explanation
-                response.setExplanation("Unknown query type \"" + request.getQueryType() + "\"");
+                response.setExplanation("Query handling error (" + queryType + "):\n" +
+                        "- message: " + ex.getMessage() + "\n");
+            }
+            catch (Exception ex) {
+                // unknown query
+                response.setResult("ERROR");
+                // set explanation
+                response.setExplanation("Error while creating query handler (" + queryType + "):\n" +
+                        "- message: " + ex.getMessage() + "\n");
             }
         }
     }

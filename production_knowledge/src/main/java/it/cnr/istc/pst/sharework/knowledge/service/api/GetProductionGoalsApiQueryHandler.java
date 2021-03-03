@@ -1,6 +1,7 @@
 package it.cnr.istc.pst.sharework.knowledge.service.api;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
+import it.cnr.istc.pst.sharework.knowledge.service.api.ex.ApiQueryHandlingException;
 import org.apache.jena.rdf.model.Resource;
 import org.ros.node.ConnectedNode;
 import sharework_knowledge_msgs.KnowledgeAPIEndPointResponse;
@@ -27,7 +28,8 @@ public class GetProductionGoalsApiQueryHandler extends ApiQueryHandler<GetProduc
      * @return
      */
     @Override
-    public GetProductionGoalsApiQueryResult handle()
+    public GetProductionGoalsApiQueryResult  handle(sharework_knowledge_msgs.KnowledgeAPIEndPointRequest request)
+            throws ApiQueryHandlingException
     {
         // prepare response
         GetProductionGoalsApiQueryResult response = new GetProductionGoalsApiQueryResult();
