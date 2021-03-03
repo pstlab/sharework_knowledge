@@ -40,7 +40,7 @@ public class GetProductionGoalsApiQueryHandler extends ApiQueryHandler<GetProduc
             response.addResource(goal);
         }
 
-        // get response
+        // get result
         return response;
     }
 

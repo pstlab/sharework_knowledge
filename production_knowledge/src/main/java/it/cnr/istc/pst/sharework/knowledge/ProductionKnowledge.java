@@ -249,6 +249,33 @@ public class ProductionKnowledge
     }
 
     /**
+     * The method reads the knowledge base to retrieve the list of known workers.
+     *
+     * The method retrieves all known individuals of type SOHO:WorkOperator
+     *
+     * @return
+     */
+    public List<Resource> getWorkerOperators() {
+        // list of workers
+        List<Resource> workers = new ArrayList<>();
+
+        // retrieve known individuals of SOHO:WorkOperator
+        List<Statement> list = this.listStatements(
+                null,
+                ProductionKnowledgeDictionary.RDF_NS + "type",
+                ProductionKnowledgeDictionary.SOHO_NS + "WorkOperator");
+
+        // get resources
+        for (Statement s : list) {
+            // add the subject of the statement
+            workers.add(s.getSubject());
+        }
+
+        // get the list of workers
+        return workers;
+    }
+
+    /**
      * The method reads the knowledge base to retrieve production graphs associated
      * to a production goal.
      *

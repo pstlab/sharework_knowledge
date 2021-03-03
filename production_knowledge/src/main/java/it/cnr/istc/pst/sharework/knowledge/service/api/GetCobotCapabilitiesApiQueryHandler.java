@@ -31,7 +31,9 @@ public class GetCobotCapabilitiesApiQueryHandler extends ApiQueryHandler<GetCobo
      * @throws ApiQueryHandlingException
      */
     @Override
-    public GetCobotCapabilitiesApiQueryResult handle(KnowledgeAPIEndPointRequest request) throws ApiQueryHandlingException {
+    public GetCobotCapabilitiesApiQueryResult handle(KnowledgeAPIEndPointRequest request) throws ApiQueryHandlingException
+    {
+
         return null;
     }
 }
