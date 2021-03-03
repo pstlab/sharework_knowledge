@@ -1,4 +1,4 @@
-package it.cnr.istc.pst.sharework.service;
+package it.cnr.istc.pst.sharework.knowledge.service;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import org.apache.commons.logging.Log;
@@ -48,8 +48,8 @@ public class KnowledgeService extends AbstractNodeMain
         // create service instance for the knowledge api end-point
         connectedNode.newServiceServer(
                 "/sharework/knowledge/endpoint/api",
-                KnowledgeServiceAPIResponseBuilder.getServiceType(),
-                new KnowledgeServiceAPIResponseBuilder(this.log, this.knowledge, connectedNode));
+                KnowledgeServiceApiResponseBuilder.getServiceType(),
+                new KnowledgeServiceApiResponseBuilder(this.log, this.knowledge, connectedNode));
 
         // create service instance for the knowledge triple end-point
         connectedNode.newServiceServer(

@@ -1,9 +1,9 @@
-package it.cnr.istc.pst.sharework.knowledge.dictionary;
+package it.cnr.istc.pst.sharework.knowledge;
 
 /**
  * Dictionary of the Sharework Production Knwolledge for Human-Robot Collaboration
  */
-public enum KnowledgeDictionary
+public enum ProductionKnowledgeDictionary
 {
     RDF_NS("http://www.w3.org/1999/02/22-rdf-syntax-ns#"),
 
@@ -23,7 +23,7 @@ public enum KnowledgeDictionary
      *
      * @param value
      */
-    private KnowledgeDictionary(String value) {
+    private ProductionKnowledgeDictionary(String value) {
         this.value = value;
     }
 

@@ -1,12 +1,12 @@
 package it.cnr.istc.pst.sharework.knowledge;
 
-import it.cnr.istc.pst.sharework.knowledge.dictionary.KnowledgeDictionary;
 import org.apache.jena.ontology.Individual;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.reasoner.rulesys.GenericRuleReasoner;
 import org.apache.jena.reasoner.rulesys.Rule;
+
 
 import java.util.*;
 
@@ -15,8 +15,8 @@ import java.util.*;
  */
 public class ProductionKnowledge
 {
-    private static final String SHAREWORK_KNOWLEDGE_HOME = System.getenv("SHAREWORK_KNOWLEDGE_HOME") != null ?
-            System.getenv("SHAREWORK_KNOWLEDGE_HOME") + "/" : "";
+    private static final String SHAREWORK_KNOWLEDGE = System.getenv("SHAREWORK_KNOWLEDGE") != null ?
+            System.getenv("SHAREWORK_KNOWLEDGE") + "/" : "";
 
     private String ontoFile;        // file with the ontology
     private String ruleFile;        // file with the inference rules
@@ -37,7 +37,7 @@ public class ProductionKnowledge
     {
         // set ontology file
         this.ontoFile = ontoFile;
-        this.ruleFile = SHAREWORK_KNOWLEDGE_HOME + "etc/soho_rules_v1.0.rules";
+        this.ruleFile = SHAREWORK_KNOWLEDGE + "etc/soho_rules_v1.0.rules";
 
         // create an ontological model from SOHO
         this.ontoModel = ModelFactory.createOntologyModel(
@@ -45,9 +45,9 @@ public class ProductionKnowledge
         );
 
         // use DocumentManager API to specify that onto is replicated locally on disk
-        this.ontoModel.getDocumentManager().addAltEntry(KnowledgeDictionary.SOHO_NS.get(), "file:" + this.ontoFile);
+        this.ontoModel.getDocumentManager().addAltEntry(ProductionKnowledgeDictionary.SOHO_NS.get(), "file:" + this.ontoFile);
         // actually load the ontology
-        this.ontoModel.read(KnowledgeDictionary.SOHO_NS.get());
+        this.ontoModel.read(ProductionKnowledgeDictionary.SOHO_NS.get());
 
         // parse the list of inference rules for knowledge processing
         List<Rule> rules = Rule.rulesFromURL("file:" + this.ruleFile);
@@ -69,7 +69,7 @@ public class ProductionKnowledge
      */
     public ProductionKnowledge() {
         // set default ontology model
-        this(SHAREWORK_KNOWLEDGE_HOME + "etc/soho_core_v1.owl");
+        this(SHAREWORK_KNOWLEDGE + "etc/soho_core_v1.owl");
     }
 
     /**
@@ -176,7 +176,7 @@ public class ProductionKnowledge
         // result flag
         boolean hasType = false;
         // get RDF:type property
-        Property rdfType = this.getProperty(KnowledgeDictionary.RDF_NS + "type");
+        Property rdfType = this.getProperty(ProductionKnowledgeDictionary.RDF_NS + "type");
         // get all types
         List<Statement> list = this.listStatements(
                 resource.getURI(), rdfType.getURI(), null);
@@ -236,8 +236,8 @@ public class ProductionKnowledge
         // retrieve known individuals of SOHO:ProductionGoal
         List<Statement> list = this.listStatements(
                 null,
-                KnowledgeDictionary.RDF_NS + "type",
-                KnowledgeDictionary.SOHO_NS + "ProductionGoal");
+                ProductionKnowledgeDictionary.RDF_NS + "type",
+                ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal");
         // get resource
         for (Statement s : list) {
             // add the subject of the statement
@@ -266,9 +266,9 @@ public class ProductionKnowledge
             throws Exception
     {
         // check parameter type
-        if (!this.hasResourceType(pGoal, KnowledgeDictionary.SOHO_NS + "ProductionGoal")) {
+        if (!this.hasResourceType(pGoal, ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal")) {
             // wrong parameter type
-            throw new Exception("Wrong parameter type, a resource/individual of type <" + KnowledgeDictionary.SOHO_NS + "ProductionGoal> expected:" +
+            throw new Exception("Wrong parameter type, a resource/individual of type <" + ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal> expected:" +
                     "\n- received parameter " + pGoal.getLocalName() + " (" + pGoal.getURI() + ")");
         }
         
@@ -277,7 +277,7 @@ public class ProductionKnowledge
         // get methods associated to the production goal
         List<Statement> stats = this.listStatements(
                 pGoal.getURI(),
-                KnowledgeDictionary.SOHO_NS + "hasPart",
+                ProductionKnowledgeDictionary.SOHO_NS + "hasPart",
                 null);
 
         // extract production graphs
@@ -286,7 +286,7 @@ public class ProductionKnowledge
             // get statement's object
             Resource method = s.getObject().asResource();
             // check if method
-            if (this.hasResourceType(method, KnowledgeDictionary.SOHO_NS + "ProductionMethod"))
+            if (this.hasResourceType(method, ProductionKnowledgeDictionary.SOHO_NS + "ProductionMethod"))
             {
                 // retrieve resource structure
                 Map<Resource, Set<Resource>> graph = this.retrieveResourceStructure(method);
@@ -314,7 +314,7 @@ public class ProductionKnowledge
     private void retrieveResourceStructure(Resource resource, Map<Resource, Set<Resource>> subtree)
     {
         // get constituent property
-        Property hasConstituent = this.getProperty(KnowledgeDictionary.DUL_NS + "hasConstituent");
+        Property hasConstituent = this.getProperty(ProductionKnowledgeDictionary.DUL_NS + "hasConstituent");
 
         // retrieve elements
         List<Statement> list = this.listStatements(resource.getURI(), hasConstituent.getURI(), null);

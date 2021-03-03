@@ -1,6 +1,5 @@
 package it.cnr.istc.pst.sharework.knowledge;
 
-import it.cnr.istc.pst.sharework.knowledge.dictionary.KnowledgeDictionary;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
@@ -49,7 +48,7 @@ public class ProductionKnowledgeTest
     public void checkIndividualAndStructuresTest()
     {
         // set ontological model
-        String ontoModel = System.getenv("SHAREWORK_KNOWLEDGE_HOME") + "/etc/soho_demo_v1.1.owl";
+        String ontoModel = System.getenv("SHAREWORK_KNOWLEDGE") + "/etc/soho_demo_v1.1.owl";
 
         // create production knowledge
         ProductionKnowledge knowledge = new ProductionKnowledge(ontoModel);
@@ -57,7 +56,7 @@ public class ProductionKnowledgeTest
         try
         {
             // get instances of simple tasks
-            List<Resource> list = knowledge.getIndividuals(KnowledgeDictionary.SOHO_NS + "SimpleTask");
+            List<Resource> list = knowledge.getIndividuals(ProductionKnowledgeDictionary.SOHO_NS + "SimpleTask");
             // check list of individuals
             Assert.assertNotNull(list);
             Assert.assertFalse(list.isEmpty());
@@ -81,7 +80,7 @@ public class ProductionKnowledgeTest
     public void checkProductionGoalStructureTest()
     {
         // set ontological model
-        String ontoModel = System.getenv("SHAREWORK_KNOWLEDGE_HOME") + "/etc/soho_demo_v1.1.owl";
+        String ontoModel = System.getenv("SHAREWORK_KNOWLEDGE") + "/etc/soho_demo_v1.1.owl";
 
         // create production knowledge
         ProductionKnowledge knowledge = new ProductionKnowledge(ontoModel);
@@ -89,7 +88,7 @@ public class ProductionKnowledgeTest
         try
         {
             // get instances of production goals
-            List<Resource> goals = knowledge.getIndividuals(KnowledgeDictionary.SOHO_NS + "ProductionGoal");
+            List<Resource> goals = knowledge.getIndividuals(ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal");
             // check list of individuals
             Assert.assertNotNull(goals);
             Assert.assertFalse(goals.isEmpty());
@@ -102,7 +101,7 @@ public class ProductionKnowledgeTest
                 System.out.println("ProductionGoal: " + g.getLocalName() + " (" + g.getURI() + ")");
 
                 // get property
-                Property hasPart = knowledge.getProperty(KnowledgeDictionary.SOHO_NS + "hasPart");
+                Property hasPart = knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "hasPart");
                 Assert.assertNotNull(hasPart);
 
                 // check associated production methods
@@ -137,15 +136,15 @@ public class ProductionKnowledgeTest
                     for (Resource task : tasks)
                     {
                         // check task type
-                        if (knowledge.hasResourceType(task, KnowledgeDictionary.SOHO_NS + "ComplexTask")) {
+                        if (knowledge.hasResourceType(task, ProductionKnowledgeDictionary.SOHO_NS + "ComplexTask")) {
                             // complex task
                             ctasks.add(task);
                         }
-                        else if (knowledge.hasResourceType(task, KnowledgeDictionary.SOHO_NS + "SimpleTask")) {
+                        else if (knowledge.hasResourceType(task, ProductionKnowledgeDictionary.SOHO_NS + "SimpleTask")) {
                             // simple task
                             stasks.add(task);
                         }
-                        else if (knowledge.hasResourceType(task, KnowledgeDictionary.SOHO_NS + "Function")) {
+                        else if (knowledge.hasResourceType(task, ProductionKnowledgeDictionary.SOHO_NS + "Function")) {
                             // function
                             funcs.add(task);
                         }
@@ -200,7 +199,7 @@ public class ProductionKnowledgeTest
     public void getProductionGoalsTest()
     {
         // set ontological model
-        String ontoModel = System.getenv("SHAREWORK_KNOWLEDGE_HOME") + "/etc/soho_demo_v1.1.owl";
+        String ontoModel = System.getenv("SHAREWORK_KNOWLEDGE") + "/etc/soho_demo_v1.1.owl";
 
         // create production knowledge
         ProductionKnowledge knowledge = new ProductionKnowledge(ontoModel);
@@ -228,7 +227,7 @@ public class ProductionKnowledgeTest
     public void getProductionGraphsTest()
     {
         // set ontological model
-        String ontoModel = System.getenv("SHAREWORK_KNOWLEDGE_HOME") + "/etc/soho_demo_v1.1.owl";
+        String ontoModel = System.getenv("SHAREWORK_KNOWLEDGE") + "/etc/soho_demo_v1.1.owl";
 
         // create production knowledge
         ProductionKnowledge knowledge = new ProductionKnowledge(ontoModel);
@@ -266,15 +265,15 @@ public class ProductionKnowledgeTest
             for (Resource task : tasks)
             {
                 // check type
-                if (knowledge.hasResourceType(task, KnowledgeDictionary.SOHO_NS + "ComplexTask")) {
+                if (knowledge.hasResourceType(task, ProductionKnowledgeDictionary.SOHO_NS + "ComplexTask")) {
                     // complex task
                     ctasks.add(task);
                 }
-                else if (knowledge.hasResourceType(task, KnowledgeDictionary.SOHO_NS + "SimpleTask")) {
+                else if (knowledge.hasResourceType(task, ProductionKnowledgeDictionary.SOHO_NS + "SimpleTask")) {
                     // simple tasks
                     stasks.add(task);
                 }
-                else if (knowledge.hasResourceType(task, KnowledgeDictionary.SOHO_NS + "Function")) {
+                else if (knowledge.hasResourceType(task, ProductionKnowledgeDictionary.SOHO_NS + "Function")) {
                     // function
                     funcs.add(task);
                 }

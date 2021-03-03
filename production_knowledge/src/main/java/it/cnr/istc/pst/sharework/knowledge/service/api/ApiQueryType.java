@@ -1,4 +1,4 @@
-package it.cnr.istc.pst.sharework.service;
+package it.cnr.istc.pst.sharework.knowledge.service.api;
 
 import java.util.Arrays;
 
@@ -9,14 +9,15 @@ import java.util.Arrays;
  * the associated parameters, when needed
  *
  */
-public enum KnowledgeServiceAPIQueryType
+public enum ApiQueryType
 {
     /**
      * Query the knowledge to get a list of all known production goals
      */
     GET_PRODUCTION_GOALS(
             "get_prod_goals",
-            new String[] {}),
+            new String[] {},
+            GetProductionGoalsApiQueryHandler.class),
 
     /**
      * Query the knowledge to get the list of functions (i.e., human/robot skills or
@@ -24,19 +25,23 @@ public enum KnowledgeServiceAPIQueryType
      */
     GET_PRODUCTION_GOAL_FUNCTIONS(
             "get_prod_goal_funcs",
-            new String[] {"\"prod_goal\": URI of a known production goal"});
+            new String[] {"\"prod_goal\": URI of a known production goal"},
+            GetProductionGoalFunctionsApiQueryHandler.class);
 
     private String label;
     private String[] params;
+    private Class<? extends ApiQueryHandler<?>> hClass;
 
     /**
      *
      * @param type
      * @param params
+     * @param hClass
      */
-    private KnowledgeServiceAPIQueryType(String type, String[] params) {
+    private ApiQueryType(String type, String[] params, Class<?extends ApiQueryHandler<?>> hClass) {
         this.label = type;
         this.params = params;
+        this.hClass = hClass;
     }
 
     /**
@@ -57,16 +62,24 @@ public enum KnowledgeServiceAPIQueryType
 
     /**
      *
+     * @return
+     */
+    public Class<? extends ApiQueryHandler<?>> getHandlerClass() {
+        return hClass;
+    }
+
+    /**
+     *
      * @param type
      * @return
      * @throws Exception
      */
-    public static KnowledgeServiceAPIQueryType getType(String type)
+    public static ApiQueryType getType(String type)
             throws Exception
     {
         // type
-        KnowledgeServiceAPIQueryType result = null;
-        for (KnowledgeServiceAPIQueryType t : KnowledgeServiceAPIQueryType.values()) {
+        ApiQueryType result = null;
+        for (ApiQueryType t : ApiQueryType.values()) {
             if (t.getLabel().equals(type.trim().toLowerCase())) {
                 // set result
                 result = t;

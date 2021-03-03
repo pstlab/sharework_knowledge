@@ -1,4 +1,4 @@
-package it.cnr.istc.pst.sharework.service;
+package it.cnr.istc.pst.sharework.knowledge.service;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import org.apache.commons.logging.Log;
