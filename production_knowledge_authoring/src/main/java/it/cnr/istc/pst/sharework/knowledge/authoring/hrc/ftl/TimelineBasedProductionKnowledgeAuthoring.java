@@ -28,11 +28,23 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
     private int numberOfConstraints;                    // number of generated constraints
     private long time;                                  // model generation time (in milliseconds)
 
+    private String pdlPath;
+
     /**
      *
      */
     public TimelineBasedProductionKnowledgeAuthoring() {
         super();
+    }
+
+    /**
+     *
+     * @param pdlPath
+     */
+    public TimelineBasedProductionKnowledgeAuthoring(String pdlPath) {
+
+        super();
+        this.pdlPath = pdlPath;
     }
 
     /**
@@ -201,8 +213,17 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 writer.write(ddl);
             }
 
-            // validate the PDB
-            pdb = PlanDataBaseBuilder.createAndSet(ddlFile.getAbsolutePath());
+            // check PDL
+            if (this.pdlPath == null) {
+                // validate the PDB
+                pdb = PlanDataBaseBuilder.createAndSet(ddlFile.getAbsolutePath());
+            }
+            else {
+                // validate the PDB
+                pdb = PlanDataBaseBuilder.createAndSet(
+                        ddlFile.getAbsolutePath(),
+                        this.pdlPath);
+            }
         }
         catch (Exception ex) {
             throw new Exception("Error while validating the generated model:\n" +
