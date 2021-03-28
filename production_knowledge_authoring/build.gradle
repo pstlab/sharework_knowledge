@@ -45,6 +45,7 @@ repositories {
 dependencies {
   /* An external maven artifact dependency */
   compile 'org.ros.rosjava_core:rosjava:[0.3,0.4)'
+  compile 'it.cnr.istc.pst:platinum:[1.0,2.0)'
   /* Example of a local subproject dependency */
   /* compile project(':sibling_gradle_project') */
   compile project(':production_knowledge')

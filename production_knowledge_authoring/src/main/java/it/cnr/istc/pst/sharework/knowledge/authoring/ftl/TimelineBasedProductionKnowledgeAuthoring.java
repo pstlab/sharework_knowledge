@@ -1,5 +1,7 @@
 package it.cnr.istc.pst.sharework.knowledge.authoring.ftl;
 
+import it.cnr.istc.pst.platinum.ai.framework.domain.PlanDataBaseBuilder;
+import it.cnr.istc.pst.platinum.ai.framework.domain.component.PlanDataBase;
 import it.cnr.istc.pst.sharework.knowledge.authoring.ProductionKnowledgeAuthoring;
 import org.apache.jena.rdf.model.Resource;
 
@@ -69,7 +71,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
      * @throws Exception
      */
     @Override
-    public String compile()
+    public synchronized String compile()
             throws Exception
     {
         // check knowledge
@@ -127,6 +129,47 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
         return ddl;
     }
 
+    /**
+     * s
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public synchronized PlanDataBase compileAndValidate()
+            throws Exception
+    {
+        // get DDL file
+        String ddl = this.compile();
+        // prepare PDB
+        PlanDataBase pdb;
+        String ddlPath = null;
+        // set start time and update authoring time
+        long start = System.currentTimeMillis();
+
+        try
+        {
+            /*
+             * TODO write a file with the DDL description and get the path
+             */
+
+            ddlPath = "";
+
+            // validate the PDB
+            pdb = PlanDataBaseBuilder.createAndSet(ddlPath);
+        }
+        catch (Exception ex) {
+            throw new Exception("Error while validating the generated model:\n" +
+                    "- DDL file: " + ddlPath + "\n" +
+                    "- message: " + ex.getMessage() + "\n");
+        }
+        finally {
+            // update authoring time
+            this.time += System.currentTimeMillis() - start;
+        }
+
+        // get PDB
+        return pdb;
+    }
 
     /**
      *

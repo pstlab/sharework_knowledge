@@ -1,6 +1,7 @@
 package it.cnr.istc.pst.sharework.knowledge.authoring;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
+import it.cnr.istc.pst.platinum.ai.framework.domain.component.PlanDataBase;
 
 /**
  *
@@ -38,5 +39,13 @@ public abstract class ProductionKnowledgeAuthoring
      * @throws Exception
      */
     public abstract  String compile()
+            throws Exception;
+
+    /**
+     * s
+     * @return
+     * @throws Exception
+     */
+    public abstract PlanDataBase compileAndValidate()
             throws Exception;
 }
