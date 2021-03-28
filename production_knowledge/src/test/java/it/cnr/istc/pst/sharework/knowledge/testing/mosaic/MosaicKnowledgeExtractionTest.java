@@ -17,7 +17,7 @@ import java.util.Set;
 public class MosaicKnowledgeExtractionTest
 {
     // get a reference to the knowledge
-    private static final String ONTOLOGY_PATH = ProductionKnowledge.SHAREWORK_KNOWLEDGE +  "etc/ontologies/soho_mosaic_v0.3.owl";
+    private static final String ONTOLOGY_PATH = ProductionKnowledge.SHAREWORK_KNOWLEDGE +  "etc/ontologies/soho_mosaic_v0.4.owl";
 
     /**
      * Test the extraction of known production goals from knowledge
