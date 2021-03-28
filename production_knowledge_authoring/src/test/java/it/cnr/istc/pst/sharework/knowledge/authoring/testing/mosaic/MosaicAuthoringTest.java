@@ -1,12 +1,16 @@
 package it.cnr.istc.pst.sharework.knowledge.authoring.testing.mosaic;
 
+import it.cnr.istc.pst.platinum.ai.framework.domain.component.PlanDataBase;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
-import it.cnr.istc.pst.sharework.knowledge.authoring.ftl.TimelineBasedProductionKnowledgeAuthoring;
+import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledgeDictionary;
+import it.cnr.istc.pst.sharework.knowledge.authoring.hrc.ftl.TimelineBasedProductionKnowledgeAuthoring;
 import org.apache.jena.rdf.model.Resource;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -192,10 +196,176 @@ public class MosaicAuthoringTest
      *
      */
     @Test
-    public void authoringTest()
+    public void componentTest()
     {
         System.out.println("*********************************************");
-        System.out.println("***** Test: authoringTest() *****");
+        System.out.println("***** Test: componentTest() *****");
+
+        // create production knowledge
+        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH);
+        Assert.assertNotNull(knowledge);
+        try
+        {
+            // get production goals
+            List<Resource> goals = knowledge.getProductionGoals();
+            Assert.assertNotNull(goals);
+            Assert.assertTrue(goals.size() == 1);
+
+            // create a domain component for each state variable starting from the goal state variable
+            String comps = "\tCOMPONENT Goal {FLEXIBLE goals(functional)} : GoalVariableType;\n";
+
+            // create a domain component for a worker and one component for the cobot
+            List<Resource> workers = knowledge.getWorkOperators();
+            Assert.assertNotNull(workers);
+            Assert.assertTrue(workers.size() == 1);
+            comps += "\tCOMPONENT Worker {FLEXIBLE operations(primitive}} : WorkerVariableType;\n";
+
+            List<Resource> cobots = knowledge.getCobots();
+            Assert.assertNotNull(cobots);
+            Assert.assertTrue(cobots.size() == 1);
+            comps += "\tCOMPONENT Cobot {FLEXIBLE tasks(primitive)} : CobotVariableType;\n";
+
+            // create a state variable for each decomposition variable
+            List<List<Resource>> hierarchy = knowledge.getProductionHierarchy(goals.get(0));
+            for (int hlevel = 0; hlevel < hierarchy.size(); hlevel++) {
+                // create h-level component
+                comps += "\tCOMPONENT ProductionL" + hlevel + " {FLEXIBLE hlevel" + hlevel + "(functional)} : ProductionHierarchyL" + hlevel + "Type;\n";
+            }
+
+            // print resulting components
+            System.out.println(comps);
+        }
+        catch (Exception ex) {
+            // print error message
+            System.err.println(ex.getMessage());
+            Assert.assertTrue(false);
+        }
+        finally
+        {
+            // close test
+            System.out.println("*********************************************");
+            System.out.println();
+        }
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void synchronizationTest()
+    {
+        System.out.println("*********************************************");
+        System.out.println("***** Test: synchronizationTest() *****");
+
+        // create production knowledge
+        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH);
+        Assert.assertNotNull(knowledge);
+        try
+        {
+            // get production goals
+            List<Resource> goals = knowledge.getProductionGoals();
+            Assert.assertNotNull(goals);
+            Assert.assertTrue(goals.size() == 1);
+
+            // Synchronization description
+            String synch = "";
+            // check the decomposition graph of each production goal
+            for (Resource goal : goals)
+            {
+                // define synchronization rules related to the current goal
+                System.out.println("Synchronization rules associated to goal " + goal.getLocalName() + " (" + goal.getURI() + "):\n\n");
+                // get the decomposition graph
+                List<Map<Resource, List<Set<Resource>>>> graphs = knowledge.getDecompositionGraph(goal);
+                // check each possible decomposition - method
+                for (Map<Resource, List<Set<Resource>>> graph : graphs)
+                {
+                    // get reference predicates/values
+                    for (Resource reference : graph.keySet())
+                    {
+                        // check if decomposition is empty
+                        if (!graph.get(reference).isEmpty())
+                        {
+                            // check if HRC (simple) task
+                            if (knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "HRCTask"))
+                            {
+                                // check possible HRC task types
+                                if (knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "SimultaneousHRCTask")) {
+                                    // TODO simultaneous constraint
+                                } else if (knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "SupportiveHRCTask")) {
+                                    // TODO supportive constraint
+                                } else if (knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "SynchronousHRCTask")) {
+                                    // TODO synchronous constraint
+                                } else    // independent task
+                                {
+                                    // check possible decompositions
+                                    for (Set<Resource> decomposition : graph.get(reference)) {
+                                        Assert.assertNotNull(decomposition);
+                                        Assert.assertFalse(decomposition.isEmpty());
+                                        Assert.assertTrue(decomposition.size() == 1);
+
+                                        // create synchronization
+                                        synch += "\tSYNCHRONIZE <component-name> {\n\n" +
+                                                "\t\tVALUE " + reference.getLocalName() + "() {\n\n" +
+                                                "\t\t\td0 <component-name>." + decomposition.stream().findFirst().get().getLocalName() + " ();\n" +
+                                                "\t\t\tCONTAINS [0, +INF] [0, +INF] d0;\n" +
+                                                "\t\t}\n\n";
+                                    }
+                                }
+                            } else // any other type of complex task
+                            {
+                                // check possible decomposition
+                                for (Set<Resource> decomposition : graph.get(reference))
+                                {
+                                    // check if empty
+                                    if (!decomposition.isEmpty()) {
+                                        // create synchronization
+                                        synch += "\tSYNCHRONIZE <component-name> {\n\n" +
+                                                "\t\t VALUE " + reference.getLocalName() + "() {\n\n";
+
+                                        int dIndex = 0;
+                                        for (Resource dec : decomposition) {
+                                            // add decomposition description
+                                            synch += "\t\t\td" + dIndex + " <component-name>." + dec.getLocalName() + "();\n" +
+                                                    "\t\t\tCONTAINS [0, +INF] [0, +INF] d" + dIndex + ";\n";
+
+                                            // increment
+                                            dIndex++;
+                                        }
+
+                                        // close synchronization
+                                        synch += "\t\t}\n\n";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // print description
+            System.out.println(synch);
+        }
+        catch (Exception ex) {
+            // print error message
+            System.err.println(ex.getMessage());
+            Assert.assertTrue(false);
+        }
+        finally
+        {
+            // close test
+            System.out.println("*********************************************");
+            System.out.println();
+        }
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void authoringCompilationTest()
+    {
+        System.out.println("*********************************************");
+        System.out.println("***** Test: authoringCompilationTest() *****");
 
         // create production knowledge
         TimelineBasedProductionKnowledgeAuthoring authoring = new TimelineBasedProductionKnowledgeAuthoring();
@@ -206,7 +376,7 @@ public class MosaicAuthoringTest
             authoring.setProductionKnowledge(ONTOLOGY_PATH);
             // get model
             String ddl = authoring.compile();
-            System.out.println("Complied timeline-based planning model:\n" +
+            System.out.println("Complied timeline-based planning model:\n\n" +
                     "" + ddl + "\n\n");
 
             // print some statistics
@@ -229,5 +399,49 @@ public class MosaicAuthoringTest
             System.out.println();
         }
     }
+
+    /**
+     *
+     */
+    @Test
+    public void authoringTest()
+    {
+        System.out.println("*********************************************");
+        System.out.println("***** Test: authoringTest() *****");
+
+        // create production knowledge
+        TimelineBasedProductionKnowledgeAuthoring authoring = new TimelineBasedProductionKnowledgeAuthoring();
+        Assert.assertNotNull(authoring);
+        try
+        {
+            // load knowledge base
+            authoring.setProductionKnowledge(ONTOLOGY_PATH);
+            // get data structure
+            PlanDataBase pdb = authoring.compileAndValidate();
+            Assert.assertNotNull(pdb);
+            System.out.println("Complied timeline-based planning model:\n\n" +
+                    "" + pdb + "\n\n");
+
+            // print some statistics
+            System.out.println("Authoring statistics:\n" +
+                    "- Number of SV: " + authoring.getNumberOfVariables() + "\n" +
+                    "- Number of predicates: " + authoring.getNumberOfPredicates() + "\n" +
+                    "- Number of synchronizations: " + authoring.getNumberOfSynchronizations() + "\n" +
+                    "- Number of constraints: " + authoring.getNumberOfConstraints() + "\n" +
+                    "- Time: " + authoring.getTime() + " (msecs)\n\n");
+        }
+        catch (Exception ex) {
+            // print error message
+            System.err.println(ex.getMessage());
+            Assert.assertTrue(false);
+        }
+        finally
+        {
+            // close test
+            System.out.println("*********************************************");
+            System.out.println();
+        }
+    }
+
 
 }
