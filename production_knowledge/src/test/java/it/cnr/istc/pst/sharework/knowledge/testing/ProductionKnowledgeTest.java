@@ -1,5 +1,7 @@
-package it.cnr.istc.pst.sharework.knowledge;
+package it.cnr.istc.pst.sharework.knowledge.testing;
 
+import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
+import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledgeDictionary;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
@@ -48,7 +50,7 @@ public class ProductionKnowledgeTest
     public void checkIndividualAndStructuresTest()
     {
         // set ontological model
-        String ontoModel = System.getenv("SHAREWORK_KNOWLEDGE") + "/etc/soho_demo_v1.1.owl";
+        String ontoModel = ProductionKnowledge.SHAREWORK_KNOWLEDGE + "etc/soho_demo_v1.1.owl";
 
         // create production knowledge
         ProductionKnowledge knowledge = new ProductionKnowledge(ontoModel);
@@ -80,7 +82,7 @@ public class ProductionKnowledgeTest
     public void checkProductionGoalStructureTest()
     {
         // set ontological model
-        String ontoModel = System.getenv("SHAREWORK_KNOWLEDGE") + "/etc/soho_demo_v1.1.owl";
+        String ontoModel = ProductionKnowledge.SHAREWORK_KNOWLEDGE + "etc/soho_demo_v1.1.owl";
 
         // create production knowledge
         ProductionKnowledge knowledge = new ProductionKnowledge(ontoModel);
@@ -199,7 +201,7 @@ public class ProductionKnowledgeTest
     public void getProductionGoalsTest()
     {
         // set ontological model
-        String ontoModel = System.getenv("SHAREWORK_KNOWLEDGE") + "/etc/soho_demo_v1.1.owl";
+        String ontoModel = ProductionKnowledge.SHAREWORK_KNOWLEDGE+ "etc/soho_demo_v1.1.owl";
 
         // create production knowledge
         ProductionKnowledge knowledge = new ProductionKnowledge(ontoModel);
@@ -227,7 +229,7 @@ public class ProductionKnowledgeTest
     public void getProductionGraphsTest()
     {
         // set ontological model
-        String ontoModel = System.getenv("SHAREWORK_KNOWLEDGE") + "/etc/soho_demo_v1.1.owl";
+        String ontoModel = ProductionKnowledge.SHAREWORK_KNOWLEDGE + "etc/soho_demo_v1.1.owl";
 
         // create production knowledge
         ProductionKnowledge knowledge = new ProductionKnowledge(ontoModel);
@@ -243,14 +245,14 @@ public class ProductionKnowledgeTest
             // get the only production goal expected
             Resource goal = goals.get(0);
             // get production graphs
-            List<Map<Resource, Set<Resource>>> graphs = knowledge.getProductionGraph(goal);
+            List<Map<Resource, List<Set<Resource>>>> graphs = knowledge.getDecompositionGraph(goal);
             Assert.assertNotNull(graphs);
             Assert.assertFalse(graphs.isEmpty());
             // only one production graph expected
             Assert.assertTrue(graphs.size() == 1);
 
             // get the only graph expected
-            Map<Resource, Set<Resource>> graph = graphs.get(0);
+            Map<Resource, List<Set<Resource>>> graph = graphs.get(0);
             // get set of tasks
             Set<Resource> tasks = graph.keySet();
             Assert.assertNotNull(tasks);
@@ -295,7 +297,7 @@ public class ProductionKnowledgeTest
             try
             {
                 // check behavior in case of wrong parameter
-                knowledge.getProductionGraph(ctasks.get(0));
+                knowledge.getDecompositionGraph(ctasks.get(0));
                 // error
                 Assert.assertTrue(false);
             }

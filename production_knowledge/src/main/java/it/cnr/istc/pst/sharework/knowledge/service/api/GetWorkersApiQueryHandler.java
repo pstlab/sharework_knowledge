@@ -35,7 +35,7 @@ public class GetWorkersApiQueryHandler extends ApiQueryHandler<GetWorkersApiQuer
         GetWorkersApiQueryResult response = new GetWorkersApiQueryResult();
 
         // get resources representing known workers
-        List<Resource> goals = this.knowledge.getWorkerOperators();
+        List<Resource> goals = this.knowledge.getWorkOperators();
         for (Resource goal : goals) {
             // add the goal the the response
             response.addResource(goal);

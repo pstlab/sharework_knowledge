@@ -6,8 +6,6 @@ import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.reasoner.rulesys.GenericRuleReasoner;
 import org.apache.jena.reasoner.rulesys.Rule;
-
-
 import java.util.*;
 
 /**
@@ -15,7 +13,7 @@ import java.util.*;
  */
 public class ProductionKnowledge
 {
-    private static final String SHAREWORK_KNOWLEDGE = System.getenv("SHAREWORK_KNOWLEDGE") != null ?
+    public static final String SHAREWORK_KNOWLEDGE = System.getenv("SHAREWORK_KNOWLEDGE") != null ?
             System.getenv("SHAREWORK_KNOWLEDGE") + "/" : "";
 
     private String ontoFile;        // file with the ontology
@@ -212,7 +210,8 @@ public class ProductionKnowledge
      * @param resource
      * @return
      */
-    public Map<Resource, Set<Resource>> retrieveResourceStructure(Resource resource) {
+    public Map<Resource, Set<Resource>> retrieveResourceStructure(Resource resource)
+    {
         // set result structure
         HashMap<Resource, Set<Resource>> structure = new HashMap<>();
         // navigate knowledge to extract structure
@@ -229,7 +228,8 @@ public class ProductionKnowledge
      *
      * @return a list of resource of type SOHO:ProductionGoal
      */
-    public List<Resource> getProductionGoals() {
+    public List<Resource> getProductionGoals()
+    {
         // list of production goals
         List<Resource> goals = new ArrayList<>();
 
@@ -238,6 +238,7 @@ public class ProductionKnowledge
                 null,
                 ProductionKnowledgeDictionary.RDF_NS + "type",
                 ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal");
+
         // get resource
         for (Statement s : list) {
             // add the subject of the statement
@@ -249,13 +250,43 @@ public class ProductionKnowledge
     }
 
     /**
+     * The method reads the knowledge base to retrieve the list of
+     * known autonomous agents.
+     *
+     * The method retrieves all known individuals of type SOHO:AutonomousAgent
+     *
+     * @return a list of resource of type SOHO:AutonomousAgent
+     */
+    public List<Resource> getAgents()
+    {
+        // list of agents
+        List<Resource> agents = new ArrayList<>();
+
+        // retrieve known individuals of SOHO:AutonomousAgent
+        List<Statement> list = this.listStatements(
+                null,
+                ProductionKnowledgeDictionary.RDF_NS + "type",
+                ProductionKnowledgeDictionary.SOHO_NS + "AutonomousAgent");
+
+        // get resources
+        for (Statement s : list) {
+            // add subject to the list
+            agents.add(s.getSubject());
+        }
+
+        // get the list
+        return agents;
+    }
+
+    /**
      * The method reads the knowledge base to retrieve the list of known workers.
      *
      * The method retrieves all known individuals of type SOHO:WorkOperator
      *
      * @return
      */
-    public List<Resource> getWorkerOperators() {
+    public List<Resource> getWorkOperators()
+    {
         // list of workers
         List<Resource> workers = new ArrayList<>();
 
@@ -276,6 +307,95 @@ public class ProductionKnowledge
     }
 
     /**
+     * The method reads the knowledge base to retrieve the list of known cobots.
+     *
+     * The method retrieves all known individuals of type SOHO:Cobot
+     *
+     * @return
+     */
+    public List<Resource> getCobots()
+    {
+        // list of workers
+        List<Resource> cobots = new ArrayList<>();
+
+        // retrieve known individuals of SOHO:WorkOperator
+        List<Statement> list = this.listStatements(
+                null,
+                ProductionKnowledgeDictionary.RDF_NS + "type",
+                ProductionKnowledgeDictionary.SOHO_NS + "Cobot");
+
+        // get resources
+        for (Statement s : list) {
+            // add the subject of the statement
+            cobots.add(s.getSubject());
+        }
+
+        // get the list of cobots
+        return cobots;
+    }
+
+    /**
+     * The method reads the knowledge base to retrieve the list of
+     * known functions some agent can perform.
+     *
+     * The method retrieves all known individuals of type SOHO:Function
+     *
+     * @return a list of resource of type SOHO:Function
+     */
+    public List<Resource> getFunctions()
+    {
+        // list of agents
+        List<Resource> agents = new ArrayList<>();
+
+        // retrieve known individuals of SOHO:AutonomousAgent
+        List<Statement> list = this.listStatements(
+                null,
+                ProductionKnowledgeDictionary.RDF_NS + "type",
+                ProductionKnowledgeDictionary.SOHO_NS + "Function");
+
+        // get resources
+        for (Statement s : list) {
+            // add subject to the list
+            agents.add(s.getSubject());
+        }
+
+        // get the list
+        return agents;
+    }
+
+    /**
+     * The method reads the knowledge base to retrieve the list of
+     * functions a specific agent (i.e., individual of SOHO:AutonomousAgent)
+     * can perform.
+     *
+     * The method retrieves all known individuals of type SOHO:Function
+     * associated to the specified individual of SOHO:AutonomousAgent through
+     * the property SOHO:canBePerformedBy
+     *
+     * @return a list of resource of type SOHO:Function
+     */
+    public List<Resource> getFunctionsByAgent(Resource agent)
+    {
+        // list of agents
+        List<Resource> functions = new ArrayList<>();
+
+        // retrieve known individuals of SOHO:AutonomousAgent
+        List<Statement> list = this.listStatements(
+                null,
+                ProductionKnowledgeDictionary.SOHO_NS + "canBePerformedBy",
+                agent.getURI());
+
+        // get resources
+        for (Statement s : list) {
+            // add subject to the list
+            functions.add(s.getSubject());
+        }
+
+        // get the list
+        return functions;
+    }
+
+    /**
      * The method reads the knowledge base to retrieve production graphs associated
      * to a production goal.
      *
@@ -289,7 +409,7 @@ public class ProductionKnowledge
      * @throws throws an exception in case that the type of the parameter is wrong
      *
      */
-    public List<Map<Resource, Set<Resource>>> getProductionGraph(Resource pGoal)
+    public List<Map<Resource, List<Set<Resource>>>> getDecompositionGraph(Resource pGoal)
             throws Exception
     {
         // check parameter type
@@ -300,33 +420,321 @@ public class ProductionKnowledge
         }
         
         // set result data
-        List<Map<Resource, Set<Resource>>> result = new ArrayList<>();
+        List<Map<Resource, List<Set<Resource>>>> graphs = new ArrayList<>();
         // get methods associated to the production goal
-        List<Statement> stats = this.listStatements(
+        List<Statement> mStats = this.listStatements(
                 pGoal.getURI(),
-                ProductionKnowledgeDictionary.SOHO_NS + "hasPart",
+                ProductionKnowledgeDictionary.DUL_NS + "hasConstituent",
                 null);
 
         // extract production graphs
-        for (Statement s : stats)
+        for (Statement ms : mStats)
         {
-            // get statement's object
-            Resource method = s.getObject().asResource();
+            // get production method
+            Resource method = ms.getObject().asResource();
             // check if method
             if (this.hasResourceType(method, ProductionKnowledgeDictionary.SOHO_NS + "ProductionMethod"))
             {
-                // retrieve resource structure
-                Map<Resource, Set<Resource>> graph = this.retrieveResourceStructure(method);
-                // remove the entry associated to the method
-                graph.remove(method);
-                // add the graph to the result list
-                result.add(graph);
+                // prepare the graph associated to the method
+                Map<Resource, List<Set<Resource>>> mGraph = new HashMap<>();
+
+                // retrieve property
+                Property prop = this.getProperty(ProductionKnowledgeDictionary.DUL_NS + "hasConstituent");
+                Iterator<Statement> it = method.listProperties(prop);
+                // check statements and associated high-level tasks
+                while (it.hasNext())
+                {
+                    // get statement
+                    Statement s = it.next();
+                    // get associated high-level tasks
+                    Resource hTask = s.getObject().asResource();
+                    // check if production task
+                    if (this.hasResourceType(hTask, ProductionKnowledgeDictionary.SOHO_NS + "ProductionTask"))
+                    {
+                        // add data to the method-graph
+                        if (!mGraph.containsKey(hTask)) {
+                            // initialize data by associating a list of possible disjunctive decompositions
+                            mGraph.put(hTask, new ArrayList<Set<Resource>>());
+                        }
+
+                        // navigate the knowledge base to extract possible decompositions
+                        this.retrieveProductionTaskDecomposition(hTask, mGraph);
+                    }
+
+                }
+
+                // add method-related graph to the result
+                graphs.add(mGraph);
             }
         }
 
         // get result
-        return result;
+        return graphs;
     }
+
+    /**
+     * The method reads the knowledge base to retrieve the dependency structure
+     * of production processes associated to a give SOHO:ProductionGoal
+     *
+     * @param pGoal
+     * @return
+     * @throws Exception
+     */
+    public Map<Resource, Set<Resource>> getDependencyGraph(Resource pGoal)
+            throws Exception
+    {
+        // check parameter type
+        if (!this.hasResourceType(pGoal, ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal")) {
+            // wrong parameter type
+            throw new Exception("Wrong parameter type, a resource/individual of type <" + ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal> expected:" +
+                    "\n- received parameter " + pGoal.getLocalName() + " (" + pGoal.getURI() + ")");
+        }
+
+        // build dependency graph
+        Map<Resource, Set<Resource>> dGraph = new HashMap<>();
+        // get production graphs
+        List<Map<Resource, List<Set<Resource>>>> graphs = this.getDecompositionGraph(pGoal);
+        // check graphs
+        for (Map<Resource, List<Set<Resource>>> graph : graphs)
+        {
+            for (Resource key : graph.keySet())
+            {
+                // add key to the dependency graph
+                if (!dGraph.containsKey(key)) {
+                    dGraph.put(key, new HashSet<Resource>());
+                }
+
+                for (Set<Resource> subtasks : graph.get(key)) {
+                    for (Resource subtask : subtasks) {
+                        dGraph.get(key).add(subtask);
+                    }
+                }
+            }
+        }
+
+
+        // get dependency graph
+        return dGraph;
+    }
+
+    /**
+     * The method reads the knowledge base to extract the production hierarchy for a
+     * given production goal
+     * t
+     * @param pGoal
+     * @return
+     * @throws Exception
+     */
+    public List<List<Resource>> getProductionHierarchy(Resource pGoal)
+            throws Exception
+    {
+        // check parameter type
+        if (!this.hasResourceType(pGoal, ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal")) {
+            // wrong parameter type
+            throw new Exception("Wrong parameter type, a resource/individual of type <" + ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal> expected:" +
+                    "\n- received parameter " + pGoal.getLocalName() + " (" + pGoal.getURI() + ")");
+        }
+
+        // initialize the hierarchy
+        List<List<Resource>> hierarchy = new ArrayList<>();
+        // get production dependency
+        Map<Resource, Set<Resource>> graph = this.getDependencyGraph(pGoal);
+
+        // make a copy
+        Map<Resource, Set<Resource>> copy = new HashMap<>(graph);
+        // remove SOHO:Function from the graph to build the hierarchy
+        for (Resource task : copy.keySet())
+        {
+            // check type
+            if (this.hasResourceType(task, ProductionKnowledgeDictionary.SOHO_NS + "Function") &&
+                    copy.get(task).isEmpty())
+            {
+                // remove function
+                graph.remove(task);
+                for (Resource key : graph.keySet()) {
+                    // remove task from dependency
+                    graph.get(key).remove(task);
+                }
+            }
+        }
+
+        // invert the graph as an "incidence graph"
+        Map<Resource, Set<Resource>> iGraph = new HashMap<>();
+        // set of visited nodes
+        Set<Resource> visited = new HashSet<>();
+        for (Resource from : graph.keySet())
+        {
+            // add to visited
+            visited.add(from);
+            // check if leaf
+            for (Resource to : graph.get(from))
+            {
+                // add to visited
+                visited.add(to);
+                // update  incidence graph
+                if (!iGraph.containsKey(to)) {
+                    iGraph.put(to, new HashSet<Resource>());
+                }
+
+                // add entry
+                iGraph.get(to).add(from);
+            }
+        }
+
+        // add root nodes
+        for (Resource node : visited) {
+            // check if contained into the incidence graph
+            if (!iGraph.containsKey(node)) {
+                iGraph.put(node, new HashSet<Resource>());
+            }
+        }
+
+        // compute the hierarchy
+        return this.runTopologicalSort(iGraph);
+    }
+
+    /**
+     *
+     * @param dependencies
+     * @return
+     */
+    private List<List<Resource>> runTopologicalSort(Map<Resource, Set<Resource>> dependencies)
+    {
+        // make a copy of the data
+        Map<Resource, Set<Resource>> graph = new HashMap<>(dependencies);
+        // compute hierarchy through topological sort
+        List<Resource> S = new ArrayList<>();
+        for (Resource key : graph.keySet()) {
+            // check if root
+            if (graph.get(key).isEmpty()) {
+                S.add(key);
+            }
+        }
+
+        // initialize hierarchy
+        List<List<Resource>> hierarchy = new ArrayList<List<Resource>>();
+
+        // top hierarchical level
+        int hLevel = 0;
+        // start building the hierarchy
+        while (!S.isEmpty())
+        {
+            // get all root resources
+            for (Resource res : S)
+            {
+                // add root element
+                if (hierarchy.size() <= hLevel) {
+                    // add hierarchical level
+                    hierarchy.add(new ArrayList<Resource>());
+                }
+
+                // add the resource to the current hierarchical level
+                hierarchy.get(hLevel).add(res);
+                // remove the resource from the graph
+                graph.remove(res);
+                // remove "edges" to resource
+                for (Resource key : graph.keySet()) {
+                    graph.get(key).remove(res);
+                }
+            }
+
+            // clear the set of root nodes
+            S.clear();
+            // update hierarchical level
+            hLevel++;
+
+            // look for new roots
+            for (Resource key : graph.keySet()) {
+                // check if root
+                if (graph.get(key).isEmpty()) {
+                    S.add(key);
+                }
+            }
+        }
+
+
+        // get hierarchy
+        return hierarchy;
+    }
+
+    /**
+     * Retrieve possible decompositions of a given SOHO:ProductionTask
+     *
+     * @param task
+     * @param graph
+     */
+    private void retrieveProductionTaskDecomposition(Resource task, Map<Resource, List<Set<Resource>>> graph)
+    {
+        // get constituent property
+        Property prop = this.getProperty(ProductionKnowledgeDictionary.DUL_NS +  "hasConstituent");
+        // check if disjunctive task
+        if (this.hasResourceType(task, ProductionKnowledgeDictionary.SOHO_NS + "DisjunctiveComplexTask"))
+        {
+            // check (disjunctive) constituent resources
+            Iterator<Statement> it = task.listProperties(prop);
+            // check statements
+            while (it.hasNext())
+            {
+                // next statement
+                Statement s = it.next();
+                // get target resource
+                Resource subTask = s.getObject().asResource();
+                // check if SOHO:ProductionTask
+                if (this.hasResourceType(subTask, ProductionKnowledgeDictionary.SOHO_NS + "ProductionTask"))
+                {
+                    // create disjunction
+                    Set<Resource> disjunction = new HashSet<>();
+                    // add the subtask
+                    disjunction.add(subTask);
+                    graph.get(task).add(disjunction);
+
+                    // add sub-task to the graph
+                    if (!graph.containsKey(subTask)) {
+                        graph.put(subTask, new ArrayList<Set<Resource>>());
+                    }
+
+                    // recursively check disjunction decomposition
+                    this.retrieveProductionTaskDecomposition(subTask, graph);
+                }
+            }
+        }
+        else // complex (conjunctive) task, simple task or function
+        {
+            // prepare a set of subtask
+            Set<Resource> subTasks = new HashSet<>();
+
+            // check (conjunctive) constituent resources
+            Iterator<Statement> it = task.listProperties(prop);
+            // check statements
+            while (it.hasNext())
+            {
+                // next statement
+                Statement s = it.next();
+                // get target resource
+                Resource subTask = s.getObject().asResource();
+                // check if SOHO:ProductionTask
+                if (this.hasResourceType(subTask, ProductionKnowledgeDictionary.SOHO_NS + "ProductionTask"))
+                {
+                    // add task to the sub-tasks
+                    subTasks.add(subTask);
+                    // add sub-task to the graph
+                    if (!graph.containsKey(subTask)) {
+                        graph.put(subTask, new ArrayList<Set<Resource>>());
+                    }
+
+                    // check if not SOHO:Function and possible further decomposition
+                    if (!this.hasResourceType(subTask, ProductionKnowledgeDictionary.SOHO_NS + "Function")) {
+                        // recursively check sub-task decomposition
+                        this.retrieveProductionTaskDecomposition(subTask, graph);
+                    }
+                }
+            }
+
+            // add task decomposition
+            graph.get(task).add(subTasks);
+        }
+    }
+
 
     /**
      * This method recursively navigates the property DUL:hasConstituent to
