@@ -254,6 +254,43 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
         List<Resource> goals = this.knowledge.getProductionGoals();
         for (Resource goal : goals)
         {
+            // check if exists
+            if (!value2component.containsKey(goal)) {
+                throw new Exception("No component defined for predicate: " + goal.getLocalName() + "()");
+            }
+
+            // first connect goals to root nodes of the decomposition hierarchy
+            List<List<Resource>> hierarchy = this.knowledge.getProductionHierarchy(goal);
+            // get top-level
+            List<Resource> top = hierarchy.get(0);
+            // get goal component
+            String goalComp = value2component.get(goal);
+            // check if synchronization description has been opened
+            if (!comp2sync.containsKey(goalComp)) {
+                // open synchronization description
+                comp2sync.put(goalComp, "\tSYNCHRONIZE " + goalComp + " {\n\n");
+            }
+
+            // add goal synchronizations
+            for (Resource task : top)
+            {
+                // check if exists
+                if (!value2component.containsKey(task)) {
+                    throw new Exception("No component defined for predicate: " + task.getLocalName() + "()");
+                }
+
+                // get synchronization body
+                String body = comp2sync.get(goalComp);
+                // add synchronization constraints
+                body += "\t\tVALUE " + goal.getLocalName() + "() {\n\n" +
+                        "\t\t\td0 " + value2component.get(task) + "." + task.getLocalName() + "();\n" +
+                        "\t\t\tCONTAINS [0, +INF] [0, +INF] d0;\n" +
+                        "\t\t}\n\n";
+
+                // update description
+                comp2sync.put(goalComp, body);
+            }
+
             // get the decomposition graph
             List<Map<Resource, List<Set<Resource>>>> graphs = knowledge.getDecompositionGraph(goal);
             // check each possible decomposition - method
@@ -274,10 +311,10 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                     if (!graph.get(reference).isEmpty())
                     {
                         // check if HRC (simple) task
-                        if (knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "HRCTask"))
+                        if (this.knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "HRCTask"))
                         {
                             // check possible HRC task types
-                            if (knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "SimultaneousHRCTask")) {
+                            if (this.knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "SimultaneousHRCTask")) {
                                 // TODO simultaneous constraint
                             } else if (knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "SupportiveHRCTask")) {
                                 // TODO supportive constraint

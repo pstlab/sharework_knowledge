@@ -110,7 +110,21 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 	}
 
-	COMP_TYPE SingletonStateVariable ProductionHierarchyL0Type(r01(), r02(), h09(), h10(), h11(), h07(), h08(), h05(), h06(), h03(), h04(), h12(), h01(), h02(),  Idle()) {
+	COMP_TYPE SingletonStateVariable ProductionHierarchyL0Type(nissan-task(),  Idle()) {
+
+		VALUE Idle() [1, +INF]
+		MEETS {
+			nissan-task();
+		}
+
+		VALUE nissan-task() [1, +INF]
+		MEETS {
+			Idle();
+		}
+
+	}
+
+	COMP_TYPE SingletonStateVariable ProductionHierarchyL1Type(r01(), r02(), h09(), h10(), h11(), h07(), h08(), h05(), h06(), h03(), h04(), h12(), h01(), h02(),  Idle()) {
 
 		VALUE Idle() [1, +INF]
 		MEETS {
@@ -207,8 +221,45 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 	COMPONENT Worker {FLEXIBLE operations(primitive)} :  WorkerVariableType;
 	COMPONENT Cobot {FLEXIBLE tasks(primitive)} : CobotVariableType;
 	COMPONENT ProductionL0 {FLEXIBLE tasks_l0(primitive)} : ProductionHierarchyL0Type;
+	COMPONENT ProductionL1 {FLEXIBLE tasks_l1(primitive)} : ProductionHierarchyL1Type;
 
 	SYNCHRONIZE ProductionL0.tasks_l0 {
+
+		 VALUE nissan-task() {
+
+			d0 ProductionL1.tasks_l1.r01();
+			CONTAINS [0, +INF] [0, +INF] d0;
+			d1 ProductionL1.tasks_l1.r02();
+			CONTAINS [0, +INF] [0, +INF] d1;
+			d2 ProductionL1.tasks_l1.h09();
+			CONTAINS [0, +INF] [0, +INF] d2;
+			d3 ProductionL1.tasks_l1.h10();
+			CONTAINS [0, +INF] [0, +INF] d3;
+			d4 ProductionL1.tasks_l1.h11();
+			CONTAINS [0, +INF] [0, +INF] d4;
+			d5 ProductionL1.tasks_l1.h07();
+			CONTAINS [0, +INF] [0, +INF] d5;
+			d6 ProductionL1.tasks_l1.h08();
+			CONTAINS [0, +INF] [0, +INF] d6;
+			d7 ProductionL1.tasks_l1.h05();
+			CONTAINS [0, +INF] [0, +INF] d7;
+			d8 ProductionL1.tasks_l1.h06();
+			CONTAINS [0, +INF] [0, +INF] d8;
+			d9 ProductionL1.tasks_l1.h03();
+			CONTAINS [0, +INF] [0, +INF] d9;
+			d10 ProductionL1.tasks_l1.h04();
+			CONTAINS [0, +INF] [0, +INF] d10;
+			d11 ProductionL1.tasks_l1.h12();
+			CONTAINS [0, +INF] [0, +INF] d11;
+			d12 ProductionL1.tasks_l1.h01();
+			CONTAINS [0, +INF] [0, +INF] d12;
+			d13 ProductionL1.tasks_l1.h02();
+			CONTAINS [0, +INF] [0, +INF] d13;
+		}
+
+	}
+
+	SYNCHRONIZE ProductionL1.tasks_l1 {
 
 		VALUE r01() {
 
@@ -291,6 +342,16 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 		VALUE h01() {
 
 			d0 Worker.operations.connect-harness-frontdoor();
+			CONTAINS [0, +INF] [0, +INF] d0;
+		}
+
+	}
+
+	SYNCHRONIZE Goal.goals {
+
+		VALUE nissan-case() {
+
+			d0 ProductionL0.tasks_l0.nissan-task();
 			CONTAINS [0, +INF] [0, +INF] d0;
 		}
 
