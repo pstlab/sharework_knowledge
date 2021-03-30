@@ -20,20 +20,18 @@ public enum UpdateQueryType
             "create_individual",
             new String[] {
                     "\"class\": URI of the class/concept to be instantiate"
-            },
-            null),
+            }),
 
     /**
      * Update the knowledge by creating a new individual of a given class and
      * explicitly stating that the resource represents a different instances
      * with respect to its siblings
      */
-    CREATE_DISTINCT_INDIVIDUAL(
+    CREATE_UNIQUE_INDIVIDUAL(
             "create_distinct_individual",
             new String[] {
                     "\"class\": URI of the class/concept to be instantiate"
-            },
-            null),
+            }),
 
     /**
      * Update the knowledge by asserting a new property.
@@ -42,14 +40,13 @@ public enum UpdateQueryType
      *
      *              <subject> <property> <object>
      */
-    ASSERT_PROPERTY(
-            "assert_property",
+    ADD_ASSERTION(
+            "add_assertion",
             new String[] {
                     "\"subject\": URI of the reference/subject of the property",
                     "\"property\": URI of the property to assert",
                     "\"object\": URI of the object/target of the property"
-            },
-            null),
+            }),
 
     /**
      * Update the knowledge by removing an asserted property.
@@ -58,29 +55,25 @@ public enum UpdateQueryType
      *
      *              <subject> <property> <object>
      */
-    DELETE_PROPERTY(
-            "delete_property",
+    REMOVE_ASSERTION(
+            "remove_assertion",
             new String[] {
                     "\"subject\": URI of the reference/subject of the property",
                     "\"property\": URI of the property to assert",
                     "\"object\": URI of the object/target of the property"
-            },
-            null);
+            });
 
     private String label;
     private String[] params;
-    private Class hClass;
 
     /**
      *
      * @param label
      * @param params
-     * @param hClass
      */
-    private UpdateQueryType(String label, String[] params, Class hClass) {
+    private UpdateQueryType(String label, String[] params) {
         this.label = label;
         this.params = params;
-        this.hClass = hClass;
     }
 
     /**
@@ -97,14 +90,6 @@ public enum UpdateQueryType
      */
     public String[] getParameters() {
         return this.params;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Class getHandlerClass() {
-        return hClass;
     }
 
     /**

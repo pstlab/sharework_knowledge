@@ -207,7 +207,7 @@ public class ProductionKnowledge
      * @return
      * @throws Exception
      */
-    public Resource createDistinctIndividual(String classUri)
+    public Resource createUniqueIndividual(String classUri)
             throws Exception
     {
         // individual
@@ -298,7 +298,7 @@ public class ProductionKnowledge
      * @return
      * @throws Exception
      */
-    public Statement assertProperty(String referenceUri, String propertyUri, String objectUri)
+    public Statement addAssertion(String referenceUri, String propertyUri, String objectUri)
             throws Exception
     {
         // check if property exists
@@ -324,7 +324,7 @@ public class ProductionKnowledge
      * @param objectUri
      * @return
      */
-    public List<Statement> deleteProperty(String referenceUri, String propertyUri, String objectUri)
+    public List<Statement> removeAssertion(String referenceUri, String propertyUri, String objectUri)
     {
         // list of statements
         List<Statement> list = new ArrayList<>();

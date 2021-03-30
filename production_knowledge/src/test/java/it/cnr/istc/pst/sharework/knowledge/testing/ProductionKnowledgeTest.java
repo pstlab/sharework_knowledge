@@ -8,7 +8,6 @@ import org.apache.jena.rdf.model.Statement;
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.swing.plaf.nimbus.State;
 import java.util.*;
 
 /**
@@ -259,7 +258,7 @@ public class ProductionKnowledgeTest
             // check number of known agents
             List<Resource> agents = knowledge.getAgents();
             // create an individual of class SOHO:Cobot
-            Resource cobot = knowledge.createDistinctIndividual(ProductionKnowledgeDictionary.SOHO_NS + "Cobot");
+            Resource cobot = knowledge.createUniqueIndividual(ProductionKnowledgeDictionary.SOHO_NS + "Cobot");
             Assert.assertNotNull(cobot);
             System.out.println("> " + (cobot.getLocalName() == null ? "blank-node" : cobot.getLocalName()) + " (" + (cobot.getURI() == null ? cobot.asNode().getBlankNodeLabel() : cobot.getURI()) + ")");
 
@@ -281,12 +280,12 @@ public class ProductionKnowledgeTest
             Assert.assertTrue(funcs.isEmpty());
 
             // create and individual of class SOHO:PickPlace
-            Resource function = knowledge.createDistinctIndividual(ProductionKnowledgeDictionary.SOHO_NS + "PickPlace");
+            Resource function = knowledge.createUniqueIndividual(ProductionKnowledgeDictionary.SOHO_NS + "PickPlace");
             Assert.assertNotNull(function);
             System.out.println("> " + (function.getLocalName() == null ? "blank-node" : function.getLocalName()) + " (" + (function.getURI() == null ? function.asNode().getBlankNodeLabel() : function.getURI()) + ")");
 
             // assert property
-            Statement stat = knowledge.assertProperty(
+            Statement stat = knowledge.addAssertion(
                     function.getURI() == null ? function.asNode().getBlankNodeLabel() : function.getURI(),
                     ProductionKnowledgeDictionary.SOHO_NS + "canBePerformedBy",
                     cobot.getURI() == null ? cobot.asNode().getBlankNodeLabel() : cobot.getURI());
