@@ -56,6 +56,12 @@ public class KnowledgeService extends AbstractNodeMain
                 "/sharework/knowledge/endpoint/triple",
                 KnowledgeServiceTripleResponseBuilder.getServiceType(),
                 new KnowledgeServiceTripleResponseBuilder(this.log, this.knowledge, connectedNode));
+
+        // create service instance for the update of the knowledge base
+        connectedNode.newServiceServer(
+                "sharework/knowledge/endpoint/update",
+                KnowledgeUpdateServiceResponseBuilder.getServiceType(),
+                new KnowledgeUpdateServiceResponseBuilder(this.log, this.knowledge, connectedNode));
     }
 
     /**

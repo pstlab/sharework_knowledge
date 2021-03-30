@@ -14,6 +14,7 @@ import javafx.animation.Timeline;
 public class MosaicPlanningTest
 {
     private static final String ONTOLOGY_PATH = ProductionKnowledge.SHAREWORK_KNOWLEDGE +  "etc/ontologies/soho_mosaic_v0.4.owl";
+    private static final String RULE_PATH = ProductionKnowledge.SHAREWORK_KNOWLEDGE +  "etc/ontologies/soho_rules_v1.0.rules";
     private static final String PDL = ProductionKnowledge.SHAREWORK_KNOWLEDGE +  "gen/mosaic.pdl";
 
     /**
@@ -26,7 +27,7 @@ public class MosaicPlanningTest
         {
             TimelineBasedProductionKnowledgeAuthoring authoring = new TimelineBasedProductionKnowledgeAuthoring(PDL);
             // load knowledge base
-            authoring.setProductionKnowledge(ONTOLOGY_PATH);
+            authoring.setProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
             // get plan database
             PlanDataBase pdb = authoring.compileAndValidate();
 

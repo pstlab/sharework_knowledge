@@ -19,6 +19,7 @@ public class NissanAuthoringTest
 {
     // get a reference to the knowledge
     private static final String ONTOLOGY_PATH = ProductionKnowledge.SHAREWORK_KNOWLEDGE +  "etc/ontologies/soho_nissan_v0.1.owl";
+    private static final String RULE_PATH = ProductionKnowledge.SHAREWORK_KNOWLEDGE +  "etc/ontologies/soho_rules_v1.0.rules";
 
     /**
      *
@@ -73,7 +74,7 @@ public class NissanAuthoringTest
         System.out.println("***** Test: goalStateVariablesTest() *****");
 
         // create production knowledge
-        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH);
+        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
         Assert.assertNotNull(knowledge);
         try
         {
@@ -109,7 +110,7 @@ public class NissanAuthoringTest
         System.out.println("***** Test: agentFunctionsVariablesTest() *****");
 
         // create production knowledge
-        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH);
+        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
         Assert.assertNotNull(knowledge);
         try
         {
@@ -161,7 +162,7 @@ public class NissanAuthoringTest
         System.out.println("***** Test: productionVariablesTest() *****");
 
         // create production knowledge
-        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH);
+        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
         Assert.assertNotNull(knowledge);
         try
         {
@@ -204,7 +205,7 @@ public class NissanAuthoringTest
         System.out.println("***** Test: componentTest() *****");
 
         // create production knowledge
-        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH);
+        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
         Assert.assertNotNull(knowledge);
         try
         {
@@ -260,7 +261,7 @@ public class NissanAuthoringTest
         System.out.println("***** Test: synchronizationTest() *****");
 
         // create production knowledge
-        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH);
+        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
         Assert.assertNotNull(knowledge);
         try
         {
@@ -377,7 +378,7 @@ public class NissanAuthoringTest
         try
         {
             // load knowledge base
-            authoring.setProductionKnowledge(ONTOLOGY_PATH);
+            authoring.setProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
             // get model
             String ddl = authoring.compile();
             System.out.println("Complied timeline-based planning model:\n\n" +
@@ -419,7 +420,7 @@ public class NissanAuthoringTest
         try
         {
             // load knowledge base
-            authoring.setProductionKnowledge(ONTOLOGY_PATH);
+            authoring.setProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
             // get data structure
             PlanDataBase pdb = authoring.compileAndValidate();
             Assert.assertNotNull(pdb);

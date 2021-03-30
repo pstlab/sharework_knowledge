@@ -20,9 +20,10 @@ public abstract class ProductionKnowledgeAuthoring
     /**
      *
      * @param ontoPath
+     * @param rulePath
      */
-    public void setProductionKnowledge(String ontoPath) {
-        this.knowledge = new ProductionKnowledge(ontoPath);
+    public void setProductionKnowledge(String ontoPath, String rulePath) {
+        this.knowledge = new ProductionKnowledge(ontoPath, rulePath);
     }
 
     /**

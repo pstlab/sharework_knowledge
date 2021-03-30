@@ -1,11 +1,11 @@
 package it.cnr.istc.pst.sharework.knowledge;
 
-import org.apache.jena.ontology.Individual;
-import org.apache.jena.ontology.OntModel;
-import org.apache.jena.ontology.OntModelSpec;
+import org.apache.jena.ontology.*;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.reasoner.rulesys.GenericRuleReasoner;
 import org.apache.jena.reasoner.rulesys.Rule;
+import org.apache.jena.util.iterator.ExtendedIterator;
+
 import java.util.*;
 
 /**
@@ -30,20 +30,24 @@ public class ProductionKnowledge
      * OWL semantics (OWLMicro) to refine the internal knowledge graph.
      *
      * @param ontoFile
+     * @param rulePath
      */
-    public ProductionKnowledge(String ontoFile)
+    public ProductionKnowledge(String ontoFile, String rulePath)
     {
         // set ontology file
         this.ontoFile = ontoFile;
-        this.ruleFile = SHAREWORK_KNOWLEDGE + "etc/soho_rules_v1.0.rules";
+        this.ruleFile = rulePath;
 
         // create an ontological model from SOHO
         this.ontoModel = ModelFactory.createOntologyModel(
-                OntModelSpec.RDFS_MEM_TRANS_INF
+                OntModelSpec.OWL_DL_MEM                             // support "diff" statements
+                //OntModelSpec.RDFS_MEM_TRANS_INF
         );
 
         // use DocumentManager API to specify that onto is replicated locally on disk
-        this.ontoModel.getDocumentManager().addAltEntry(ProductionKnowledgeDictionary.SOHO_NS.get(), "file:" + this.ontoFile);
+        this.ontoModel.getDocumentManager().addAltEntry(
+                ProductionKnowledgeDictionary.SOHO_NS.get(),
+                "file:" + this.ontoFile);
         // actually load the ontology
         this.ontoModel.read(ProductionKnowledgeDictionary.SOHO_NS.get());
 
@@ -67,7 +71,8 @@ public class ProductionKnowledge
      */
     public ProductionKnowledge() {
         // set default ontology model
-        this(SHAREWORK_KNOWLEDGE + "etc/soho_core_v1.owl");
+        this(SHAREWORK_KNOWLEDGE + "etc/ontologies/soho_core_v1.owl",
+                SHAREWORK_KNOWLEDGE + "etc/ontologies/soho_rules_v1.0.rules");
     }
 
     /**
@@ -78,24 +83,71 @@ public class ProductionKnowledge
      * @return
      * @throws Exception
      */
-    public List<Resource> getIndividuals(String classURI)
+    public List<Resource> getInstances(String classURI)
             throws Exception
     {
        // list of individuals
        List<Resource> list = new ArrayList<>();
        // get resource associated the class URI
-       Resource c = this.infModel.getResource(classURI);
-       if (c == null) {
-           throw new Exception("No class found with URI= " + classURI + "\n");
+       Resource c = ResourceFactory.createResource(classURI);
+       // check if the model contains the resource
+       if (!this.ontoModel.containsResource(c)) {
+           // class not existing
+           throw new Exception("No class found with URI  \"" + classURI + "\"");
+       }
+       else {
+           // update the resource
+           c = this.ontoModel.getResource(classURI);
        }
 
-       // TODO : check individuals from infModel instead of ontoModel
-       Iterator<Individual> it = this.ontoModel.listIndividuals(c);
+       // get property
+        Property prop = this.ontoModel.getProperty(ProductionKnowledgeDictionary.RDF_NS + "type");
+       // check all resources of the specified type
+       Iterator<Statement> it = this.infModel.listStatements(null, prop, c);
+        // check statements
        while (it.hasNext()) {
-           list.add(it.next());
+           // next statement
+           Statement s = it.next();
+           // get statement's subject
+           list.add(s.getSubject());
        }
 
        // get the list
+        return list;
+    }
+
+    /**
+     *
+     * @param classURI
+     * @return
+     * @throws Exception
+     */
+    public List<Individual> getIndividuals(String classURI)
+            throws Exception
+    {
+        // list of individuals
+        List<Individual> list = new ArrayList<>();
+        // get resource associated the class URI
+        Resource c = ResourceFactory.createResource(classURI);
+        // check if the model contains the resource
+        if (!this.ontoModel.containsResource(c)) {
+            // class not existing
+            throw new Exception("No class found with URI  \"" + classURI + "\"");
+        }
+        else {
+            // update the resource
+            c = this.ontoModel.getResource(classURI);
+        }
+
+        // list individual of a given class
+        Iterator<Individual> it = this.ontoModel.listIndividuals(c);
+        // check statements
+        while (it.hasNext()) {
+            // get next individual
+            list.add(it.next());
+        }
+
+        // get the list
         return list;
     }
 
@@ -118,6 +170,195 @@ public class ProductionKnowledge
     {
         // retrieve the property from the model
         return this.ontoModel.getProperty(uri);
+    }
+
+    /**
+     *
+     * @param classUri
+     * @return
+     * @throws Exception
+     */
+    public Resource createIndividual(String classUri)
+            throws Exception
+    {
+        // individual
+        Resource ind = null;
+        // create resource
+        Resource rClass = ResourceFactory.createResource(classUri);
+        // check if the ontology model contains the resource
+        if (this.ontoModel.containsResource(rClass))
+        {
+            // create a new individual of the class
+            ind = this.ontoModel.createIndividual(
+                    this.ontoModel.getResource(classUri)).asResource();
+        }
+        else {
+            // invalid parameter
+            throw new Exception("Unknown resource with URI \"" + classUri + "\"");
+        }
+
+        // get individual
+        return ind;
+    }
+
+    /**
+     *
+     * @param classUri
+     * @return
+     * @throws Exception
+     */
+    public Resource createDistinctIndividual(String classUri)
+            throws Exception
+    {
+        // individual
+        Resource ind = null;
+        // create resource
+        Resource rClass = ResourceFactory.createResource(classUri);
+        // check if the ontology model contains the resource
+        if (this.ontoModel.containsResource(rClass))
+        {
+            // create a new individual of the class
+            ind = this.ontoModel.createIndividual(
+                    this.ontoModel.getResource(classUri)).asResource();
+        }
+        else {
+            // invalid parameter
+            throw new Exception("Unknown resource with URI \"" + classUri + "\"");
+        }
+
+        // set different from siblings
+        this.setDifferentFromSiblings(ind);
+        // get individual
+        return ind;
+    }
+
+    /**
+     *
+     * @param res
+     * @throws Exception
+     */
+    public void setDifferentFromSiblings(Resource res)
+            throws Exception
+    {
+        // get resource as individual
+        Individual i = this.ontoModel.getResource(
+                // check blank node
+                res.getURI() == null ? res.asNode().getBlankNodeLabel() : res.getURI()).as(Individual.class);
+
+        // get resource type
+        Statement s = res.getProperty(this.ontoModel.getProperty(
+                ProductionKnowledgeDictionary.RDF_NS + "type"));
+        // get type
+        Resource rClass = s.getObject().asResource();
+        // get all instances
+        List<Resource> siblings = this.getInstances(rClass.getURI());
+        // set different
+        for (Resource sibling : siblings) {
+            if (!sibling.equals(res)) {
+                // set as different individuals
+                i.addDifferentFrom(sibling);
+            }
+        }
+
+        // rebind inference model
+        this.infModel.rebind();
+    }
+
+    /**
+     *
+     * @param res
+     * @param others
+     * @throws Exception
+     */
+    public void setDifferentFromResources(Resource res, List<Resource> others)
+            throws Exception
+    {
+        // get resource as individual
+        Individual i = this.ontoModel.getResource(
+                // check blank nodes
+                res.getURI() == null ? res.asNode().getBlankNodeLabel() : res.getURI()).as(Individual.class);
+
+        // set different
+        for (Resource other : others) {
+            if (!other.equals(res)) {
+                // set as different individuals
+                i.addDifferentFrom(other);
+            }
+        }
+
+        // rebind inference model
+        this.infModel.rebind();
+    }
+
+    /**
+     *
+     * @param referenceUri
+     * @param propertyUri
+     * @param objectUri
+     * @return
+     * @throws Exception
+     */
+    public Statement assertProperty(String referenceUri, String propertyUri, String objectUri)
+            throws Exception
+    {
+        // check if property exists
+        Property prop = this.infModel.getProperty(propertyUri);
+
+        // check if reference resource exists
+        Resource ref = this.infModel.getResource(referenceUri);
+        // check if object resource exists
+        Resource obj = this.infModel.getResource(objectUri);
+
+        // create statement
+        Statement stat = this.infModel.createStatement(ref, prop, obj);
+        // assert/add the statement
+        this.infModel.add(stat);
+        // get created statement
+        return stat;
+    }
+
+    /**
+     *
+     * @param referenceUri
+     * @param propertyUri
+     * @param objectUri
+     * @return
+     */
+    public List<Statement> deleteProperty(String referenceUri, String propertyUri, String objectUri)
+    {
+        // list of statements
+        List<Statement> list = new ArrayList<>();
+        // check if property exists
+        Property prop = this.infModel.getProperty(propertyUri);
+
+        // check if reference resource exists
+        Resource ref = this.infModel.getResource(referenceUri);
+        // check if object resource exists
+        Resource obj = this.infModel.getResource(objectUri);
+
+        // get statements
+        StmtIterator it = this.infModel.listStatements(
+                ref,
+                prop,
+                obj);
+        // get statements to remove
+        while (it.hasNext()) {
+            // get statement
+            Statement s = it.next();
+            // get next
+            list.add(s);
+            // remove statement
+            this.infModel.remove(s);
+        }
+
+        // create statement
+        Statement stat = this.infModel.createStatement(ref, prop, obj);
+        // assert/add the statement
+        this.infModel.add(stat);
+
+
+        // get the list of statements
+        return list;
     }
 
     /**
@@ -177,7 +418,10 @@ public class ProductionKnowledge
         Property rdfType = this.getProperty(ProductionKnowledgeDictionary.RDF_NS + "type");
         // get all types
         List<Statement> list = this.listStatements(
-                resource.getURI(), rdfType.getURI(), null);
+                // check blank node
+                resource.getURI() == null ? resource.asNode().getBlankNodeLabel() : resource.getURI(),
+                rdfType.getURI(),
+                null);
         // check statements
         for (Statement s : list)
         {
@@ -383,7 +627,8 @@ public class ProductionKnowledge
         List<Statement> list = this.listStatements(
                 null,
                 ProductionKnowledgeDictionary.SOHO_NS + "canBePerformedBy",
-                agent.getURI());
+                // check blank node
+                agent.getURI()  == null ? agent.asNode().getBlankNodeLabel() : agent.getURI());
 
         // get resources
         for (Statement s : list) {
@@ -423,7 +668,8 @@ public class ProductionKnowledge
         List<Map<Resource, List<Set<Resource>>>> graphs = new ArrayList<>();
         // get methods associated to the production goal
         List<Statement> mStats = this.listStatements(
-                pGoal.getURI(),
+                // check blank node
+                pGoal.getURI() == null ? pGoal.asNode().getBlankNodeLabel() : pGoal.getURI(),
                 ProductionKnowledgeDictionary.DUL_NS + "hasConstituent",
                 null);
 
@@ -752,7 +998,12 @@ public class ProductionKnowledge
         Property hasConstituent = this.getProperty(ProductionKnowledgeDictionary.DUL_NS + "hasConstituent");
 
         // retrieve elements
-        List<Statement> list = this.listStatements(resource.getURI(), hasConstituent.getURI(), null);
+        List<Statement> list = this.listStatements(
+                // check blank node
+                resource.getURI() == null ? resource.asNode().getBlankNodeLabel() : resource.getURI(),
+                hasConstituent.getURI(),
+                null);
+
         // check results
         if (list == null || list.isEmpty()) {
             // stop recursive call

@@ -13,6 +13,7 @@ import it.cnr.istc.pst.sharework.knowledge.authoring.hrc.ftl.TimelineBasedProduc
 public class NissanPlanningTest
 {
     private static final String ONTOLOGY_PATH = ProductionKnowledge.SHAREWORK_KNOWLEDGE +  "etc/ontologies/soho_nissan_v0.1.owl";
+    private static final String RULE_PATH = ProductionKnowledge.SHAREWORK_KNOWLEDGE +  "etc/ontologies/soho_rules_v1.0.rules";
     private static final String PDL = ProductionKnowledge.SHAREWORK_KNOWLEDGE +  "gen/nissan.pdl";
 
     /**
@@ -25,7 +26,7 @@ public class NissanPlanningTest
         {
             TimelineBasedProductionKnowledgeAuthoring authoring = new TimelineBasedProductionKnowledgeAuthoring(PDL);
             // load knowledge base
-            authoring.setProductionKnowledge(ONTOLOGY_PATH);
+            authoring.setProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
             // get plan database
             PlanDataBase pdb = authoring.compileAndValidate();
 

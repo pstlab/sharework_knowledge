@@ -25,7 +25,10 @@ public class KnowledgeServiceTripleResponseBuilder implements ServiceResponseBui
      * @param log
      * @param knowledge
      */
-    protected KnowledgeServiceTripleResponseBuilder(Log log, ProductionKnowledge knowledge, ConnectedNode node) {
+    protected KnowledgeServiceTripleResponseBuilder(Log log,
+                                                    ProductionKnowledge knowledge,
+                                                    ConnectedNode node)
+    {
         this.log = log;
         this.knowledge = knowledge;
         this.cNode = node;
@@ -40,13 +43,14 @@ public class KnowledgeServiceTripleResponseBuilder implements ServiceResponseBui
     }
 
     /**
-     *
+     *s
      * @param request
      * @param response
      * @throws ServiceException
      */
     @Override
-    public void build(sharework_knowledge_msgs.KnowledgeRDFTripleEndPointRequest request, sharework_knowledge_msgs.KnowledgeRDFTripleEndPointResponse response)
+    public void build(sharework_knowledge_msgs.KnowledgeRDFTripleEndPointRequest request,
+                      sharework_knowledge_msgs.KnowledgeRDFTripleEndPointResponse response)
             throws ServiceException
     {
         // set response

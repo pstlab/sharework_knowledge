@@ -8,6 +8,7 @@ import org.apache.jena.rdf.model.Statement;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.swing.plaf.nimbus.State;
 import java.util.*;
 
 /**
@@ -17,14 +18,22 @@ import java.util.*;
  */
 public class ProductionKnowledgeTest
 {
+    // get a reference to the knowledge
+    private static final String ONTOLOGY_PATH = ProductionKnowledge.SHAREWORK_KNOWLEDGE +  "etc/ontologies/soho_nissan_v0.1.owl";
+    private static final String RULE_PATH = ProductionKnowledge.SHAREWORK_KNOWLEDGE +  "etc/ontologies/soho_rules_v1.0.rules";
+
+
     /**
      * Test production knowledge initialization and extraction of statements
      */
     @Test
     public void createProductionKnowledgeTest()
     {
+        System.out.println("*********************************************");
+        System.out.println("***** Test: createProductionKnowledgeTest() *****");
+
         // create production knowledge
-        ProductionKnowledge knowledge = new ProductionKnowledge();
+        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
         Assert.assertNotNull(knowledge);
 
         // list statements
@@ -38,9 +47,10 @@ public class ProductionKnowledgeTest
         for (Statement s : list) {
             // check statement
             Assert.assertNotNull(s);
-            // print statement
-            System.out.println(s);
         }
+
+        // close test
+        System.out.println("*********************************************");
     }
 
     /**
@@ -49,20 +59,19 @@ public class ProductionKnowledgeTest
     @Test
     public void checkIndividualAndStructuresTest()
     {
-        // set ontological model
-        String ontoModel = ProductionKnowledge.SHAREWORK_KNOWLEDGE + "etc/soho_demo_v1.1.owl";
+        System.out.println("*********************************************");
+        System.out.println("***** Test: checkIndividualAndStructuresTest() *****");
 
         // create production knowledge
-        ProductionKnowledge knowledge = new ProductionKnowledge(ontoModel);
+        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
         Assert.assertNotNull(knowledge);
         try
         {
             // get instances of simple tasks
-            List<Resource> list = knowledge.getIndividuals(ProductionKnowledgeDictionary.SOHO_NS + "SimpleTask");
+            List<Resource> list = knowledge.getInstances(ProductionKnowledgeDictionary.SOHO_NS + "SimpleTask");
             // check list of individuals
             Assert.assertNotNull(list);
             Assert.assertFalse(list.isEmpty());
-            Assert.assertTrue(list.size() == 5);        // all the do_row_x tasks
             // print extracted individuals
             for (Resource r : list) {
                 // check resource
@@ -73,6 +82,11 @@ public class ProductionKnowledgeTest
         catch(Exception ex) {
             System.err.println(ex.getMessage());
         }
+        finally
+        {
+            // close test
+            System.out.println("*********************************************");
+        }
     }
 
     /**
@@ -81,20 +95,20 @@ public class ProductionKnowledgeTest
     @Test
     public void checkProductionGoalStructureTest()
     {
-        // set ontological model
-        String ontoModel = ProductionKnowledge.SHAREWORK_KNOWLEDGE + "etc/soho_demo_v1.1.owl";
+        System.out.println("*********************************************");
+        System.out.println("***** Test: checkProductionGoalStructureTest() *****");
 
         // create production knowledge
-        ProductionKnowledge knowledge = new ProductionKnowledge(ontoModel);
+        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
         Assert.assertNotNull(knowledge);
         try
         {
             // get instances of production goals
-            List<Resource> goals = knowledge.getIndividuals(ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal");
+            List<Resource> goals = knowledge.getInstances(ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal");
             // check list of individuals
             Assert.assertNotNull(goals);
             Assert.assertFalse(goals.isEmpty());
-            Assert.assertTrue(goals.size() == 1);        // the hrc_mosaic production goal
+            Assert.assertTrue(goals.size() == 1);
             // print extracted individuals
             for (Resource g : goals)
             {
@@ -103,14 +117,14 @@ public class ProductionKnowledgeTest
                 System.out.println("ProductionGoal: " + g.getLocalName() + " (" + g.getURI() + ")");
 
                 // get property
-                Property hasPart = knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "hasPart");
-                Assert.assertNotNull(hasPart);
+                Property hasConstituent = knowledge.getProperty(ProductionKnowledgeDictionary.DUL_NS + "hasConstituent");
+                Assert.assertNotNull(hasConstituent);
 
                 // check associated production methods
                 List<Statement> mlist = knowledge.listStatements(
-                        g.getURI(), hasPart.getURI(), null);
+                        g.getURI(), hasConstituent.getURI(), null);
                 Assert.assertNotNull(mlist);
-                Assert.assertTrue(mlist.size() == 1);       // only one decomposition method expected
+                Assert.assertTrue(mlist.size() == 1);
                 for (Statement ms : mlist)
                 {
                     // get the method
@@ -158,7 +172,6 @@ public class ProductionKnowledgeTest
 
                     // check extracted information
                     Assert.assertFalse(ctasks.isEmpty());
-                    Assert.assertTrue(ctasks.size() == 1);
                     // print complex tasks
                     System.out.println("\tComplex tasks");
                     for (Resource ctask : ctasks) {
@@ -166,7 +179,6 @@ public class ProductionKnowledgeTest
                     }
 
                     Assert.assertFalse(stasks.isEmpty());
-                    Assert.assertTrue(stasks.size() == 5);
                     // print simple tasks
                     System.out.println("\t\tSimple tasks");
                     for (Resource stask : stasks) {
@@ -182,7 +194,6 @@ public class ProductionKnowledgeTest
 
                     // only the method is expected in this set
                     Assert.assertFalse(unks.isEmpty());
-                    Assert.assertTrue(unks.size() == 1);
                     Assert.assertTrue(new ArrayList<>(unks).get(0).equals(method));
                 }
             }
@@ -190,6 +201,11 @@ public class ProductionKnowledgeTest
         catch(Exception ex) {
             System.err.println(ex.getMessage());
             Assert.assertTrue(false);
+        }
+        finally
+        {
+            // close test
+            System.out.println("*********************************************");
         }
     }
 
@@ -200,11 +216,11 @@ public class ProductionKnowledgeTest
     @Test
     public void getProductionGoalsTest()
     {
-        // set ontological model
-        String ontoModel = ProductionKnowledge.SHAREWORK_KNOWLEDGE+ "etc/soho_demo_v1.1.owl";
+        System.out.println("*********************************************");
+        System.out.println("***** Test: getProductionGoalsTest() *****");
 
         // create production knowledge
-        ProductionKnowledge knowledge = new ProductionKnowledge(ontoModel);
+        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
         Assert.assertNotNull(knowledge);
         try
         {
@@ -218,92 +234,74 @@ public class ProductionKnowledgeTest
             // print error message
             System.err.println(ex.getMessage());
             Assert.assertTrue(false);
+        }
+        finally
+        {
+            // close test
+            System.out.println("*********************************************");
         }
     }
 
     /**
-     * Test the extraction of production graphs associated to production goals
      *
      */
     @Test
-    public void getProductionGraphsTest()
+    public void createIndividualTest()
     {
-        // set ontological model
-        String ontoModel = ProductionKnowledge.SHAREWORK_KNOWLEDGE + "etc/soho_demo_v1.1.owl";
+        System.out.println("*********************************************");
+        System.out.println("***** Test: createIndividualTest() *****");
 
         // create production knowledge
-        ProductionKnowledge knowledge = new ProductionKnowledge(ontoModel);
+        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
         Assert.assertNotNull(knowledge);
         try
         {
-            // get the goals
-            List<Resource> goals = knowledge.getProductionGoals();
-            Assert.assertNotNull(goals);
-            Assert.assertFalse(goals.isEmpty());
-            Assert.assertTrue(goals.size() == 1);
+            // check number of known agents
+            List<Resource> agents = knowledge.getAgents();
+            // create an individual of class SOHO:Cobot
+            Resource cobot = knowledge.createDistinctIndividual(ProductionKnowledgeDictionary.SOHO_NS + "Cobot");
+            Assert.assertNotNull(cobot);
+            System.out.println("> " + (cobot.getLocalName() == null ? "blank-node" : cobot.getLocalName()) + " (" + (cobot.getURI() == null ? cobot.asNode().getBlankNodeLabel() : cobot.getURI()) + ")");
 
-            // get the only production goal expected
-            Resource goal = goals.get(0);
-            // get production graphs
-            List<Map<Resource, List<Set<Resource>>>> graphs = knowledge.getDecompositionGraph(goal);
-            Assert.assertNotNull(graphs);
-            Assert.assertFalse(graphs.isEmpty());
-            // only one production graph expected
-            Assert.assertTrue(graphs.size() == 1);
 
-            // get the only graph expected
-            Map<Resource, List<Set<Resource>>> graph = graphs.get(0);
-            // get set of tasks
-            Set<Resource> tasks = graph.keySet();
-            Assert.assertNotNull(tasks);
-            Assert.assertFalse(tasks.isEmpty());
-            // list of complex tasks
-            List<Resource> ctasks = new ArrayList<>();
-            // list of simple tasks
-            List<Resource> stasks = new ArrayList<>();
-            // list of functions
-            List<Resource> funcs = new ArrayList<>();
-            // check structure
-            for (Resource task : tasks)
-            {
-                // check type
-                if (knowledge.hasResourceType(task, ProductionKnowledgeDictionary.SOHO_NS + "ComplexTask")) {
-                    // complex task
-                    ctasks.add(task);
-                }
-                else if (knowledge.hasResourceType(task, ProductionKnowledgeDictionary.SOHO_NS + "SimpleTask")) {
-                    // simple tasks
-                    stasks.add(task);
-                }
-                else if (knowledge.hasResourceType(task, ProductionKnowledgeDictionary.SOHO_NS + "Function")) {
-                    // function
-                    funcs.add(task);
-                }
-                else {
-                    // no task expected
-                    Assert.assertFalse(true);
-                }
+            // check again the list of agents
+            agents = knowledge.getAgents();
+            Assert.assertNotNull(agents);
+            Assert.assertFalse(agents.isEmpty());
+            Assert.assertTrue(agents.size() == 3);
+            System.out.println("Known agents (" + agents.size() + ")");
+            for (Resource agent : agents) {
+                // print known agent
+                System.out.println("\t> " + agent + "");
             }
 
-            // check retrieved data
-            Assert.assertFalse(ctasks.isEmpty());
-            Assert.assertTrue(ctasks.size() == 1);
-            Assert.assertFalse(stasks.isEmpty());
-            Assert.assertTrue(stasks.size() == 5);
+            // check cobot's functions
+            List<Resource> funcs = knowledge.getFunctionsByAgent(cobot);
+            Assert.assertNotNull(funcs);
+            Assert.assertTrue(funcs.isEmpty());
+
+            // create and individual of class SOHO:PickPlace
+            Resource function = knowledge.createDistinctIndividual(ProductionKnowledgeDictionary.SOHO_NS + "PickPlace");
+            Assert.assertNotNull(function);
+            System.out.println("> " + (function.getLocalName() == null ? "blank-node" : function.getLocalName()) + " (" + (function.getURI() == null ? function.asNode().getBlankNodeLabel() : function.getURI()) + ")");
+
+            // assert property
+            Statement stat = knowledge.assertProperty(
+                    function.getURI() == null ? function.asNode().getBlankNodeLabel() : function.getURI(),
+                    ProductionKnowledgeDictionary.SOHO_NS + "canBePerformedBy",
+                    cobot.getURI() == null ? cobot.asNode().getBlankNodeLabel() : cobot.getURI());
+            Assert.assertNotNull(stat);
+            System.out.println(stat);
+
+
+            // check again cobot's functions
+            funcs = knowledge.getFunctionsByAgent(cobot);
+            Assert.assertNotNull(funcs);
             Assert.assertFalse(funcs.isEmpty());
-            Assert.assertTrue(funcs.size() > 1);
-
-
-            try
-            {
-                // check behavior in case of wrong parameter
-                knowledge.getDecompositionGraph(ctasks.get(0));
-                // error
-                Assert.assertTrue(false);
-            }
-            catch (Exception ex) {
-                // error expected
-                Assert.assertTrue(true);
+            Assert.assertTrue(funcs.size() == 1);
+            System.out.println("Functions of agent " + cobot + " (" + funcs.size() + ")");
+            for (Resource fun : funcs) {
+                System.out.println("\t> Function " + fun + "");
             }
         }
         catch (Exception ex) {
@@ -311,5 +309,12 @@ public class ProductionKnowledgeTest
             System.err.println(ex.getMessage());
             Assert.assertTrue(false);
         }
+        finally
+        {
+            // close test
+            System.out.println("*********************************************");
+        }
     }
+
+
 }

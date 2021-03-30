@@ -28,7 +28,10 @@ public class KnowledgeServiceApiResponseBuilder implements ServiceResponseBuilde
      * @param knowledge
      * @param node
      */
-    protected KnowledgeServiceApiResponseBuilder(Log log, ProductionKnowledge knowledge, ConnectedNode node) {
+    protected KnowledgeServiceApiResponseBuilder(Log log,
+                                                 ProductionKnowledge knowledge,
+                                                 ConnectedNode node)
+    {
         this.log = log;
         this.knowledge = knowledge;
         this.cNode = node;
@@ -49,7 +52,8 @@ public class KnowledgeServiceApiResponseBuilder implements ServiceResponseBuilde
      * @throws ServiceException
      */
     @Override
-    public void build(sharework_knowledge_msgs.KnowledgeAPIEndPointRequest request, sharework_knowledge_msgs.KnowledgeAPIEndPointResponse response)
+    public void build(sharework_knowledge_msgs.KnowledgeAPIEndPointRequest request,
+                      sharework_knowledge_msgs.KnowledgeAPIEndPointResponse response)
             throws ServiceException
     {
         // get query type

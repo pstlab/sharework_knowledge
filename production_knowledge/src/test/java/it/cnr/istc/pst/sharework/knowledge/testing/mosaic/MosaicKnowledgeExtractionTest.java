@@ -18,6 +18,7 @@ public class MosaicKnowledgeExtractionTest
 {
     // get a reference to the knowledge
     private static final String ONTOLOGY_PATH = ProductionKnowledge.SHAREWORK_KNOWLEDGE +  "etc/ontologies/soho_mosaic_v0.4.owl";
+    private static final String RULE_PATH = ProductionKnowledge.SHAREWORK_KNOWLEDGE +  "etc/ontologies/soho_rules_v1.0.rules";
 
     /**
      * Test the extraction of known production goals from knowledge
@@ -29,7 +30,7 @@ public class MosaicKnowledgeExtractionTest
         System.out.println("***** Test: getProductionGoalsTest() *****");
 
         // create production knowledge
-        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH);
+        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
         Assert.assertNotNull(knowledge);
         try
         {
@@ -68,7 +69,7 @@ public class MosaicKnowledgeExtractionTest
         System.out.println("***** Test: getAutonomousAgentsTest() *****");
 
         // create production knowledge
-        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH);
+        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
         Assert.assertNotNull(knowledge);
         try
         {
@@ -116,7 +117,7 @@ public class MosaicKnowledgeExtractionTest
         System.out.println("***** Test: getFunctionsTest() *****");
 
         // create production knowledge
-        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH);
+        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
         Assert.assertNotNull(knowledge);
         try
         {
@@ -183,7 +184,7 @@ public class MosaicKnowledgeExtractionTest
         System.out.println("***** Test: getDecompositionGraphTest() *****");
 
         // create production knowledge
-        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH);
+        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
         Assert.assertNotNull(knowledge);
         try
         {
@@ -247,7 +248,7 @@ public class MosaicKnowledgeExtractionTest
         System.out.println("***** Test: getDependencyGraphTest() *****");
 
         // create production knowledge
-        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH);
+        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
         Assert.assertNotNull(knowledge);
         try
         {
@@ -299,7 +300,7 @@ public class MosaicKnowledgeExtractionTest
         System.out.println("***** Test: getProdutionHierarchyTest() *****");
 
         // create production knowledge
-        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH);
+        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
         Assert.assertNotNull(knowledge);
         try
         {
