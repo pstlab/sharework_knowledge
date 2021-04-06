@@ -8,6 +8,7 @@ import org.ros.node.ConnectedNode;
 import org.ros.node.service.ServiceResponseBuilder;
 import sharework_knowledge_msgs.KnowledgeRDFTriple;
 
+import javax.xml.ws.Service;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,44 +56,48 @@ public class KnowledgeServiceTripleResponseBuilder implements ServiceResponseBui
     {
         // set response
         List<KnowledgeRDFTriple> triples = new ArrayList<KnowledgeRDFTriple>();
-        // get triple query
-        sharework_knowledge_msgs.KnowledgeRDFTriple query = request.getQuery();
+        try {
 
-        // get parameters from query triple
-        String subject = query.getSubject() != null && !query.getSubject().equals("") ?
-                query.getSubject() : null;
-        String property = query.getProperty() != null && !query.getProperty().equals("") ?
-                query.getProperty() : null;
-        String object = query.getObject() != null && !query.getObject().equals("") ?
-                query.getObject() : null;
+            // get triple query
+            sharework_knowledge_msgs.KnowledgeRDFTriple query = request.getQuery();
 
-        // Perform a simple triple query on production knowledge
-        List<Statement> list = knowledge.listStatements(subject, property, object);
-        for (Statement stat : list)
-        {
-            // check null values
-            if (stat.getSubject() != null &&
-                    stat.getPredicate() != null &&
-                    stat.getObject() != null)
-            {
-                // print statement information
-                log.info("Found statement - " + stat + "\n");
-                // create message triple object
-                sharework_knowledge_msgs.KnowledgeRDFTriple triple = this.cNode
-                        .getTopicMessageFactory()
-                        .newFromType(sharework_knowledge_msgs.KnowledgeRDFTriple._TYPE);
+            // get parameters from query triple
+            String subject = query.getSubject() != null && !query.getSubject().equals("") ?
+                    query.getSubject() : null;
+            String property = query.getProperty() != null && !query.getProperty().equals("") ?
+                    query.getProperty() : null;
+            String object = query.getObject() != null && !query.getObject().equals("") ?
+                    query.getObject() : null;
 
-                // set attributes
-                triple.setSubject(stat.getSubject().getLocalName());
-                triple.setProperty(stat.getPredicate().getLocalName());
-                triple.setObject(stat.getObject().asResource().getLocalName());
+            // Perform a simple triple query on production knowledge
+            List<Statement> list = knowledge.listStatements(subject, property, object);
+            for (Statement stat : list) {
+                // check null values
+                if (stat.getSubject() != null &&
+                        stat.getPredicate() != null &&
+                        stat.getObject() != null) {
+                    // print statement information
+                    log.info("Found statement - " + stat + "\n");
+                    // create message triple object
+                    sharework_knowledge_msgs.KnowledgeRDFTriple triple = this.cNode
+                            .getTopicMessageFactory()
+                            .newFromType(sharework_knowledge_msgs.KnowledgeRDFTriple._TYPE);
 
-                // add triple to the result list
-                triples.add(triple);
+                    // set attributes
+                    triple.setSubject(stat.getSubject().getLocalName());
+                    triple.setProperty(stat.getPredicate().getLocalName());
+                    triple.setObject(stat.getObject().asResource().getLocalName());
 
-            } else {
-                // print a warning
+                    // add triple to the result list
+                    triples.add(triple);
+
+                } else {
+                    // print a warning
+                }
             }
+        }
+        catch (Exception ex) {
+            throw new ServiceException(ex.getMessage());
         }
 
         // set result

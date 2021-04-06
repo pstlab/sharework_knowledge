@@ -33,11 +33,17 @@ public class GetProductionGoalsApiQueryHandler extends ApiQueryHandler<GetProduc
     {
         // prepare response
         GetProductionGoalsApiQueryResult response = new GetProductionGoalsApiQueryResult();
-        // get resources representing known production goals
-        List<Resource> goals = this.knowledge.getProductionGoals();
-        for (Resource goal : goals) {
-            // add the goal the the response
-            response.addResource(goal);
+        try
+        {
+            // get resources representing known production goals
+            List<Resource> goals = this.knowledge.getProductionGoals();
+            for (Resource goal : goals) {
+                // add the goal the the response
+                response.addResource(goal);
+            }
+        }
+        catch (Exception ex) {
+            throw new ApiQueryHandlingException(ex.getMessage());
         }
 
         // get result

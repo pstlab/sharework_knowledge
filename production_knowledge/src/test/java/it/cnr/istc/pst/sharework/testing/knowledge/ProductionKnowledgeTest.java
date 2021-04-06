@@ -31,21 +31,27 @@ public class ProductionKnowledgeTest
         System.out.println("*********************************************");
         System.out.println("***** Test: createProductionKnowledgeTest() *****");
 
-        // create production knowledge
-        ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
-        Assert.assertNotNull(knowledge);
+        try {
+            // create production knowledge
+            ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
+            Assert.assertNotNull(knowledge);
 
-        // list statements
-        List<Statement> list = knowledge.listStatements(null, null, null);
-        Assert.assertNotNull(list);
-        Assert.assertFalse(list.isEmpty());
-        // print number of statements
-        System.out.println("Number of statements: " + list.size() + "\n");
+            // list statements
+            List<Statement> list = knowledge.listStatements(null, null, null);
+            Assert.assertNotNull(list);
+            Assert.assertFalse(list.isEmpty());
+            // print number of statements
+            System.out.println("Number of statements: " + list.size() + "\n");
 
-        // iterate over statements
-        for (Statement s : list) {
-            // check statement
-            Assert.assertNotNull(s);
+            // iterate over statements
+            for (Statement s : list) {
+                // check statement
+                Assert.assertNotNull(s);
+            }
+        }
+        catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            Assert.assertTrue(false);
         }
 
         // close test

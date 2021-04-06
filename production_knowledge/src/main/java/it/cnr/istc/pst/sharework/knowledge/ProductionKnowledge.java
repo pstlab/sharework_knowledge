@@ -522,7 +522,7 @@ public class ProductionKnowledge
     }
 
     /**
-     * 
+     *
      * @param referenceUri
      * @param propertyUri
      * @param objectUri
