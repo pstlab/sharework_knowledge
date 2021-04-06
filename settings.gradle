@@ -15,4 +15,3 @@
  */
 
 include 'production_knowledge'
-include 'production_knowledge_authoring'

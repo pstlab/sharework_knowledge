@@ -2,9 +2,7 @@ package it.cnr.istc.pst.sharework.knowledge;
 
 import org.apache.jena.ontology.*;
 import org.apache.jena.rdf.model.*;
-import org.apache.jena.reasoner.rulesys.GenericRuleReasoner;
-import org.apache.jena.reasoner.rulesys.Rule;
-import org.apache.jena.util.iterator.ExtendedIterator;
+import org.apache.jena.reasoner.rulesys.*;
 
 import java.util.*;
 
@@ -15,6 +13,10 @@ public class ProductionKnowledge
 {
     public static final String SHAREWORK_KNOWLEDGE = System.getenv("SHAREWORK_KNOWLEDGE") != null ?
             System.getenv("SHAREWORK_KNOWLEDGE") + "/" : "";
+
+    private static final Object lock = new Object();                // state lock
+    private ProductionKnowledgeState state;                         // current state
+
 
     private String ontoFile;        // file with the ontology
     private String ruleFile;        // file with the inference rules
@@ -37,6 +39,8 @@ public class ProductionKnowledge
         // set ontology file
         this.ontoFile = ontoFile;
         this.ruleFile = rulePath;
+        // set default state
+        this.state = ProductionKnowledgeState.NONE;
 
         // create an ontological model from SOHO
         this.ontoModel = ModelFactory.createOntologyModel(
@@ -86,34 +90,62 @@ public class ProductionKnowledge
     public List<Resource> getInstances(String classURI)
             throws Exception
     {
-       // list of individuals
-       List<Resource> list = new ArrayList<>();
-       // get resource associated the class URI
-       Resource c = ResourceFactory.createResource(classURI);
-       // check if the model contains the resource
-       if (!this.ontoModel.containsResource(c)) {
-           // class not existing
-           throw new Exception("No class found with URI  \"" + classURI + "\"");
-       }
-       else {
-           // update the resource
-           c = this.ontoModel.getResource(classURI);
-       }
+        // check status lock
+        synchronized (lock) {
+            // check status
+            while (!this.state.equals(ProductionKnowledgeState.NONE) ||
+                this.state.equals(ProductionKnowledgeState.READ_MODE)) {
+                // wait
+                lock.wait();
+            }
 
-       // get property
-        Property prop = this.ontoModel.getProperty(ProductionKnowledgeDictionary.RDF_NS + "type");
-       // check all resources of the specified type
-       Iterator<Statement> it = this.infModel.listStatements(null, prop, c);
-        // check statements
-       while (it.hasNext()) {
-           // next statement
-           Statement s = it.next();
-           // get statement's subject
-           list.add(s.getSubject());
-       }
+            // set status
+            this.state = ProductionKnowledgeState.READ_MODE;
+        }
 
-       // get the list
+
+        // list of individuals
+        List<Resource> list = new ArrayList<>();
+        try
+        {
+            // get resource associated the class URI
+            Resource c = ResourceFactory.createResource(classURI);
+            // check if the model contains the resource
+            if (!this.ontoModel.containsResource(c)) {
+                // class not existing
+                throw new Exception("No class found with URI  \"" + classURI + "\"");
+            } else {
+                // update the resource
+                c = this.ontoModel.getResource(classURI);
+            }
+
+            // get property
+            Property prop = this.ontoModel.getProperty(ProductionKnowledgeDictionary.RDF_NS + "type");
+            // check all resources of the specified type
+            Iterator<Statement> it = this.infModel.listStatements(null, prop, c);
+            // check statements
+            while (it.hasNext()) {
+                // next statement
+                Statement s = it.next();
+                // get statement's subject
+                list.add(s.getSubject());
+            }
+
+        }
+        finally
+        {
+            // release the lock
+            synchronized (lock) {
+                this.state = ProductionKnowledgeState.NONE;
+                // signal waiting threads
+                lock.notifyAll();
+            }
+        }
+
+
+        // get the list
         return list;
+
     }
 
     /**
@@ -125,26 +157,49 @@ public class ProductionKnowledge
     public List<Individual> getIndividuals(String classURI)
             throws Exception
     {
-        // list of individuals
-        List<Individual> list = new ArrayList<>();
-        // get resource associated the class URI
-        Resource c = ResourceFactory.createResource(classURI);
-        // check if the model contains the resource
-        if (!this.ontoModel.containsResource(c)) {
-            // class not existing
-            throw new Exception("No class found with URI  \"" + classURI + "\"");
-        }
-        else {
-            // update the resource
-            c = this.ontoModel.getResource(classURI);
+        // check status lock
+        synchronized (lock) {
+            // check status
+            while (!this.state.equals(ProductionKnowledgeState.NONE) ||
+                    this.state.equals(ProductionKnowledgeState.READ_MODE)) {
+                // wait
+                lock.wait();
+            }
+
+            // set status
+            this.state = ProductionKnowledgeState.READ_MODE;
         }
 
-        // list individual of a given class
-        Iterator<Individual> it = this.ontoModel.listIndividuals(c);
-        // check statements
-        while (it.hasNext()) {
-            // get next individual
-            list.add(it.next());
+        // list of individuals
+        List<Individual> list = new ArrayList<>();
+        try {
+            // get resource associated the class URI
+            Resource c = ResourceFactory.createResource(classURI);
+            // check if the model contains the resource
+            if (!this.ontoModel.containsResource(c)) {
+                // class not existing
+                throw new Exception("No class found with URI  \"" + classURI + "\"");
+            } else {
+                // update the resource
+                c = this.ontoModel.getResource(classURI);
+            }
+
+            // list individual of a given class
+            Iterator<Individual> it = this.ontoModel.listIndividuals(c);
+            // check statements
+            while (it.hasNext()) {
+                // get next individual
+                list.add(it.next());
+            }
+        }
+        finally
+        {
+            // release the lock
+            synchronized (lock) {
+                this.state = ProductionKnowledgeState.NONE;
+                // signal waiting threads
+                lock.notifyAll();
+            }
         }
 
         // get the list
@@ -155,21 +210,73 @@ public class ProductionKnowledge
      * This method (re)binds the inference model to the underlying ontological
      * model by triggering the rule-based inference engine on the new/updated data
      * of the model
+     *
+     * @throws Exception
      */
-    public void rebind() {
-        // bind the inference model to the underlying data/ontological model
-        this.infModel.rebind();
+    public void rebind()
+            throws Exception
+    {
+        // check status lock
+        synchronized (lock) {
+            // check status
+            while (!this.state.equals(ProductionKnowledgeState.NONE)) {
+                // wait
+                lock.wait();
+            }
+
+            // set status
+            this.state = ProductionKnowledgeState.WRITE_MODE;
+        }
+
+        try {
+            // bind the inference model to the underlying data/ontological model
+            this.infModel.rebind();
+        }
+        finally {
+            // release lock
+            synchronized (lock) {
+                this.state = ProductionKnowledgeState.NONE;
+                // notify listeners
+                lock.notifyAll();
+            }
+        }
     }
 
     /**
      *
      * @param uri
      * @return
+     * @throws Exception
      */
     public Property getProperty(String uri)
+            throws Exception
     {
-        // retrieve the property from the model
-        return this.ontoModel.getProperty(uri);
+        // check status lock
+        synchronized (lock) {
+            // check status
+            while (!this.state.equals(ProductionKnowledgeState.NONE) ||
+                    this.state.equals(ProductionKnowledgeState.READ_MODE)) {
+                // wait
+                lock.wait();
+            }
+
+            // set status
+            this.state = ProductionKnowledgeState.READ_MODE;
+        }
+
+        try {
+            // retrieve the property from the model
+            return this.ontoModel.getProperty(uri);
+        }
+        finally
+        {
+            // release lock
+            synchronized (lock) {
+                this.state = ProductionKnowledgeState.NONE;
+                // notify listeners
+                lock.notifyAll();
+            }
+        }
     }
 
     /**
@@ -181,20 +288,37 @@ public class ProductionKnowledge
     public Resource createIndividual(String classUri)
             throws Exception
     {
+        synchronized (lock) {
+            while (!this.state.equals(ProductionKnowledgeState.NONE)) {
+                lock.wait();
+            }
+
+            // set state
+            this.state = ProductionKnowledgeState.WRITE_MODE;
+        }
+
         // individual
         Resource ind = null;
-        // create resource
-        Resource rClass = ResourceFactory.createResource(classUri);
-        // check if the ontology model contains the resource
-        if (this.ontoModel.containsResource(rClass))
-        {
-            // create a new individual of the class
-            ind = this.ontoModel.createIndividual(
-                    this.ontoModel.getResource(classUri)).asResource();
+        try {
+            // create resource
+            Resource rClass = ResourceFactory.createResource(classUri);
+            // check if the ontology model contains the resource
+            if (this.ontoModel.containsResource(rClass)) {
+                // create a new individual of the class
+                ind = this.ontoModel.createIndividual(
+                        this.ontoModel.getResource(classUri)).asResource();
+            } else {
+                // invalid parameter
+                throw new Exception("Unknown resource with URI \"" + classUri + "\"");
+            }
         }
-        else {
-            // invalid parameter
-            throw new Exception("Unknown resource with URI \"" + classUri + "\"");
+        finally {
+            // release lock
+            synchronized (lock) {
+                this.state = ProductionKnowledgeState.NONE;
+                // notify listeners
+                lock.notifyAll();
+            }
         }
 
         // get individual
@@ -210,24 +334,42 @@ public class ProductionKnowledge
     public Resource createUniqueIndividual(String classUri)
             throws Exception
     {
-        // individual
-        Resource ind = null;
-        // create resource
-        Resource rClass = ResourceFactory.createResource(classUri);
-        // check if the ontology model contains the resource
-        if (this.ontoModel.containsResource(rClass))
-        {
-            // create a new individual of the class
-            ind = this.ontoModel.createIndividual(
-                    this.ontoModel.getResource(classUri)).asResource();
-        }
-        else {
-            // invalid parameter
-            throw new Exception("Unknown resource with URI \"" + classUri + "\"");
+        synchronized (lock) {
+            while (!this.state.equals(ProductionKnowledgeState.NONE)) {
+                lock.wait();
+            }
+
+            // set state
+            this.state = ProductionKnowledgeState.WRITE_MODE;
         }
 
-        // set different from siblings
-        this.setDifferentFromSiblings(ind);
+        // individual
+        Resource ind = null;
+
+        try {
+            // create resource
+            Resource rClass = ResourceFactory.createResource(classUri);
+            // check if the ontology model contains the resource
+            if (this.ontoModel.containsResource(rClass)) {
+                // create a new individual of the class
+                ind = this.ontoModel.createIndividual(
+                        this.ontoModel.getResource(classUri)).asResource();
+            } else {
+                // invalid parameter
+                throw new Exception("Unknown resource with URI \"" + classUri + "\"");
+            }
+
+            // set different from siblings
+            this.setDifferentFromSiblings(ind);
+        }
+        finally {
+            // release lock
+            synchronized (lock) {
+                this.state = ProductionKnowledgeState.NONE;
+                // notify listeners
+                lock.notifyAll();
+            }
+        }
         // get individual
         return ind;
     }
@@ -240,28 +382,48 @@ public class ProductionKnowledge
     public void setDifferentFromSiblings(Resource res)
             throws Exception
     {
-        // get resource as individual
-        Individual i = this.ontoModel.getResource(
-                // check blank node
-                res.getURI() == null ? res.asNode().getBlankNodeLabel() : res.getURI()).as(Individual.class);
-
-        // get resource type
-        Statement s = res.getProperty(this.ontoModel.getProperty(
-                ProductionKnowledgeDictionary.RDF_NS + "type"));
-        // get type
-        Resource rClass = s.getObject().asResource();
-        // get all instances
-        List<Resource> siblings = this.getInstances(rClass.getURI());
-        // set different
-        for (Resource sibling : siblings) {
-            if (!sibling.equals(res)) {
-                // set as different individuals
-                i.addDifferentFrom(sibling);
+        synchronized (lock) {
+            while (!this.state.equals(ProductionKnowledgeState.NONE)) {
+                lock.wait();
             }
+
+            // set state
+            this.state = ProductionKnowledgeState.WRITE_MODE;
         }
 
-        // rebind inference model
-        this.infModel.rebind();
+        try
+        {
+            // get resource as individual
+            Individual i = this.ontoModel.getResource(
+                    // check blank node
+                    res.getURI() == null ? res.asNode().getBlankNodeLabel() : res.getURI()).as(Individual.class);
+
+            // get resource type
+            Statement s = res.getProperty(this.ontoModel.getProperty(
+                    ProductionKnowledgeDictionary.RDF_NS + "type"));
+            // get type
+            Resource rClass = s.getObject().asResource();
+            // get all instances
+            List<Resource> siblings = this.getInstances(rClass.getURI());
+            // set different
+            for (Resource sibling : siblings) {
+                if (!sibling.equals(res)) {
+                    // set as different individuals
+                    i.addDifferentFrom(sibling);
+                }
+            }
+
+            // rebind inference model
+            this.infModel.rebind();
+        }
+        finally {
+            // release lock
+            synchronized (lock) {
+                this.state = ProductionKnowledgeState.NONE;
+                // notify listeners
+                lock.notifyAll();
+            }
+        }
     }
 
     /**
@@ -273,21 +435,40 @@ public class ProductionKnowledge
     public void setDifferentFromResources(Resource res, List<Resource> others)
             throws Exception
     {
-        // get resource as individual
-        Individual i = this.ontoModel.getResource(
-                // check blank nodes
-                res.getURI() == null ? res.asNode().getBlankNodeLabel() : res.getURI()).as(Individual.class);
-
-        // set different
-        for (Resource other : others) {
-            if (!other.equals(res)) {
-                // set as different individuals
-                i.addDifferentFrom(other);
+        synchronized (lock) {
+            while (!this.state.equals(ProductionKnowledgeState.NONE)) {
+                lock.wait();
             }
+
+            // set state
+            this.state = ProductionKnowledgeState.WRITE_MODE;
         }
 
-        // rebind inference model
-        this.infModel.rebind();
+        try {
+            // get resource as individual
+            Individual i = this.ontoModel.getResource(
+                    // check blank nodes
+                    res.getURI() == null ? res.asNode().getBlankNodeLabel() : res.getURI()).as(Individual.class);
+
+            // set different
+            for (Resource other : others) {
+                if (!other.equals(res)) {
+                    // set as different individuals
+                    i.addDifferentFrom(other);
+                }
+            }
+
+            // rebind inference model
+            this.infModel.rebind();
+        }
+        finally {
+            // release lock
+            synchronized (lock) {
+                this.state = ProductionKnowledgeState.NONE;
+                // notify listeners
+                lock.notifyAll();
+            }
+        }
     }
 
     /**
@@ -301,61 +482,106 @@ public class ProductionKnowledge
     public Statement addAssertion(String referenceUri, String propertyUri, String objectUri)
             throws Exception
     {
-        // check if property exists
-        Property prop = this.infModel.getProperty(propertyUri);
+        synchronized (lock) {
+            while (!this.state.equals(ProductionKnowledgeState.NONE)) {
+                lock.wait();
+            }
 
-        // check if reference resource exists
-        Resource ref = this.infModel.getResource(referenceUri);
-        // check if object resource exists
-        Resource obj = this.infModel.getResource(objectUri);
+            // set state
+            this.state = ProductionKnowledgeState.WRITE_MODE;
+        }
 
-        // create statement
-        Statement stat = this.infModel.createStatement(ref, prop, obj);
-        // assert/add the statement
-        this.infModel.add(stat);
+        // prepare statement
+        Statement stat = null;
+        try {
+            // check if property exists
+            Property prop = this.infModel.getProperty(propertyUri);
+
+            // check if reference resource exists
+            Resource ref = this.infModel.getResource(referenceUri);
+            // check if object resource exists
+            Resource obj = this.infModel.getResource(objectUri);
+
+            // create statement
+            stat = this.infModel.createStatement(ref, prop, obj);
+            // assert/add the statement
+            this.infModel.add(stat);
+        }
+        finally {
+            // release lock
+            synchronized (lock) {
+                this.state = ProductionKnowledgeState.NONE;
+                // notify listeners
+                lock.notifyAll();
+            }
+        }
+
+
         // get created statement
         return stat;
     }
 
     /**
-     *
+     * 
      * @param referenceUri
      * @param propertyUri
      * @param objectUri
      * @return
+     * @throws Exception
      */
-    public List<Statement> removeAssertion(String referenceUri, String propertyUri, String objectUri)
+    public  List<Statement> removeAssertion(String referenceUri, String propertyUri, String objectUri)
+            throws Exception
     {
-        // list of statements
-        List<Statement> list = new ArrayList<>();
-        // check if property exists
-        Property prop = this.infModel.getProperty(propertyUri);
+        synchronized (lock) {
+            while (!this.state.equals(ProductionKnowledgeState.NONE)) {
+                lock.wait();
+            }
 
-        // check if reference resource exists
-        Resource ref = this.infModel.getResource(referenceUri);
-        // check if object resource exists
-        Resource obj = this.infModel.getResource(objectUri);
-
-        // get statements
-        StmtIterator it = this.infModel.listStatements(
-                ref,
-                prop,
-                obj);
-        // get statements to remove
-        while (it.hasNext()) {
-            // get statement
-            Statement s = it.next();
-            // get next
-            list.add(s);
-            // remove statement
-            this.infModel.remove(s);
+            // set state
+            this.state = ProductionKnowledgeState.WRITE_MODE;
         }
 
-        // create statement
-        Statement stat = this.infModel.createStatement(ref, prop, obj);
-        // assert/add the statement
-        this.infModel.add(stat);
+        // list of statements
+        List<Statement> list = new ArrayList<>();
 
+        try
+        {
+            // check if property exists
+            Property prop = this.infModel.getProperty(propertyUri);
+
+            // check if reference resource exists
+            Resource ref = this.infModel.getResource(referenceUri);
+            // check if object resource exists
+            Resource obj = this.infModel.getResource(objectUri);
+
+            // get statements
+            StmtIterator it = this.infModel.listStatements(
+                    ref,
+                    prop,
+                    obj);
+            // get statements to remove
+            while (it.hasNext()) {
+                // get statement
+                Statement s = it.next();
+                // get next
+                list.add(s);
+                // remove statement
+                this.infModel.remove(s);
+            }
+
+            // create statement
+            Statement stat = this.infModel.createStatement(ref, prop, obj);
+            // assert/add the statement
+            this.infModel.add(stat);
+        }
+        finally {
+            // release lock
+            synchronized (lock) {
+                this.state = ProductionKnowledgeState.NONE;
+                // notify listeners
+                lock.notifyAll();
+            }
+        }
 
         // get the list of statements
         return list;
@@ -367,36 +593,63 @@ public class ProductionKnowledge
      * @param p
      * @param o
      * @return
+     * @throws Exception
      */
     public List<Statement> listStatements(String s, String p, String o)
+            throws Exception
     {
-        // check statement subject
-        Resource subject = null;
-        if (s != null) {
-            // retrieve resource from the model
-            subject = this.ontoModel.getResource(s);
-        }
+        // check status lock
+        synchronized (lock) {
+            // check status
+            while (!this.state.equals(ProductionKnowledgeState.NONE) ||
+                    this.state.equals(ProductionKnowledgeState.READ_MODE)) {
+                // wait
+                lock.wait();
+            }
 
-        // check statement property
-        Property property = null;
-        if (p != null) {
-            // retrieve resource from the model
-            property = this.ontoModel.getProperty(p);
-        }
-
-        // check statement object
-        RDFNode object = null;
-        if (o != null) {
-            // retrieve object from the model
-            object = this.ontoModel.getRDFNode(this.ontoModel.getResource(o).asNode());
+            // set status
+            this.state = ProductionKnowledgeState.READ_MODE;
         }
 
         // list of statement found
         List<Statement> list = new ArrayList<>();
-        // iterate over found statements
-        Iterator<Statement> it = this.infModel.listStatements(subject, property, object);
-        while (it.hasNext()) {
-            list.add(it.next());
+        try
+        {
+            // check statement subject
+            Resource subject = null;
+            if (s != null) {
+                // retrieve resource from the model
+                subject = this.ontoModel.getResource(s);
+            }
+
+            // check statement property
+            Property property = null;
+            if (p != null) {
+                // retrieve resource from the model
+                property = this.ontoModel.getProperty(p);
+            }
+
+            // check statement object
+            RDFNode object = null;
+            if (o != null) {
+                // retrieve object from the model
+                object = this.ontoModel.getRDFNode(this.ontoModel.getResource(o).asNode());
+            }
+
+
+            // iterate over found statements
+            Iterator<Statement> it = this.infModel.listStatements(subject, property, object);
+            while (it.hasNext()) {
+                list.add(it.next());
+            }
+        }
+        finally {
+            // release lock
+            synchronized (lock) {
+                this.state = ProductionKnowledgeState.NONE;
+                // notify listeners
+                lock.notifyAll();
+            }
         }
 
         // get list of statements
@@ -411,9 +664,11 @@ public class ProductionKnowledge
      * @return
      */
     public boolean hasResourceType(Resource resource, String classURI)
+            throws Exception
     {
         // result flag
         boolean hasType = false;
+
         // get RDF:type property
         Property rdfType = this.getProperty(ProductionKnowledgeDictionary.RDF_NS + "type");
         // get all types
@@ -423,18 +678,16 @@ public class ProductionKnowledge
                 rdfType.getURI(),
                 null);
         // check statements
-        for (Statement s : list)
-        {
+        for (Statement s : list) {
             // get statement type
             Resource type = s.getObject().asResource();
             // check if it corresponds to the desired type
             if (type != null && type.getURI() != null &&
-                    type.getURI().toLowerCase().equals(classURI.toLowerCase()))
-            {
-               // found
-               hasType = true;
-               // exit the loop
-               break;
+                    type.getURI().toLowerCase().equals(classURI.toLowerCase())) {
+                // found
+                hasType = true;
+                // exit the loop
+                break;
             }
         }
 
@@ -453,8 +706,10 @@ public class ProductionKnowledge
      *
      * @param resource
      * @return
+     * @throws Exception
      */
     public Map<Resource, Set<Resource>> retrieveResourceStructure(Resource resource)
+            throws Exception
     {
         // set result structure
         HashMap<Resource, Set<Resource>> structure = new HashMap<>();
@@ -471,9 +726,11 @@ public class ProductionKnowledge
      * The method retrieves all known individuals of type SOHO:ProductionGoal
      *
      * @return a list of resource of type SOHO:ProductionGoal
+     * @throws Exception
      */
-    public List<Resource> getProductionGoals()
+    public List<Resource> getProductionGoals() throws Exception
     {
+
         // list of production goals
         List<Resource> goals = new ArrayList<>();
 
@@ -489,6 +746,7 @@ public class ProductionKnowledge
             goals.add(s.getSubject());
         }
 
+
         // get the list
         return goals;
     }
@@ -500,12 +758,13 @@ public class ProductionKnowledge
      * The method retrieves all known individuals of type SOHO:AutonomousAgent
      *
      * @return a list of resource of type SOHO:AutonomousAgent
+     * @throws Exception
      */
     public List<Resource> getAgents()
+            throws Exception
     {
         // list of agents
         List<Resource> agents = new ArrayList<>();
-
         // retrieve known individuals of SOHO:AutonomousAgent
         List<Statement> list = this.listStatements(
                 null,
@@ -528,8 +787,10 @@ public class ProductionKnowledge
      * The method retrieves all known individuals of type SOHO:WorkOperator
      *
      * @return
+     * @throws Exception
      */
     public List<Resource> getWorkOperators()
+            throws Exception
     {
         // list of workers
         List<Resource> workers = new ArrayList<>();
@@ -556,8 +817,10 @@ public class ProductionKnowledge
      * The method retrieves all known individuals of type SOHO:Cobot
      *
      * @return
+     * @throws Exception
      */
     public List<Resource> getCobots()
+            throws Exception
     {
         // list of workers
         List<Resource> cobots = new ArrayList<>();
@@ -584,9 +847,11 @@ public class ProductionKnowledge
      *
      * The method retrieves all known individuals of type SOHO:Function
      *
-     * @return a list of resource of type SOHO:Function
+     * @return
+     * @throws Exception
      */
     public List<Resource> getFunctions()
+            throws Exception
     {
         // list of agents
         List<Resource> agents = new ArrayList<>();
@@ -616,9 +881,14 @@ public class ProductionKnowledge
      * associated to the specified individual of SOHO:AutonomousAgent through
      * the property SOHO:canBePerformedBy
      *
+     *
+     *
+     * @param agent
      * @return a list of resource of type SOHO:Function
+     * @throws Exception
      */
     public List<Resource> getFunctionsByAgent(Resource agent)
+            throws Exception
     {
         // list of agents
         List<Resource> functions = new ArrayList<>();
@@ -908,8 +1178,10 @@ public class ProductionKnowledge
      *
      * @param task
      * @param graph
+     * @throws Exception
      */
     private void retrieveProductionTaskDecomposition(Resource task, Map<Resource, List<Set<Resource>>> graph)
+            throws Exception
     {
         // get constituent property
         Property prop = this.getProperty(ProductionKnowledgeDictionary.DUL_NS +  "hasConstituent");
@@ -981,7 +1253,6 @@ public class ProductionKnowledge
         }
     }
 
-
     /**
      * This method recursively navigates the property DUL:hasConstituent to
      * extract the internal structure of an individual of the knowledge base.
@@ -989,10 +1260,13 @@ public class ProductionKnowledge
      * The method navigates the individuals of the knowledge base (i.e., the
      * knowledge graph)
      *
+     *
      * @param resource
      * @param subtree
+     * @throws Exception
      */
     private void retrieveResourceStructure(Resource resource, Map<Resource, Set<Resource>> subtree)
+            throws Exception
     {
         // get constituent property
         Property hasConstituent = this.getProperty(ProductionKnowledgeDictionary.DUL_NS + "hasConstituent");

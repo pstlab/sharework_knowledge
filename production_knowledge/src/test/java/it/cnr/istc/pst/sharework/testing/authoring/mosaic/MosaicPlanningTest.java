@@ -1,12 +1,11 @@
-package it.cnr.istc.pst.sharework.knowledge.authoring.testing.mosaic;
+package it.cnr.istc.pst.sharework.testing.authoring.mosaic;
 
 import it.cnr.istc.pst.platinum.ai.deliberative.Planner;
 import it.cnr.istc.pst.platinum.ai.deliberative.PlannerBuilder;
 import it.cnr.istc.pst.platinum.ai.framework.domain.component.PlanDataBase;
 import it.cnr.istc.pst.platinum.ai.framework.microkernel.lang.plan.SolutionPlan;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
-import it.cnr.istc.pst.sharework.knowledge.authoring.hrc.ftl.TimelineBasedProductionKnowledgeAuthoring;
-import javafx.animation.Timeline;
+import it.cnr.istc.pst.sharework.authoring.hrc.ftl.TimelineBasedProductionKnowledgeAuthoring;
 
 /**
  *

@@ -1,4 +1,4 @@
-package it.cnr.istc.pst.sharework.knowledge.testing.nissan;
+package it.cnr.istc.pst.sharework.testing.knowledge.nissan;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import org.apache.jena.rdf.model.Resource;

@@ -1,11 +1,12 @@
-package it.cnr.istc.pst.sharework.knowledge.authoring.testing.nissan;
+package it.cnr.istc.pst.sharework.testing.authoring.nissan;
 
 import it.cnr.istc.pst.platinum.ai.deliberative.Planner;
 import it.cnr.istc.pst.platinum.ai.deliberative.PlannerBuilder;
+import it.cnr.istc.pst.platinum.ai.framework.domain.component.DomainComponent;
 import it.cnr.istc.pst.platinum.ai.framework.domain.component.PlanDataBase;
 import it.cnr.istc.pst.platinum.ai.framework.microkernel.lang.plan.SolutionPlan;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
-import it.cnr.istc.pst.sharework.knowledge.authoring.hrc.ftl.TimelineBasedProductionKnowledgeAuthoring;
+import it.cnr.istc.pst.sharework.authoring.hrc.ftl.TimelineBasedProductionKnowledgeAuthoring;
 
 /**
  *
@@ -35,6 +36,14 @@ public class NissanPlanningTest
             SolutionPlan solution = planner.plan();
             System.out.println(solution);
             planner.display();
+
+            // get robot and human components
+            DomainComponent hc = pdb.getComponentByName("Worker");
+            // display
+            hc.display();
+            DomainComponent rc = pdb.getComponentByName("ProductionL1");
+            // display
+            rc.display();
         }
         catch (Exception ex) {
             System.err.println(ex.getMessage());

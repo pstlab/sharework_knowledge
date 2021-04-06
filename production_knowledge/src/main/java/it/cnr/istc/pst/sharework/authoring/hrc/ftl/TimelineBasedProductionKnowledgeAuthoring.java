@@ -1,12 +1,11 @@
-package it.cnr.istc.pst.sharework.knowledge.authoring.hrc.ftl;
+package it.cnr.istc.pst.sharework.authoring.hrc.ftl;
 
 import it.cnr.istc.pst.platinum.ai.framework.domain.PlanDataBaseBuilder;
 import it.cnr.istc.pst.platinum.ai.framework.domain.component.PlanDataBase;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledgeDictionary;
-import it.cnr.istc.pst.sharework.knowledge.authoring.ProductionKnowledgeAuthoring;
+import it.cnr.istc.pst.sharework.authoring.ProductionKnowledgeAuthoring;
 import org.apache.jena.rdf.model.Resource;
-import org.junit.Assert;
 
 import java.io.BufferedWriter;
 import java.io.File;

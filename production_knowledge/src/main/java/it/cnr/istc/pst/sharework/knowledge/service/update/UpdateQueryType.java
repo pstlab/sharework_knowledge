@@ -14,6 +14,15 @@ import java.util.Arrays;
 public enum UpdateQueryType
 {
     /**
+     * Update the knowledge by loading a new ontological model from a given file path
+     */
+    LOAD("load",
+            new String[] {
+                    "\"onto-path\": Path to a file with an ontological knowledge model to load",
+                    "\"rule-path\": [Optional] Path to a file with specifically designed inference rules"
+            }),
+
+    /**
      * Update the knowledge by creating a new individual of a given class
      */
     CREATE_INDIVIDUAL(

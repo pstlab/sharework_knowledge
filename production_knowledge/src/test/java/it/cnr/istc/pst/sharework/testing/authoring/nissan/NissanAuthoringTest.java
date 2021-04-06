@@ -1,9 +1,9 @@
-package it.cnr.istc.pst.sharework.knowledge.authoring.testing.nissan;
+package it.cnr.istc.pst.sharework.testing.authoring.nissan;
 
 import it.cnr.istc.pst.platinum.ai.framework.domain.component.PlanDataBase;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledgeDictionary;
-import it.cnr.istc.pst.sharework.knowledge.authoring.hrc.ftl.TimelineBasedProductionKnowledgeAuthoring;
+import it.cnr.istc.pst.sharework.authoring.hrc.ftl.TimelineBasedProductionKnowledgeAuthoring;
 import org.apache.jena.rdf.model.Resource;
 import org.junit.Assert;
 import org.junit.Test;

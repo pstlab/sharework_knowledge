@@ -1,4 +1,4 @@
-package it.cnr.istc.pst.sharework.knowledge.testing;
+package it.cnr.istc.pst.sharework.testing.knowledge;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledgeDictionary;

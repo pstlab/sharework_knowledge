@@ -1,4 +1,4 @@
-package it.cnr.istc.pst.sharework.knowledge.authoring;
+package it.cnr.istc.pst.sharework.authoring;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import it.cnr.istc.pst.platinum.ai.framework.domain.component.PlanDataBase;

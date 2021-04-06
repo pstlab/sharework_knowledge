@@ -1,5 +1,6 @@
 package it.cnr.istc.pst.sharework.knowledge.service;
 
+import it.cnr.istc.pst.sharework.authoring.ProductionKnowledgeAuthoring;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import org.apache.commons.logging.Log;
 import org.ros.namespace.GraphName;
@@ -20,8 +21,8 @@ import org.ros.node.Node;
 public class KnowledgeService extends AbstractNodeMain
 {
     private Log log;
-
-    private ProductionKnowledge knowledge;
+    private ProductionKnowledge knowledge;                      // internal knowledge base
+    private ProductionKnowledgeAuthoring authoring;             // planing model authoring service
 
     /**
      *
