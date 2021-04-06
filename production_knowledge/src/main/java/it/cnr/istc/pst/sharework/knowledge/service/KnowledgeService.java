@@ -1,8 +1,10 @@
 package it.cnr.istc.pst.sharework.knowledge.service;
 
 import it.cnr.istc.pst.sharework.authoring.ProductionKnowledgeAuthoring;
+import it.cnr.istc.pst.sharework.authoring.hrc.ftl.TimelineBasedProductionKnowledgeAuthoring;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import org.apache.commons.logging.Log;
+import org.ros.exception.ServiceException;
 import org.ros.namespace.GraphName;
 import org.ros.node.AbstractNodeMain;
 import org.ros.node.ConnectedNode;
@@ -21,8 +23,8 @@ import org.ros.node.Node;
 public class KnowledgeService extends AbstractNodeMain
 {
     private Log log;
-    private ProductionKnowledge knowledge;                      // internal knowledge base
-    private ProductionKnowledgeAuthoring authoring;             // planing model authoring service
+    protected ProductionKnowledge knowledge;                      // internal knowledge base
+    protected ProductionKnowledgeAuthoring authoring;             // planing model authoring service
 
     /**
      *
@@ -31,7 +33,7 @@ public class KnowledgeService extends AbstractNodeMain
     @Override
     public GraphName getDefaultNodeName() {
         // set the name of the node
-        return GraphName.of("sharework/knowledge/endpoint");
+        return GraphName.of("sharework/knowledge");
     }
 
     /**
@@ -39,30 +41,42 @@ public class KnowledgeService extends AbstractNodeMain
      * @param connectedNode
      */
     @Override
-    public void onStart(final ConnectedNode connectedNode)
-    {
+    public void onStart(final ConnectedNode connectedNode) {
+
         // get system log
         this.log = connectedNode.getLog();
-        // create production knowledge manager
-        this.knowledge = new ProductionKnowledge();
+        try
+        {
+            // create service instance for the knowledge api end-point
+            connectedNode.newServiceServer(
+                    "/sharework/knowledge/api",
+                    KnowledgeServiceApiResponseBuilder.getServiceType(),
+                    new KnowledgeServiceApiResponseBuilder(this.log, this, connectedNode));
 
-        // create service instance for the knowledge api end-point
-        connectedNode.newServiceServer(
-                "/sharework/knowledge/endpoint/api",
-                KnowledgeServiceApiResponseBuilder.getServiceType(),
-                new KnowledgeServiceApiResponseBuilder(this.log, this.knowledge, connectedNode));
+            // create service instance for the knowledge triple end-point
+            connectedNode.newServiceServer(
+                    "/sharework/knowledge/triple",
+                    KnowledgeServiceTripleResponseBuilder.getServiceType(),
+                    new KnowledgeServiceTripleResponseBuilder(this.log, this, connectedNode));
 
-        // create service instance for the knowledge triple end-point
-        connectedNode.newServiceServer(
-                "/sharework/knowledge/endpoint/triple",
-                KnowledgeServiceTripleResponseBuilder.getServiceType(),
-                new KnowledgeServiceTripleResponseBuilder(this.log, this.knowledge, connectedNode));
+            // create service instance for the update of the knowledge base
+            connectedNode.newServiceServer(
+                    "sharework/knowledge/update",
+                    KnowledgeUpdateServiceResponseBuilder.getServiceType(),
+                    new KnowledgeUpdateServiceResponseBuilder(this.log, this, connectedNode));
 
-        // create service instance for the update of the knowledge base
-        connectedNode.newServiceServer(
-                "sharework/knowledge/endpoint/update",
-                KnowledgeUpdateServiceResponseBuilder.getServiceType(),
-                new KnowledgeUpdateServiceResponseBuilder(this.log, this.knowledge, connectedNode));
+
+            // create production knowledge manager
+            this.knowledge = new ProductionKnowledge();
+            // create authoring process
+            this.authoring = new TimelineBasedProductionKnowledgeAuthoring();
+            // bind authoring process
+            this.authoring.bind(this.knowledge);
+        }
+        catch (Exception ex) {
+            // start error
+            this.log.error(ex.getMessage());
+        }
     }
 
     /**
@@ -70,12 +84,18 @@ public class KnowledgeService extends AbstractNodeMain
      * @param node
      */
     @Override
-    public void onShutdown(Node node) {
+    public void onShutdown(Node node)  {
 
-        /**
-         * TODO : ROSJava node callback
-         */
+        try {
 
+            // unbind authoring process
+            this.authoring.unbind();
+        }
+        catch (Exception ex) {
+            this.log.error(ex.getMessage());
+        }
+
+        // complete shutdown handling
         super.onShutdown(node);
     }
 
@@ -87,10 +107,16 @@ public class KnowledgeService extends AbstractNodeMain
     @Override
     public void onError(Node node, Throwable throwable) {
 
-        /**
-         * TODO : ROSJava node callback
-         */
+        try {
 
+            // unbind authoring process
+            this.authoring.unbind();
+        }
+        catch (Exception ex) {
+            this.log.error(ex.getMessage());
+        }
+
+        // complete error handling
         super.onError(node, throwable);
     }
 
@@ -100,11 +126,6 @@ public class KnowledgeService extends AbstractNodeMain
      */
     @Override
     public void onShutdownComplete(Node node) {
-
-        /**
-         * TODO : ROSJava node callback
-         */
-
         super.onShutdownComplete(node);
     }
 }

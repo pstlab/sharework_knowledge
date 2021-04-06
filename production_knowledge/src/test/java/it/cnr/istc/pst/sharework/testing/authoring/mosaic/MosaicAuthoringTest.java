@@ -418,10 +418,8 @@ public class MosaicAuthoringTest
             // load knowledge base
             authoring.setProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
             // get data structure
-            PlanDataBase pdb = authoring.compileAndValidate();
-            Assert.assertNotNull(pdb);
-            System.out.println("Complied timeline-based planning model:\n\n" +
-                    "" + pdb + "\n\n");
+            boolean valid = authoring.compileAndValidate();
+            Assert.assertTrue(valid);
 
             // print some statistics
             System.out.println("Authoring statistics:\n" +

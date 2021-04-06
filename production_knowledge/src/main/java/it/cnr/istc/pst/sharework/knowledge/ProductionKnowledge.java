@@ -16,13 +16,20 @@ public class ProductionKnowledge
 
     private static final Object lock = new Object();                // state lock
     private ProductionKnowledgeState state;                         // current state
+    private boolean readTransaction;                                // set read transaction flag
 
 
-    private String ontoFile;        // file with the ontology
-    private String ruleFile;        // file with the inference rules
+    private String defaultOntoFile;         // default ontological file
+    private String defaultRuleFile;         // default rule file
 
-    private OntModel ontoModel;         // reference to the ontology model
-    private InfModel infModel;          // the actual knowledge performing inference
+    private String ontoFile;                 // file with the ontology
+    private String ruleFile;                 // file with the inference rules
+
+    private OntModel ontoModel;             // reference to the ontology model
+    private InfModel infModel;              // the actual knowledge performing inference
+
+
+    private List<ProductionKnowledgeUpdateSubscriber> subscribers;
 
     /**
      * Create the element responsible for actually managing production knowledge.
@@ -32,38 +39,44 @@ public class ProductionKnowledge
      * OWL semantics (OWLMicro) to refine the internal knowledge graph.
      *
      * @param ontoFile
-     * @param rulePath
+     * @param ruleFile
      */
-    public ProductionKnowledge(String ontoFile, String rulePath)
+    public ProductionKnowledge(String ontoFile, String ruleFile)
     {
-        // set ontology file
-        this.ontoFile = ontoFile;
-        this.ruleFile = rulePath;
+        // load model
+        this.doLoad(ontoFile, ruleFile);
         // set default state
         this.state = ProductionKnowledgeState.NONE;
+        // set ontology file
+        this.ontoFile = ontoFile;
+        this.ruleFile = ruleFile;
+        // set default files
+        this.defaultOntoFile = ontoFile;
+        this.defaultRuleFile = ruleFile;
 
-        // create an ontological model from SOHO
-        this.ontoModel = ModelFactory.createOntologyModel(
-                OntModelSpec.OWL_DL_MEM                             // support "diff" statements
-                //OntModelSpec.RDFS_MEM_TRANS_INF
-        );
+        // set transaction flag
+        this.readTransaction = false;
+        // set list of subscribers
+        this.subscribers = new ArrayList<>();
+    }
 
-        // use DocumentManager API to specify that onto is replicated locally on disk
-        this.ontoModel.getDocumentManager().addAltEntry(
-                ProductionKnowledgeDictionary.SOHO_NS.get(),
-                "file:" + this.ontoFile);
-        // actually load the ontology
-        this.ontoModel.read(ProductionKnowledgeDictionary.SOHO_NS.get());
+    /**
+     *
+     * @param subscriber
+     */
+    public synchronized void subscrbe(ProductionKnowledgeUpdateSubscriber subscriber) {
+        // add to list
+        if (!this.subscribers.contains(subscriber)) {
+            this.subscribers.add(subscriber);
+        }
+    }
 
-        // parse the list of inference rules for knowledge processing
-        List<Rule> rules = Rule.rulesFromURL("file:" + this.ruleFile);
-        // create a generic rule-based reasoner
-        GenericRuleReasoner reasoner = new GenericRuleReasoner(rules);
-        reasoner.setOWLTranslation(true);
-        reasoner.setTransitiveClosureCaching(true);
-
-        // create an inference model attached to the ontological model schema
-        this.infModel = ModelFactory.createInfModel(reasoner, this.ontoModel);
+    /**
+     *
+     * @param subscriber
+     */
+    public synchronized void unsubscribe(ProductionKnowledgeUpdateSubscriber subscriber) {
+        this.subscribers.remove(subscriber);
     }
 
     /**
@@ -75,8 +88,204 @@ public class ProductionKnowledge
      */
     public ProductionKnowledge() {
         // set default ontology model
-        this(SHAREWORK_KNOWLEDGE + "etc/ontologies/soho_core_v1.owl",
+        this(SHAREWORK_KNOWLEDGE + "etc/ontologies/soho_core_v0.1.owl",
                 SHAREWORK_KNOWLEDGE + "etc/ontologies/soho_rules_v1.0.rules");
+    }
+
+    /**
+     *
+     * @param ontoFile
+     * @param ruleFile
+     */
+    private void doLoad(String ontoFile, String ruleFile)
+    {
+        // create an ontological model from SOHO
+        this.ontoModel = ModelFactory.createOntologyModel(
+                OntModelSpec.OWL_DL_MEM                             // support "diff" statements
+                //OntModelSpec.RDFS_MEM_TRANS_INF
+        );
+
+        // use DocumentManager API to specify that onto is replicated locally on disk
+        this.ontoModel.getDocumentManager().addAltEntry(
+                ProductionKnowledgeDictionary.SOHO_NS.get(),
+                "file:" + ontoFile);
+        // actually load the ontology
+        this.ontoModel.read(ProductionKnowledgeDictionary.SOHO_NS.get());
+
+        // parse the list of inference rules for knowledge processing
+        List<Rule> rules = Rule.rulesFromURL("file:" + ruleFile);
+        // create a generic rule-based reasoner
+        GenericRuleReasoner reasoner = new GenericRuleReasoner(rules);
+        reasoner.setOWLTranslation(true);
+        reasoner.setTransitiveClosureCaching(true);
+
+        // create an inference model attached to the ontological model schema
+        this.infModel = ModelFactory.createInfModel(reasoner, this.ontoModel);
+    }
+
+
+    /**
+     *
+     * @param ontoFile
+     * @param ruleFile
+     * @throws Exception
+     */
+    public void load(String ontoFile, String ruleFile)
+            throws Exception
+    {
+        synchronized (lock) {
+            while (!this.state.equals(ProductionKnowledgeState.NONE)) {
+                lock.wait();
+            }
+
+            // set state
+            this.state = ProductionKnowledgeState.WRITE_MODE;
+        }
+
+        try
+        {
+            // load ontological model
+            this.doLoad(ontoFile, ruleFile);
+            // update internal reference
+            this.ontoFile = ontoFile;
+            this.ruleFile = ruleFile;
+        }
+        finally
+        {
+            // release the lock
+            synchronized (lock) {
+
+                // notify subscribers
+                for (ProductionKnowledgeUpdateSubscriber subscriber : subscribers) {
+                    subscriber.update();
+                }
+
+                // set state
+                this.state = ProductionKnowledgeState.NONE;
+                // notify listeners
+                lock.notifyAll();
+            }
+        }
+    }
+
+    /**
+     *
+     * @param ontoFile
+     * @throws Exception
+     */
+    public void load(String ontoFile)
+            throws Exception
+    {
+        synchronized (lock) {
+            while (!this.state.equals(ProductionKnowledgeState.NONE)) {
+                lock.wait();
+            }
+
+            // set state
+            this.state = ProductionKnowledgeState.WRITE_MODE;
+        }
+
+        try
+        {
+            // load ontological model using the current rule file
+            this.doLoad(ontoFile, this.ruleFile);
+            // update internal reference
+            this.ontoFile = ontoFile;
+        }
+        finally
+        {
+            // release the lock
+            synchronized (lock) {
+
+                // notify subscribers
+                for (ProductionKnowledgeUpdateSubscriber subscriber : subscribers) {
+                    subscriber.update();
+                }
+
+                // set state
+                this.state = ProductionKnowledgeState.NONE;
+                // notify listeners
+                lock.notifyAll();
+            }
+        }
+    }
+
+    /**
+     *
+     * @throws Exception
+     */
+    public void restore()
+            throws Exception
+    {
+        synchronized (lock) {
+            while (!this.state.equals(ProductionKnowledgeState.NONE)) {
+                lock.wait();
+            }
+
+            // set state
+            this.state = ProductionKnowledgeState.WRITE_MODE;
+        }
+
+        try
+        {
+            // load ontological model
+            this.doLoad(this.defaultOntoFile, this.defaultRuleFile);
+            // update internal reference
+            this.ontoFile = this.defaultOntoFile;
+            this.ruleFile = this.defaultRuleFile;
+        }
+        finally
+        {
+            // release the lock
+            synchronized (lock) {
+
+                // notify subscribers
+                for (ProductionKnowledgeUpdateSubscriber subscriber : subscribers) {
+                    subscriber.update();
+                }
+
+
+                // set state
+                this.state = ProductionKnowledgeState.NONE;
+                // notify listeners
+                lock.notifyAll();
+            }
+        }
+    }
+
+    /**
+     *
+     * @throws Exception
+     */
+    public void beginReadTransaction()
+            throws Exception
+    {
+        synchronized (lock) {
+            while (!this.state.equals(ProductionKnowledgeState.NONE) &&
+                    !this.state.equals(ProductionKnowledgeState.READ_MODE)) {
+                // wait
+                lock.wait();
+            }
+
+            // set state
+            this.state = ProductionKnowledgeState.READ_MODE;
+            // set transaction flag
+            this.readTransaction = true;
+        }
+    }
+
+    /**
+     *
+     */
+    public void finishReadTransaction() {
+        synchronized (lock) {
+            // set transaction flag
+            this.readTransaction = false;
+            // set state
+            this.state = ProductionKnowledgeState.NONE;
+            // release lock
+            lock.notifyAll();
+        }
     }
 
     /**
@@ -93,8 +302,8 @@ public class ProductionKnowledge
         // check status lock
         synchronized (lock) {
             // check status
-            while (!this.state.equals(ProductionKnowledgeState.NONE) ||
-                this.state.equals(ProductionKnowledgeState.READ_MODE)) {
+            while (!this.state.equals(ProductionKnowledgeState.NONE) &&
+                !this.state.equals(ProductionKnowledgeState.READ_MODE)) {
                 // wait
                 lock.wait();
             }
@@ -136,7 +345,11 @@ public class ProductionKnowledge
         {
             // release the lock
             synchronized (lock) {
-                this.state = ProductionKnowledgeState.NONE;
+                // check read transaction
+                if (!this.readTransaction) {
+                    this.state = ProductionKnowledgeState.NONE;
+                }
+
                 // signal waiting threads
                 lock.notifyAll();
             }
@@ -160,8 +373,8 @@ public class ProductionKnowledge
         // check status lock
         synchronized (lock) {
             // check status
-            while (!this.state.equals(ProductionKnowledgeState.NONE) ||
-                    this.state.equals(ProductionKnowledgeState.READ_MODE)) {
+            while (!this.state.equals(ProductionKnowledgeState.NONE) &&
+                    !this.state.equals(ProductionKnowledgeState.READ_MODE)) {
                 // wait
                 lock.wait();
             }
@@ -196,7 +409,11 @@ public class ProductionKnowledge
         {
             // release the lock
             synchronized (lock) {
-                this.state = ProductionKnowledgeState.NONE;
+                // check read transaction
+                if (!this.readTransaction) {
+                    // change state
+                    this.state = ProductionKnowledgeState.NONE;
+                }
                 // signal waiting threads
                 lock.notifyAll();
             }
@@ -235,6 +452,13 @@ public class ProductionKnowledge
         finally {
             // release lock
             synchronized (lock) {
+
+                // notify subscribers
+                for (ProductionKnowledgeUpdateSubscriber subscriber : subscribers) {
+                    subscriber.update();
+                }
+
+
                 this.state = ProductionKnowledgeState.NONE;
                 // notify listeners
                 lock.notifyAll();
@@ -254,8 +478,8 @@ public class ProductionKnowledge
         // check status lock
         synchronized (lock) {
             // check status
-            while (!this.state.equals(ProductionKnowledgeState.NONE) ||
-                    this.state.equals(ProductionKnowledgeState.READ_MODE)) {
+            while (!this.state.equals(ProductionKnowledgeState.NONE) &&
+                    !this.state.equals(ProductionKnowledgeState.READ_MODE)) {
                 // wait
                 lock.wait();
             }
@@ -272,7 +496,11 @@ public class ProductionKnowledge
         {
             // release lock
             synchronized (lock) {
-                this.state = ProductionKnowledgeState.NONE;
+                // check transaction flag
+                if (!this.readTransaction) {
+                    // change state
+                    this.state = ProductionKnowledgeState.NONE;
+                }
                 // notify listeners
                 lock.notifyAll();
             }
@@ -315,6 +543,13 @@ public class ProductionKnowledge
         finally {
             // release lock
             synchronized (lock) {
+
+                // notify subscribers
+                for (ProductionKnowledgeUpdateSubscriber subscriber : subscribers) {
+                    subscriber.update();
+                }
+
+
                 this.state = ProductionKnowledgeState.NONE;
                 // notify listeners
                 lock.notifyAll();
@@ -362,9 +597,16 @@ public class ProductionKnowledge
             // set different from siblings
             this.setDifferentFromSiblings(ind);
         }
-        finally {
+        finally
+        {
             // release lock
             synchronized (lock) {
+
+                // notify subscribers
+                for (ProductionKnowledgeUpdateSubscriber subscriber : subscribers) {
+                    subscriber.update();
+                }
+
                 this.state = ProductionKnowledgeState.NONE;
                 // notify listeners
                 lock.notifyAll();
@@ -419,6 +661,12 @@ public class ProductionKnowledge
         finally {
             // release lock
             synchronized (lock) {
+
+                // notify subscribers
+                for (ProductionKnowledgeUpdateSubscriber subscriber : subscribers) {
+                    subscriber.update();
+                }
+
                 this.state = ProductionKnowledgeState.NONE;
                 // notify listeners
                 lock.notifyAll();
@@ -464,6 +712,12 @@ public class ProductionKnowledge
         finally {
             // release lock
             synchronized (lock) {
+
+                // notify subscribers
+                for (ProductionKnowledgeUpdateSubscriber subscriber : subscribers) {
+                    subscriber.update();
+                }
+
                 this.state = ProductionKnowledgeState.NONE;
                 // notify listeners
                 lock.notifyAll();
@@ -510,6 +764,13 @@ public class ProductionKnowledge
         finally {
             // release lock
             synchronized (lock) {
+
+                // notify subscribers
+                for (ProductionKnowledgeUpdateSubscriber subscriber : subscribers) {
+                    subscriber.update();
+                }
+
+
                 this.state = ProductionKnowledgeState.NONE;
                 // notify listeners
                 lock.notifyAll();
@@ -577,6 +838,13 @@ public class ProductionKnowledge
         finally {
             // release lock
             synchronized (lock) {
+
+                // notify subscribers
+                for (ProductionKnowledgeUpdateSubscriber subscriber : subscribers) {
+                    subscriber.update();
+                }
+
+
                 this.state = ProductionKnowledgeState.NONE;
                 // notify listeners
                 lock.notifyAll();
@@ -601,8 +869,8 @@ public class ProductionKnowledge
         // check status lock
         synchronized (lock) {
             // check status
-            while (!this.state.equals(ProductionKnowledgeState.NONE) ||
-                    this.state.equals(ProductionKnowledgeState.READ_MODE)) {
+            while (!this.state.equals(ProductionKnowledgeState.NONE) &&
+                    !this.state.equals(ProductionKnowledgeState.READ_MODE)) {
                 // wait
                 lock.wait();
             }
@@ -646,7 +914,11 @@ public class ProductionKnowledge
         finally {
             // release lock
             synchronized (lock) {
-                this.state = ProductionKnowledgeState.NONE;
+                // check transaction flag
+                if (!this.readTransaction) {
+                    // change state
+                    this.state = ProductionKnowledgeState.NONE;
+                }
                 // notify listeners
                 lock.notifyAll();
             }

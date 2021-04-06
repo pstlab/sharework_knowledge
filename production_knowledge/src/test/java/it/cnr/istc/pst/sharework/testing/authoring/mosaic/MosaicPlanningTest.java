@@ -28,13 +28,20 @@ public class MosaicPlanningTest
             // load knowledge base
             authoring.setProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
             // get plan database
-            PlanDataBase pdb = authoring.compileAndValidate();
+            if (authoring.compileAndValidate())
+            {
+                // get the PDB
+                PlanDataBase pdb = authoring.pdb();
 
-            // create planner
-            Planner planner = PlannerBuilder.createAndSet(pdb);
-            SolutionPlan solution = planner.plan();
-            System.out.println(solution);
-            planner.display();
+                // create planner
+                Planner planner = PlannerBuilder.createAndSet(pdb);
+                SolutionPlan solution = planner.plan();
+                System.out.println(solution);
+                planner.display();
+            }
+            else {
+                // not valid
+            }
         }
         catch (Exception ex) {
             System.err.println(ex.getMessage());

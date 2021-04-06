@@ -18,20 +18,21 @@ import java.util.List;
 public class KnowledgeServiceTripleResponseBuilder implements ServiceResponseBuilder<sharework_knowledge_msgs.KnowledgeRDFTripleEndPointRequest, sharework_knowledge_msgs.KnowledgeRDFTripleEndPointResponse>
 {
     private Log log;
-    private ProductionKnowledge knowledge;
+    private KnowledgeService service;
     private ConnectedNode cNode;
 
     /**
      *
      * @param log
-     * @param knowledge
+     * @param service
+     * @param node
      */
     protected KnowledgeServiceTripleResponseBuilder(Log log,
-                                                    ProductionKnowledge knowledge,
+                                                    KnowledgeService service,
                                                     ConnectedNode node)
     {
         this.log = log;
-        this.knowledge = knowledge;
+        this.service = service;
         this.cNode = node;
     }
 
@@ -56,8 +57,8 @@ public class KnowledgeServiceTripleResponseBuilder implements ServiceResponseBui
     {
         // set response
         List<KnowledgeRDFTriple> triples = new ArrayList<KnowledgeRDFTriple>();
-        try {
-
+        try
+        {
             // get triple query
             sharework_knowledge_msgs.KnowledgeRDFTriple query = request.getQuery();
 
@@ -70,14 +71,26 @@ public class KnowledgeServiceTripleResponseBuilder implements ServiceResponseBui
                     query.getObject() : null;
 
             // Perform a simple triple query on production knowledge
-            List<Statement> list = knowledge.listStatements(subject, property, object);
-            for (Statement stat : list) {
-                // check null values
-                if (stat.getSubject() != null &&
-                        stat.getPredicate() != null &&
-                        stat.getObject() != null) {
+            List<Statement> list = this.service.knowledge.listStatements(subject, property, object);
+            // check list
+            if (list.isEmpty()) {
+                // warning
+                this.log.warn("No statement found into the Knowledge graph:\n" +
+                        "- query-subject: " + subject + "\n" +
+                        "- query-property: " + property + "\n" +
+                        "- query-object: " + object + "\n");
+            }
+            else
+            {
+                // info
+                this.log.info("A total of " + list.size() + " RDF statements have been found...");
+                // check statements
+                for (int index = 0; index < list.size(); index++)
+                {
+                    // get statement
+                    Statement stat = list.get(index);
                     // print statement information
-                    log.info("Found statement - " + stat + "\n");
+                    this.log.info("[" + index + "] " + stat + "\n");
                     // create message triple object
                     sharework_knowledge_msgs.KnowledgeRDFTriple triple = this.cNode
                             .getTopicMessageFactory()
@@ -90,9 +103,6 @@ public class KnowledgeServiceTripleResponseBuilder implements ServiceResponseBui
 
                     // add triple to the result list
                     triples.add(triple);
-
-                } else {
-                    // print a warning
                 }
             }
         }

@@ -19,21 +19,21 @@ import java.util.Arrays;
 public class KnowledgeServiceApiResponseBuilder implements ServiceResponseBuilder<sharework_knowledge_msgs.KnowledgeAPIEndPointRequest, sharework_knowledge_msgs.KnowledgeAPIEndPointResponse>
 {
     private Log log;
-    private ProductionKnowledge knowledge;
+    private KnowledgeService service;
     private ConnectedNode cNode;
 
     /**
      *
      * @param log
-     * @param knowledge
+     * @param service
      * @param node
      */
     protected KnowledgeServiceApiResponseBuilder(Log log,
-                                                 ProductionKnowledge knowledge,
+                                                 KnowledgeService service,
                                                  ConnectedNode node)
     {
         this.log = log;
-        this.knowledge = knowledge;
+        this.service = service;
         this.cNode = node;
     }
 
@@ -84,7 +84,7 @@ public class KnowledgeServiceApiResponseBuilder implements ServiceResponseBuilde
                 // set accessible
                 c.setAccessible(true);
                 // create handler instance by reflection
-                ApiQueryHandler<?> qHandler = (ApiQueryHandler<?>) c.newInstance(this.knowledge);
+                ApiQueryHandler<?> qHandler = (ApiQueryHandler<?>) c.newInstance(this.service.knowledge);
 
                 // do handle query and get query result
                 ApiQueryResult result = qHandler.handle(request);

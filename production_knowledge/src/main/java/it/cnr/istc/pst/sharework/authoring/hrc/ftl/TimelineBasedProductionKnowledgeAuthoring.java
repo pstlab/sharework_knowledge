@@ -27,7 +27,8 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
     private int numberOfConstraints;                    // number of generated constraints
     private long time;                                  // model generation time (in milliseconds)
 
-    private String pdlPath;
+    private String ddlPath;                             // set DDL file path
+    private String pdlPath;                             // set PDL file path
 
     /**
      *
@@ -92,14 +93,9 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
      * @throws Exception
      */
     @Override
-    public synchronized String compile()
+    protected synchronized String doCompile()
             throws Exception
     {
-        // check knowledge
-        if (this.knowledge == null) {
-            throw new Exception("No production knowledge has been set!");
-        }
-
         // get start
         long start = System.currentTimeMillis();
         // set statistic data
@@ -127,8 +123,6 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
             vIndex.put(goal, "Goal.goals");
         }
 
-
-
         // get workers
         List<Resource> workers = knowledge.getWorkOperators();
         // get functions
@@ -143,9 +137,9 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
         }
 
         // get cobots
-        List<Resource> cobots = knowledge.getCobots();
+        List<Resource> cobots = this.knowledge.getCobots();
         // get functions
-        List<Resource> rFuncs = knowledge.getFunctionsByAgent(cobots.get(0));
+        List<Resource> rFuncs = this.knowledge.getFunctionsByAgent(cobots.get(0));
         // add SV description
         ddl += this.sv("CobotVariableType", rFuncs);
         // create also component declaration
@@ -180,6 +174,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
         // close domain description
         ddl += "\n}\n\n";
+
         // get compilation time
         this.time = System.currentTimeMillis() - start;
         // get domain description
@@ -187,19 +182,65 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
     }
 
     /**
-     * s
+     *
+     */
+    @Override
+    protected void prepare() {
+
+        /**
+         * TODO - POPOLARE LE COLLECTION MONGODB PER IL TASK PLANNER
+         */
+    }
+
+    /**
+     *
+     * @return
+     */
+    public PlanDataBase pdb()
+            throws Exception
+    {
+        // check if DDL file exists
+        if (this.ddlPath == null) {
+            throw new Exception("No validation of the production knowledge has been done!");
+        }
+
+        PlanDataBase pdb = null;
+        try
+        {
+            // check PDL
+            if (this.pdlPath == null) {
+                // validate the PDB
+                pdb = PlanDataBaseBuilder.createAndSet(this.ddlPath);
+            }
+            else {
+                // validate the PDB
+                pdb = PlanDataBaseBuilder.createAndSet(
+                        this.ddlPath,
+                        this.pdlPath);
+            }
+        }
+        catch (Exception ex) {
+            throw new Exception("Error while validating the generated model:\n" +
+                    "- DDL file: " + ProductionKnowledge.SHAREWORK_KNOWLEDGE + "gen/prod_knowledge.ddl" + "\n" +
+                    "- message: " + ex.getMessage() + "\n");
+        }
+
+        // get the PDB
+        return pdb;
+    }
+
+    /**
+     *
+     * @param model
      * @return
      * @throws Exception
      */
     @Override
-    public synchronized PlanDataBase compileAndValidate()
+    protected synchronized boolean doValidate(String model)
             throws Exception
     {
-        // get DDL file
-        String ddl = this.compile();
-        // prepare PDB
-        PlanDataBase pdb;
-        String ddlPath = null;
+        // validity flag
+        boolean valid = false;
         // set start time and update authoring time
         long start = System.currentTimeMillis();
 
@@ -209,20 +250,26 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
             File ddlFile = new File(ProductionKnowledge.SHAREWORK_KNOWLEDGE + "gen/prod_knowledge.ddl");
             try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(ddlFile), "UTF-8"))) {
                 // write content file
-                writer.write(ddl);
+                writer.write(model);
             }
+
 
             // check PDL
             if (this.pdlPath == null) {
                 // validate the PDB
-                pdb = PlanDataBaseBuilder.createAndSet(ddlFile.getAbsolutePath());
+                PlanDataBaseBuilder.createAndSet(ddlFile.getAbsolutePath());
             }
             else {
                 // validate the PDB
-                pdb = PlanDataBaseBuilder.createAndSet(
+                PlanDataBaseBuilder.createAndSet(
                         ddlFile.getAbsolutePath(),
                         this.pdlPath);
             }
+
+            // set DDL file path
+            this.ddlPath = ddlFile.getAbsolutePath();
+            // set validity flag
+            valid = true;
         }
         catch (Exception ex) {
             throw new Exception("Error while validating the generated model:\n" +
@@ -234,8 +281,8 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
             this.time += System.currentTimeMillis() - start;
         }
 
-        // get PDB
-        return pdb;
+        // get validity flag
+        return valid;
     }
 
     /**

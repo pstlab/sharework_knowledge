@@ -29,21 +29,28 @@ public class NissanPlanningTest
             // load knowledge base
             authoring.setProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
             // get plan database
-            PlanDataBase pdb = authoring.compileAndValidate();
+            if (authoring.compileAndValidate())
+            {
+                // get the PDB
+                PlanDataBase pdb = authoring.pdb();
 
-            // create planner
-            Planner planner = PlannerBuilder.createAndSet(pdb);
-            SolutionPlan solution = planner.plan();
-            System.out.println(solution);
-            planner.display();
+                // create planner
+                Planner planner = PlannerBuilder.createAndSet(pdb);
+                SolutionPlan solution = planner.plan();
+                System.out.println(solution);
+                planner.display();
 
-            // get robot and human components
-            DomainComponent hc = pdb.getComponentByName("Worker");
-            // display
-            hc.display();
-            DomainComponent rc = pdb.getComponentByName("ProductionL1");
-            // display
-            rc.display();
+                // get robot and human components
+                DomainComponent hc = pdb.getComponentByName("Worker");
+                // display
+                hc.display();
+                DomainComponent rc = pdb.getComponentByName("ProductionL1");
+                // display
+                rc.display();
+            }
+            else {
+                // not valid
+            }
         }
         catch (Exception ex) {
             System.err.println(ex.getMessage());

@@ -9,6 +9,7 @@ import org.apache.jena.rdf.model.Statement;
 import org.ros.exception.ServiceException;
 import org.ros.node.ConnectedNode;
 import org.ros.node.service.ServiceResponseBuilder;
+import sharework_knowledge_msgs.KnowledgeRDFTriple;
 import sharework_knowledge_msgs.KnowledgeRDFUpdatePointRequest;
 import sharework_knowledge_msgs.KnowledgeRDFUpdatePointResponse;
 
@@ -22,20 +23,21 @@ import java.util.List;
 public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBuilder<sharework_knowledge_msgs.KnowledgeRDFUpdatePointRequest, sharework_knowledge_msgs.KnowledgeRDFUpdatePointResponse>
 {
     private Log log;
-    private ProductionKnowledge knowledge;
+    private KnowledgeService service;
     private ConnectedNode cNode;
 
     /**
      *
      * @param log
-     * @param knowledge
+     * @param service
+     * @param node
      */
     protected KnowledgeUpdateServiceResponseBuilder(Log log,
-                                                    ProductionKnowledge knowledge,
+                                                    KnowledgeService service,
                                                     ConnectedNode node)
     {
         this.log = log;
-        this.knowledge = knowledge;
+        this.service = service;
         this.cNode = node;
     }
 
@@ -85,12 +87,12 @@ public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBui
                     String targetURI = data.get(2);
 
                     // assert property
-                    Statement statement = this.knowledge.addAssertion(referenceURI, propertyURI, targetURI);
+                    Statement statement = this.service.knowledge.addAssertion(referenceURI, propertyURI, targetURI);
                     // prepare response data
                     List<sharework_knowledge_msgs.KnowledgeRDFTriple> list = new ArrayList<>();
 
                     // print statement information
-                    log.info("Added assertion - " + statement + "\n");
+                    this.log.info("Added assertion - " + statement + "\n");
                     // create message triple object
                     sharework_knowledge_msgs.KnowledgeRDFTriple triple = this.cNode
                             .getTopicMessageFactory()
@@ -130,13 +132,13 @@ public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBui
                     String targetURI = data.get(2);
 
                     // assert property
-                    List<Statement> statements = this.knowledge.removeAssertion(referenceURI, propertyURI, targetURI);
+                    List<Statement> statements = this.service.knowledge.removeAssertion(referenceURI, propertyURI, targetURI);
                     // prepare response data
                     List<sharework_knowledge_msgs.KnowledgeRDFTriple> list = new ArrayList<>();
                     // check removed statements
                     for (Statement statement : statements) {
                         // print statement information
-                        log.info("Removed assertion - " + statement + "\n");
+                        this.log.info("Removed assertion - " + statement + "\n");
                         // create message triple object
                         sharework_knowledge_msgs.KnowledgeRDFTriple triple = this.cNode
                                 .getTopicMessageFactory()
@@ -175,7 +177,7 @@ public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBui
                     // get class
                     String classURI = data.get(0);
                     // create individual
-                    Resource individual = this.knowledge.createIndividual(classURI);
+                    Resource individual = this.service.knowledge.createIndividual(classURI);
                     this.log.info("Created individual - " + individual + "\n");
 
                     // prepare response data
@@ -215,7 +217,7 @@ public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBui
                     // get class
                     String classURI = data.get(0);
                     // create individual
-                    Resource individual = this.knowledge.createUniqueIndividual(classURI);
+                    Resource individual = this.service.knowledge.createUniqueIndividual(classURI);
                     this.log.info("Created (unique) individual - " + individual + "\n");
 
                     // prepare response data
@@ -239,12 +241,64 @@ public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBui
                     knowledgeRDFUpdatePointResponse.setResult(list);
                 }
                 break;
+
+                // load an ontological model from file
+                case LOAD : {
+
+                    // check data
+                    List<String> data = knowledgeRDFUpdatePointRequest.getData();
+                    // three parameters expected
+                    if (data == null || data.isEmpty()) {
+                        // wrong number of parameters
+                        throw new ServiceException("Wrong number of parameters:\n" +
+                                "- parameters: " + Arrays.toString(UpdateQueryType.LOAD.getParameters()));
+                    }
+
+                    // get ontological model file
+                    String ontoFile = data.get(0);
+                    // check rule file
+                    String ruleFile = data.size() > 1 ? data.get(1) : null;
+
+                    try
+                    {
+                        // load file
+                        if (ruleFile != null) {
+                            // load ontological model
+                            this.service.knowledge.load(ontoFile, ruleFile);
+                        }
+                        else {
+                            // load ontological file
+                            this.service.knowledge.load(ontoFile);
+                        }
+                    }
+                    catch (Exception ex) {
+                        // restore ontological model
+                        this.service.knowledge.restore();
+                        // throw exception
+                        throw new ServiceException("Failure while loading ontological model\n" +
+                                "- file: " + ontoFile + "\n" +
+                                "- the default ontological model has been restored...");
+                    }
+                    finally {
+
+                        // set empty response
+                        knowledgeRDFUpdatePointResponse.setResult(new ArrayList<KnowledgeRDFTriple>());
+                    }
+                }
+                break;
+
+                default : {
+                    // unknown query type
+                    throw new ServiceException("Unknown update type \"" + updateType + "\"\n" +
+                            "Expected types:\n" + Arrays.deepToString(UpdateQueryType.values()));
+                }
             }
         }
         catch (Exception ex) {
             // unknown query type
-            throw new ServiceException("Unknown update type \"" + updateType + "\"\n" +
-                    "Expected types:\n" + Arrays.deepToString(UpdateQueryType.values()));
+            throw new ServiceException("Knowledge update error\n" +
+                    "- request type: \"" + updateType + "\"\n" +
+                    "- message: " + ex.getMessage() + "\n");
         }
     }
 }
