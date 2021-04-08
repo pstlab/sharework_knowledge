@@ -1,20 +1,20 @@
 package it.cnr.istc.pst.sharework.authoring.hrc.ftl;
 
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
 import it.cnr.istc.pst.platinum.ai.framework.domain.PlanDataBaseBuilder;
 import it.cnr.istc.pst.platinum.ai.framework.domain.component.PlanDataBase;
+import it.cnr.istc.pst.sharework.authoring.hrc.HRCTask;
+import it.cnr.istc.pst.sharework.authoring.hrc.HRCModel;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledgeDictionary;
 import it.cnr.istc.pst.sharework.authoring.ProductionKnowledgeAuthoring;
+import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.io.*;
+import java.util.*;
 
 /**
  *
@@ -27,14 +27,101 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
     private int numberOfConstraints;                    // number of generated constraints
     private long time;                                  // model generation time (in milliseconds)
 
+
+    private HRCModel hrc;                               // HRC model generated after compilation
+
     private String ddlPath;                             // set DDL file path
     private String pdlPath;                             // set PDL file path
+    private long horizon;                               // plan horizon
+
+    private static final String PROPERTY_KEY_HORIZON = "horizon";
+    private static final String PROPERTY_KEY_MONGODB_HOST = "mongodb_host";
+    private static final String PROPERTY_KEY_MONGODB_NAME = "mongodb_name";
+    private static final String PROPERTY_KEY_MONGODB_COLLECTION_TASK_PROPERTIES = "mongodb_collection_task_properties";
+    private static final String PROPERTY_KEY_MONGODB_COLLECTION_TASK_DURATIONS = "mongodb_collection_task_durations";
+    private static final String PROPERTY_KEY_MONGODB_COLLECTION_RISK_MATRIX = "mongodb_collection_risk_matrix";
+    private Map<String, String> prop2value;
 
     /**
      *
      */
     public TimelineBasedProductionKnowledgeAuthoring() {
         super();
+        // index properties
+        this.prop2value = new HashMap<>();
+        try
+        {
+            // read dataset property
+            Properties properties = new Properties();
+            try (InputStream in = new FileInputStream(new File(ProductionKnowledge.SHAREWORK_KNOWLEDGE + "etc/authoring.properties"))) {
+
+                // load property file
+                properties.load(in);
+
+                // get property
+                String value = properties.getProperty(PROPERTY_KEY_MONGODB_HOST);
+                if (value == null) {
+                    throw new RuntimeException("Missing specification for property \"" + PROPERTY_KEY_MONGODB_HOST + "\":\n" +
+                            "- property-file: " + ProductionKnowledge.SHAREWORK_KNOWLEDGE + "etc/dataset.properties\n");
+                }
+
+                // set property
+                this.prop2value.put(PROPERTY_KEY_MONGODB_HOST, value);
+
+                // get property
+                value = properties.getProperty(PROPERTY_KEY_MONGODB_NAME);
+                if (value == null) {
+                    throw new RuntimeException("Missing specification for property \"" + PROPERTY_KEY_MONGODB_NAME + "\":\n" +
+                            "- property-file: " + ProductionKnowledge.SHAREWORK_KNOWLEDGE + "etc/dataset.properties\n");
+                }
+
+                // set property
+                this.prop2value.put(PROPERTY_KEY_MONGODB_NAME, value);
+
+                // get property
+                value = properties.getProperty(PROPERTY_KEY_MONGODB_COLLECTION_TASK_PROPERTIES);
+                if (value == null) {
+                    throw new RuntimeException("Missing specification for property \"" + PROPERTY_KEY_MONGODB_COLLECTION_TASK_PROPERTIES + "\":\n" +
+                            "- property-file: " + ProductionKnowledge.SHAREWORK_KNOWLEDGE + "etc/dataset.properties\n");
+                }
+
+                // set property
+                this.prop2value.put(PROPERTY_KEY_MONGODB_COLLECTION_TASK_PROPERTIES, value);
+
+                // get property
+                value = properties.getProperty(PROPERTY_KEY_MONGODB_COLLECTION_TASK_DURATIONS);
+                if (value == null) {
+                    throw new RuntimeException("Missing specification for property \"" + PROPERTY_KEY_MONGODB_COLLECTION_TASK_DURATIONS + "\":\n" +
+                            "- property-file: " + ProductionKnowledge.SHAREWORK_KNOWLEDGE + "etc/dataset.properties\n");
+                }
+
+                // set property
+                this.prop2value.put(PROPERTY_KEY_MONGODB_COLLECTION_TASK_DURATIONS, value);
+
+
+                // get property
+                value = properties.getProperty(PROPERTY_KEY_MONGODB_COLLECTION_RISK_MATRIX);
+                if (value == null) {
+                    throw new RuntimeException("Missing specification for property \"" + PROPERTY_KEY_MONGODB_COLLECTION_RISK_MATRIX + "\":\n" +
+                            "- property-file: " + ProductionKnowledge.SHAREWORK_KNOWLEDGE + "etc/dataset.properties\n");
+                }
+
+                // set property
+                this.prop2value.put(PROPERTY_KEY_MONGODB_COLLECTION_RISK_MATRIX, value);
+
+                value = properties.getProperty(PROPERTY_KEY_HORIZON);
+                if (value == null) {
+                    throw new RuntimeException("Missing specification for property \"" + PROPERTY_KEY_HORIZON + "\":\n" +
+                            "- property-file: " + ProductionKnowledge.SHAREWORK_KNOWLEDGE + "etc/dataset.properties\n");
+                }
+
+                // set plan horizon
+                this.horizon = Long.parseLong(value);
+            }
+        }
+        catch (IOException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
     }
 
     /**
@@ -42,8 +129,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
      * @param pdlPath
      */
     public TimelineBasedProductionKnowledgeAuthoring(String pdlPath) {
-
-        super();
+        this();
         this.pdlPath = pdlPath;
     }
 
@@ -96,6 +182,9 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
     protected synchronized String doCompile()
             throws Exception
     {
+        // prepare a new HRC model
+        this.hrc = new HRCModel(this.horizon);
+
         // get start
         long start = System.currentTimeMillis();
         // set statistic data
@@ -110,60 +199,109 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
         // prepare domain description
         String ddl = "DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {\n\n" +
-                "\tTEMPORAL_MODULE temporal_module = [0, 1000], 100;\n\n";
+                "\tTEMPORAL_MODULE temporal_module = [0, " + this.horizon + "], 100;\n\n";
 
         // get production goals
         List<Resource> goals = this.knowledge.getProductionGoals();
-        // add SV description
-        ddl += this.sv("GoalVariableType", goals);
-        // prepare also component declaration
-        String comps = "\tCOMPONENT Goal {FLEXIBLE goals(functional)} : GoalVariableType;\n";
         // index goals
         for (Resource goal : goals) {
             vIndex.put(goal, "Goal.goals");
         }
 
+        // add SV description
+        ddl += this.sv("GoalVariableType", goals);
+        // prepare also component declaration
+        String comps = "\tCOMPONENT Goal {FLEXIBLE goals(functional)} : GoalVariableType;\n";
+
+
+
         // get workers
-        List<Resource> workers = knowledge.getWorkOperators();
+        List<Resource> workers = this.knowledge.getWorkOperators();
         // get functions
-        List<Resource> hFuncs = knowledge.getFunctionsByAgent(workers.get(0));
+        List<Resource> hFuncs = this.knowledge.getFunctionsByAgent(workers.get(0));
+        // index functions
+        for (Resource func : hFuncs)
+        {
+            // index function
+            vIndex.put(func, "Worker.operations");
+
+            // get function type
+            Resource funcType = this.knowledge.getResourceType(func);
+            // create human function into the model
+            HRCTask hf = this.hrc.createHumanTask(func, funcType);
+            // retrieve data properties
+            List<Statement> stats = this.knowledge.getFunctionDataProperties(func);
+            for (Statement stat : stats) {
+                // check function name
+                Property prop = stat.getPredicate();
+                // check function (unique) name
+                if (prop.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "hasProcedureName")) {
+                    // get function name
+                    String name = (String) stat.getObject().asNode().getLiteralValue();
+                    // set name
+                    hf.setName(name);
+                }
+            }
+        }
+
         // add SV description
         ddl += this.sv("WorkerVariableType", hFuncs);
         // create also component declaration
         comps += "\tCOMPONENT Worker {FLEXIBLE operations(primitive)} :  WorkerVariableType;\n";
-        // index functions
-        for (Resource func : hFuncs) {
-            vIndex.put(func, "Worker.operations");
-        }
 
         // get cobots
         List<Resource> cobots = this.knowledge.getCobots();
         // get functions
         List<Resource> rFuncs = this.knowledge.getFunctionsByAgent(cobots.get(0));
+        // index functions
+        for (Resource func : rFuncs)
+        {
+            vIndex.put(func, "Cobot.tasks");
+
+            // get function type
+            Resource funcType = this.knowledge.getResourceType(func);
+            // create human function into the model
+            HRCTask hf = this.hrc.createRobotTask(func, funcType);
+            // retrieve data properties
+            List<Statement> stats = this.knowledge.getFunctionDataProperties(func);
+            for (Statement stat : stats) {
+                // check function name
+                Property prop = stat.getPredicate();
+                // check function (unique) name
+                if (prop.getURI().equalsIgnoreCase(ProductionKnowledgeDictionary.SOHO_NS + "hasProcedureName")) {
+                    // get function name
+                    String name = (String) stat.getObject().asNode().getLiteralValue();
+                    // set name
+                    hf.setName(name);
+                }
+            }
+        }
+
         // add SV description
         ddl += this.sv("CobotVariableType", rFuncs);
         // create also component declaration
         comps += "\tCOMPONENT Cobot {FLEXIBLE tasks(primitive)} : CobotVariableType;\n";
-        // index functions
-        for (Resource func : rFuncs) {
-            vIndex.put(func, "Cobot.tasks");
-        }
+
+
+
 
         // get hierarchy
-        List<List<Resource>> hierarchy = knowledge.getProductionHierarchy(goals.get(0));
+        List<List<Resource>> hierarchy = this.knowledge.getProductionHierarchy(goals.get(0));
         // create a SV for each hierarchical level
         for (int index = 0; index < hierarchy.size(); index++)
         {
             // get values
             List<Resource> values = hierarchy.get(index);
-            // get production values
-            ddl += this.sv("ProductionHierarchyL" + index + "Type", values);
-            // create also component declaration
-            comps += "\tCOMPONENT ProductionL" + index + " {FLEXIBLE tasks_l" + index + "(primitive)} : ProductionHierarchyL" + index + "Type;\n";
+
             // index tasks
             for (Resource val : values) {
                 vIndex.put(val, "ProductionL" + index + ".tasks_l" + index);
             }
+
+            // get production values
+            ddl += this.sv("ProductionHierarchyL" + index + "Type", values);
+            // create also component declaration
+            comps += "\tCOMPONENT ProductionL" + index + " {FLEXIBLE tasks_l" + index + "(primitive)} : ProductionHierarchyL" + index + "Type;\n";
         }
 
         // add component declaration
@@ -186,6 +324,12 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
      */
     @Override
     protected void prepare() {
+
+        // create mongo client
+        MongoClient client = new MongoClient(this.prop2value.get(PROPERTY_KEY_MONGODB_HOST));
+        // get DB
+        MongoDatabase db = client.getDatabase(this.prop2value.get(PROPERTY_KEY_MONGODB_NAME));
+
 
         /**
          * TODO - POPOLARE LE COLLECTION MONGODB PER IL TASK PLANNER
@@ -305,6 +449,13 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 throw new Exception("No component defined for predicate: " + goal.getLocalName() + "()");
             }
 
+            // get goal value names
+            String goalName = this.hrc.getHRCTask(goal) == null || this.hrc.getHRCTask(goal).getName() == null ?
+                    goal.getLocalName() == null ? goal.asNode().getBlankNodeLabel() : goal.getLocalName() :
+                    this.hrc.getHRCTask(goal).getName();
+
+
+
             // first connect goals to root nodes of the decomposition hierarchy
             List<List<Resource>> hierarchy = this.knowledge.getProductionHierarchy(goal);
             // get top-level
@@ -325,20 +476,26 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                     throw new Exception("No component defined for predicate: " + task.getLocalName() + "()");
                 }
 
+                // get task name
+                String taskName = this.hrc.getHRCTask(task) == null || this.hrc.getHRCTask(task).getName() == null ?
+                        task.getLocalName() == null ? task.asNode().getBlankNodeLabel() : task.getLocalName() :
+                        this.hrc.getHRCTask(task).getName();
+
                 // get synchronization body
                 String body = comp2sync.get(goalComp);
                 // add synchronization constraints
-                body += "\t\tVALUE " + goal.getLocalName() + "() {\n\n" +
-                        "\t\t\td0 " + value2component.get(task) + "." + task.getLocalName() + "();\n" +
+                body += "\t\tVALUE " + goalName+ "() {\n\n" +
+                        "\t\t\td0 " + value2component.get(task) + "." + taskName + "();\n" +
                         "\t\t\tCONTAINS [0, +INF] [0, +INF] d0;\n" +
                         "\t\t}\n\n";
+
 
                 // update description
                 comp2sync.put(goalComp, body);
             }
 
             // get the decomposition graph
-            List<Map<Resource, List<Set<Resource>>>> graphs = knowledge.getDecompositionGraph(goal);
+            List<Map<Resource, List<Set<Resource>>>> graphs = this.knowledge.getDecompositionGraph(goal);
             // check each possible decomposition - method
             for (Map<Resource, List<Set<Resource>>> graph : graphs)
             {
@@ -352,6 +509,10 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
                     // get reference component
                     String refComp = value2component.get(reference);
+                    // get reference value name
+                    String referenceName = this.hrc.getHRCTask(reference) == null || this.hrc.getHRCTask(reference).getName() == null ?
+                            reference.getLocalName() == null ? reference.asNode().getBlankNodeLabel() : reference.getLocalName() :
+                            this.hrc.getHRCTask(reference).getName();
 
                     // check if decomposition is empty
                     if (!graph.get(reference).isEmpty())
@@ -382,11 +543,17 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
                                     // get target component
                                     Resource predicate = decomposition.stream().findFirst().get();
+                                    // get predicate name
+                                    String predicateName = this.hrc.getHRCTask(predicate) == null || this.hrc.getHRCTask(predicate).getName() == null ?
+                                            predicate.getLocalName() == null ? predicate.asNode().getBlankNodeLabel() : predicate.getLocalName() :
+                                            this.hrc.getHRCTask(predicate).getName();
+
+
                                     // get component
                                     String predicateComponent = value2component.get(predicate);
                                     // add value  synchronization
-                                    synchBody += "\t\tVALUE " + reference.getLocalName() + "() {\n\n" +
-                                            "\t\t\td0 " + predicateComponent + "." + predicate.getLocalName() + "();\n" +
+                                    synchBody += "\t\tVALUE " + referenceName + "() {\n\n" +
+                                            "\t\t\td0 " + predicateComponent + "." + predicateName + "();\n" +
                                             "\t\t\tCONTAINS [0, +INF] [0, +INF] d0;\n" +
                                             "\t\t}\n\n";
 
@@ -414,18 +581,29 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
                                     // get component synchronization body
                                     String synchBody = comp2sync.get(refComp);
+                                    // get reference name
+                                    String refName = this.hrc.getHRCTask(reference) == null || this.hrc.getHRCTask(reference).getName() == null ?
+                                        reference.getLocalName() == null ? reference.asNode().getBlankNodeLabel() : reference.getLocalName() :
+                                        this.hrc.getHRCTask(reference).getName();
+
                                     // add value synchronization
-                                    synchBody += "\t\t VALUE " + reference.getLocalName() + "() {\n\n";
+                                    synchBody += "\t\t VALUE " + refName + "() {\n\n";
                                     // increment the number of synchronization
                                     this.numberOfSynchronizations++;
 
                                     int dIndex = 0;
                                     for (Resource dec : decomposition)
                                     {
+                                        // get decision name
+                                        String decName = this.hrc.getHRCTask(dec) == null || this.hrc.getHRCTask(dec).getName() == null ?
+                                                dec.getLocalName() == null ? dec.asNode().getBlankNodeLabel() : dec.getLocalName() :
+                                                this.hrc.getHRCTask(dec).getName();
+
+
                                         // get decision component
                                         String decComponent = value2component.get(dec);
                                         // add decomposition description
-                                        synchBody += "\t\t\td" + dIndex + " " + decComponent + "." + dec.getLocalName() + "();\n" +
+                                        synchBody += "\t\t\td" + dIndex + " " + decComponent + "." + decName + "();\n" +
                                                 "\t\t\tCONTAINS [0, +INF] [0, +INF] d" + dIndex + ";\n";
                                         // increment the number of constraints
                                         this.numberOfConstraints++;
@@ -473,11 +651,18 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
         this.numberOfVariables++;
         // prepare SV description
         String sv = "\tCOMP_TYPE SingletonStateVariable " + typeName + "(";
-        for (Resource val : values) {
+        for (Resource val : values)
+        {
+            // get value name
+            String valName = this.hrc.getHRCTask(val) == null || this.hrc.getHRCTask(val).getName() == null ?
+                    val.getLocalName() == null ? val.asNode().getBlankNodeLabel() : val.getLocalName() :
+                    this.hrc.getHRCTask(val).getName();
+
             // add predicate
-            sv += val.getLocalName() + "(), ";
+            sv += valName + "(), ";
             // increment the number of created predicates
             this.numberOfPredicates++;
+
         }
 
         // add idle predicate
@@ -489,17 +674,29 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 "\t\tMEETS {\n";
         // add transitions
         for (Resource val : values) {
-            sv += "\t\t\t" + val.getLocalName() + "();\n";
+
+            // get value name
+            String valName = this.hrc.getHRCTask(val) == null || this.hrc.getHRCTask(val).getName() == null ?
+                    val.getLocalName() == null ? val.asNode().getBlankNodeLabel() : val.getLocalName() :
+                    this.hrc.getHRCTask(val).getName();
+
+            sv += "\t\t\t" + valName + "();\n";
         }
         // close transition
         sv += "\t\t}\n\n";
 
         // add transitions for all goals
         for (Resource val : values) {
-            sv += "\t\tVALUE " + val.getLocalName() + "() [1, +INF]\n" +
+            // get value name
+            String valName = this.hrc.getHRCTask(val) == null || this.hrc.getHRCTask(val).getName() == null ?
+                    val.getLocalName() == null ? val.asNode().getBlankNodeLabel() : val.getLocalName() :
+                    this.hrc.getHRCTask(val).getName();
+
+            sv += "\t\tVALUE " + valName + "() [1, +INF]\n" +
                     "\t\tMEETS {\n" +
                     "\t\t\tIdle();\n" +
                     "\t\t}\n\n";
+
         }
 
         // close SV

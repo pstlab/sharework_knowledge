@@ -4,6 +4,9 @@ import org.apache.jena.ontology.*;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.reasoner.rulesys.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -1574,4 +1577,58 @@ public class ProductionKnowledge
         }
     }
 
+    /**
+     *
+     * @param func
+     * @return
+     * @throws Exception
+     */
+    public List<Statement> getFunctionDataProperties(Resource func)
+            throws Exception
+    {
+        // list statements
+        List<Statement> list = new ArrayList<>();
+        // add all statements
+        list.addAll(this.listStatements(
+                func.getURI() == null ? func.asNode().getBlankNodeLabel(): func.getURI(),
+                ProductionKnowledgeDictionary.SOHO_NS + "hasProcedureName",
+                null));
+
+        // add all statements
+        list.addAll(this.listStatements(
+                func.getURI() == null ? func.asNode().getBlankNodeLabel(): func.getURI(),
+                ProductionKnowledgeDictionary.SOHO_NS + "hasProcedureId",
+                null));
+
+
+        // add all statements
+        list.addAll(this.listStatements(
+                func.getURI() == null ? func.asNode().getBlankNodeLabel(): func.getURI(),
+                ProductionKnowledgeDictionary.SOHO_NS + "hasDuration",
+                null));
+
+        // add all statements
+        list.addAll(this.listStatements(
+                func.getURI() == null ? func.asNode().getBlankNodeLabel(): func.getURI(),
+                ProductionKnowledgeDictionary.SOHO_NS + "hasDurationUncertainty",
+                null));
+
+
+        // get statements
+        return list;
+    }
+
+    /**
+     *
+     * @param resource
+     * @throws Exception
+     */
+    public Resource getResourceType(Resource resource)
+            throws Exception
+    {
+        // check RDF:type statement
+        Statement statement = resource.getProperty(this.getProperty(ProductionKnowledgeDictionary.RDF_NS + "type"));
+        // get retrieve resource type
+        return statement.getObject().asResource();
+    }
 }

@@ -2,6 +2,7 @@ package it.cnr.istc.pst.sharework.testing.knowledge.mosaic;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -125,11 +126,26 @@ public class MosaicKnowledgeExtractionTest
             List<Resource> funcs = knowledge.getFunctions();
             Assert.assertNotNull(funcs);
             Assert.assertFalse(funcs.isEmpty());
-            Assert.assertFalse(funcs.isEmpty());
-
-            for (Resource func : funcs) {
+            for (Resource func : funcs)
+            {
+                // get function type
+                Resource funcType = knowledge.getResourceType(func);
                 Assert.assertNotNull(func);
-                System.out.println("> function: " + func.getLocalName() + " (" + func.getURI() + ")");
+
+                System.out.println("> [" + funcType.getLocalName() +"] function: " + func.getLocalName() + " (" + func.getURI() + ")");
+
+                // retrieve function data properties
+                List<Statement> stats = knowledge.getFunctionDataProperties(func);
+                Assert.assertNotNull(stats);
+                if (!stats.isEmpty()) {
+                    System.out.println("\tFunction data properties:");
+                    for (Statement stat : stats) {
+                        Assert.assertNotNull(stat);
+                        String value = (String) stat.getObject().asNode().getLiteralValue();
+                        Assert.assertNotNull(value);
+                        System.out.println("\t\t" + stat + " ---> [" + value + "]");
+                    }
+                }
             }
 
             // check the number of functions of the cobot

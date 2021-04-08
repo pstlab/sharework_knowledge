@@ -16,94 +16,94 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 	}
 
-	COMP_TYPE SingletonStateVariable WorkerVariableType(tightening-nuts-frontdoor(), setting-nuts-frontdoor(), manualguidance-frontdoor(), connect-harness-frontdoor(), manualguidance-reardoor(), tightening-nuts-reardoor(), tightening-bolts-reardoor(), connect-harness-reardoor(), setting-nuts-reardoor(), tightening-bolts-frontdoor(), moveto-bedarea(),  Idle()) {
+	COMP_TYPE SingletonStateVariable WorkerVariableType(assembleNutsFrontDoor(), settingNutsFrontDoor(), manualGuidanceFrontDoor(), connectHarnessFrontDoor(), manualGuidanceRearDoor(), assembleNutsRearDoor(), screwBoltsRearDoor(), connectHarnessRearDoor(), settingNutsRearDoor(), screwBoltsFrontDoor(), moveToBedArea(),  Idle()) {
 
 		VALUE Idle() [1, +INF]
 		MEETS {
-			tightening-nuts-frontdoor();
-			setting-nuts-frontdoor();
-			manualguidance-frontdoor();
-			connect-harness-frontdoor();
-			manualguidance-reardoor();
-			tightening-nuts-reardoor();
-			tightening-bolts-reardoor();
-			connect-harness-reardoor();
-			setting-nuts-reardoor();
-			tightening-bolts-frontdoor();
-			moveto-bedarea();
+			assembleNutsFrontDoor();
+			settingNutsFrontDoor();
+			manualGuidanceFrontDoor();
+			connectHarnessFrontDoor();
+			manualGuidanceRearDoor();
+			assembleNutsRearDoor();
+			screwBoltsRearDoor();
+			connectHarnessRearDoor();
+			settingNutsRearDoor();
+			screwBoltsFrontDoor();
+			moveToBedArea();
 		}
 
-		VALUE tightening-nuts-frontdoor() [1, +INF]
+		VALUE assembleNutsFrontDoor() [1, +INF]
 		MEETS {
 			Idle();
 		}
 
-		VALUE setting-nuts-frontdoor() [1, +INF]
+		VALUE settingNutsFrontDoor() [1, +INF]
 		MEETS {
 			Idle();
 		}
 
-		VALUE manualguidance-frontdoor() [1, +INF]
+		VALUE manualGuidanceFrontDoor() [1, +INF]
 		MEETS {
 			Idle();
 		}
 
-		VALUE connect-harness-frontdoor() [1, +INF]
+		VALUE connectHarnessFrontDoor() [1, +INF]
 		MEETS {
 			Idle();
 		}
 
-		VALUE manualguidance-reardoor() [1, +INF]
+		VALUE manualGuidanceRearDoor() [1, +INF]
 		MEETS {
 			Idle();
 		}
 
-		VALUE tightening-nuts-reardoor() [1, +INF]
+		VALUE assembleNutsRearDoor() [1, +INF]
 		MEETS {
 			Idle();
 		}
 
-		VALUE tightening-bolts-reardoor() [1, +INF]
+		VALUE screwBoltsRearDoor() [1, +INF]
 		MEETS {
 			Idle();
 		}
 
-		VALUE connect-harness-reardoor() [1, +INF]
+		VALUE connectHarnessRearDoor() [1, +INF]
 		MEETS {
 			Idle();
 		}
 
-		VALUE setting-nuts-reardoor() [1, +INF]
+		VALUE settingNutsRearDoor() [1, +INF]
 		MEETS {
 			Idle();
 		}
 
-		VALUE tightening-bolts-frontdoor() [1, +INF]
+		VALUE screwBoltsFrontDoor() [1, +INF]
 		MEETS {
 			Idle();
 		}
 
-		VALUE moveto-bedarea() [1, +INF]
+		VALUE moveToBedArea() [1, +INF]
 		MEETS {
 			Idle();
 		}
 
 	}
 
-	COMP_TYPE SingletonStateVariable CobotVariableType(pickplace-reardoor(), pickplace-frontdoor(),  Idle()) {
+	COMP_TYPE SingletonStateVariable CobotVariableType(pickPlaceRearDoor(), pickPlaceFrontDoor(),  Idle()) {
 
 		VALUE Idle() [1, +INF]
 		MEETS {
-			pickplace-reardoor();
-			pickplace-frontdoor();
+			pickPlaceRearDoor();
+			pickPlaceFrontDoor();
 		}
 
-		VALUE pickplace-reardoor() [1, +INF]
+		VALUE pickPlaceRearDoor() [1, +INF]
 		MEETS {
 			Idle();
 		}
 
-		VALUE pickplace-frontdoor() [1, +INF]
+		VALUE pickPlaceFrontDoor() [1, +INF]
 		MEETS {
 			Idle();
 		}
@@ -263,85 +263,85 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE r01() {
 
-			d0 Cobot.tasks.pickplace-frontdoor();
+			d0 Cobot.tasks.pickPlaceFrontDoor();
 			CONTAINS [0, +INF] [0, +INF] d0;
 		}
 
 		VALUE h09() {
 
-			d0 Worker.operations.setting-nuts-reardoor();
+			d0 Worker.operations.settingNutsRearDoor();
 			CONTAINS [0, +INF] [0, +INF] d0;
 		}
 
 		VALUE h10() {
 
-			d0 Worker.operations.tightening-nuts-reardoor();
+			d0 Worker.operations.assembleNutsRearDoor();
 			CONTAINS [0, +INF] [0, +INF] d0;
 		}
 
 		VALUE h08() {
 
-			d0 Worker.operations.setting-nuts-reardoor();
+			d0 Worker.operations.settingNutsRearDoor();
 			CONTAINS [0, +INF] [0, +INF] d0;
 		}
 
 		VALUE h06() {
 
-			d0 Worker.operations.moveto-bedarea();
+			d0 Worker.operations.moveToBedArea();
 			CONTAINS [0, +INF] [0, +INF] d0;
 		}
 
 		VALUE h04() {
 
-			d0 Worker.operations.tightening-bolts-frontdoor();
+			d0 Worker.operations.screwBoltsFrontDoor();
 			CONTAINS [0, +INF] [0, +INF] d0;
 		}
 
 		VALUE h12() {
 
-			d0 Worker.operations.moveto-bedarea();
+			d0 Worker.operations.moveToBedArea();
 			CONTAINS [0, +INF] [0, +INF] d0;
 		}
 
 		VALUE h02() {
 
-			d0 Worker.operations.manualguidance-frontdoor();
+			d0 Worker.operations.manualGuidanceFrontDoor();
 			CONTAINS [0, +INF] [0, +INF] d0;
 		}
 
 		VALUE r02() {
 
-			d0 Cobot.tasks.pickplace-reardoor();
+			d0 Cobot.tasks.pickPlaceRearDoor();
 			CONTAINS [0, +INF] [0, +INF] d0;
 		}
 
 		VALUE h11() {
 
-			d0 Worker.operations.tightening-nuts-reardoor();
+			d0 Worker.operations.assembleNutsRearDoor();
 			CONTAINS [0, +INF] [0, +INF] d0;
 		}
 
 		VALUE h07() {
 
-			d0 Worker.operations.connect-harness-reardoor();
+			d0 Worker.operations.connectHarnessRearDoor();
 			CONTAINS [0, +INF] [0, +INF] d0;
 		}
 
 		VALUE h05() {
 
-			d0 Worker.operations.tightening-nuts-frontdoor();
+			d0 Worker.operations.assembleNutsFrontDoor();
 			CONTAINS [0, +INF] [0, +INF] d0;
 		}
 
 		VALUE h03() {
 
-			d0 Worker.operations.setting-nuts-frontdoor();
+			d0 Worker.operations.settingNutsFrontDoor();
 			CONTAINS [0, +INF] [0, +INF] d0;
 		}
 
 		VALUE h01() {
 
-			d0 Worker.operations.connect-harness-frontdoor();
+			d0 Worker.operations.connectHarnessFrontDoor();
 			CONTAINS [0, +INF] [0, +INF] d0;
 		}
 

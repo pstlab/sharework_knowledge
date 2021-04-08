@@ -48,6 +48,7 @@ dependencies {
   compile 'org.apache.jena:jena-core:3.17.0'
   compile 'it.cnr.istc.pst:platinum:[1.0,)'
   compile 'org.ros.rosjava_messages:sharework_knowledge_msgs:[0.1.0,)'
+  compile 'org.mongodb:mongo-java-driver:[3.12,)'
   /* Example of a local subproject dependency */
   /* compile project(':sibling_gradle_project') */
 

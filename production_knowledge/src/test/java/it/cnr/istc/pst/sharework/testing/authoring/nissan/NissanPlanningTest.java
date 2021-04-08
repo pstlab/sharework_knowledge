@@ -39,14 +39,6 @@ public class NissanPlanningTest
                 SolutionPlan solution = planner.plan();
                 System.out.println(solution);
                 planner.display();
-
-                // get robot and human components
-                DomainComponent hc = pdb.getComponentByName("Worker");
-                // display
-                hc.display();
-                DomainComponent rc = pdb.getComponentByName("ProductionL1");
-                // display
-                rc.display();
             }
             else {
                 // not valid
