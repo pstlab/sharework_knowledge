@@ -1,8 +1,10 @@
 package it.cnr.istc.pst.sharework.knowledge;
 
+import it.cnr.istc.pst.sharework.knowledge.ex.ProductionKnowledgeException;
 import org.apache.jena.ontology.*;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.reasoner.rulesys.*;
+import org.apache.jena.reasoner.rulesys.builtins.Product;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -215,10 +217,10 @@ public class ProductionKnowledge
 
     /**
      *
-     * @throws Exception
+     * @throws InterruptedException
      */
     public void restore()
-            throws Exception
+            throws InterruptedException
     {
         synchronized (lock) {
             while (!this.state.equals(ProductionKnowledgeState.NONE)) {
@@ -258,10 +260,10 @@ public class ProductionKnowledge
 
     /**
      *
-     * @throws Exception
+     * @throws InterruptedException
      */
     public void beginReadTransaction()
-            throws Exception
+            throws InterruptedException
     {
         synchronized (lock) {
             while (!this.state.equals(ProductionKnowledgeState.NONE) &&
@@ -297,10 +299,10 @@ public class ProductionKnowledge
      *
      * @param classURI
      * @return
-     * @throws Exception
+     * @throws InterruptedException
      */
     public List<Resource> getInstances(String classURI)
-            throws Exception
+            throws InterruptedException, ProductionKnowledgeException
     {
         // check status lock
         synchronized (lock) {
@@ -325,7 +327,7 @@ public class ProductionKnowledge
             // check if the model contains the resource
             if (!this.ontoModel.containsResource(c)) {
                 // class not existing
-                throw new Exception("No class found with URI  \"" + classURI + "\"");
+                throw new ProductionKnowledgeException("No class found with URI  \"" + classURI + "\"");
             } else {
                 // update the resource
                 c = this.ontoModel.getResource(classURI);
@@ -368,10 +370,11 @@ public class ProductionKnowledge
      *
      * @param classURI
      * @return
-     * @throws Exception
+     * @throws InterruptedException
+     * @throws ProductionKnowledgeException
      */
     public List<Individual> getIndividuals(String classURI)
-            throws Exception
+            throws InterruptedException, ProductionKnowledgeException
     {
         // check status lock
         synchronized (lock) {
@@ -394,7 +397,7 @@ public class ProductionKnowledge
             // check if the model contains the resource
             if (!this.ontoModel.containsResource(c)) {
                 // class not existing
-                throw new Exception("No class found with URI  \"" + classURI + "\"");
+                throw new ProductionKnowledgeException("No class found with URI  \"" + classURI + "\"");
             } else {
                 // update the resource
                 c = this.ontoModel.getResource(classURI);
@@ -431,10 +434,10 @@ public class ProductionKnowledge
      * model by triggering the rule-based inference engine on the new/updated data
      * of the model
      *
-     * @throws Exception
+     * @throws InterruptedException
      */
     public void rebind()
-            throws Exception
+            throws InterruptedException
     {
         // check status lock
         synchronized (lock) {
@@ -476,7 +479,7 @@ public class ProductionKnowledge
      * @throws Exception
      */
     public Property getProperty(String uri)
-            throws Exception
+            throws InterruptedException
     {
         // check status lock
         synchronized (lock) {
@@ -514,10 +517,11 @@ public class ProductionKnowledge
      *
      * @param classUri
      * @return
-     * @throws Exception
+     * @throws InterruptedException
+     * @throws ProductionKnowledgeException
      */
     public Resource createIndividual(String classUri)
-            throws Exception
+            throws InterruptedException, ProductionKnowledgeException
     {
         synchronized (lock) {
             while (!this.state.equals(ProductionKnowledgeState.NONE)) {
@@ -540,7 +544,7 @@ public class ProductionKnowledge
                         this.ontoModel.getResource(classUri)).asResource();
             } else {
                 // invalid parameter
-                throw new Exception("Unknown resource with URI \"" + classUri + "\"");
+                throw new ProductionKnowledgeException("Unknown resource with URI \"" + classUri + "\"");
             }
         }
         finally {
@@ -567,10 +571,11 @@ public class ProductionKnowledge
      *
      * @param classUri
      * @return
-     * @throws Exception
+     * @throws InterruptedException
+     * @throws ProductionKnowledgeException
      */
     public Resource createUniqueIndividual(String classUri)
-            throws Exception
+            throws InterruptedException, ProductionKnowledgeException
     {
         synchronized (lock) {
             while (!this.state.equals(ProductionKnowledgeState.NONE)) {
@@ -594,7 +599,7 @@ public class ProductionKnowledge
                         this.ontoModel.getResource(classUri)).asResource();
             } else {
                 // invalid parameter
-                throw new Exception("Unknown resource with URI \"" + classUri + "\"");
+                throw new ProductionKnowledgeException("Unknown resource with URI \"" + classUri + "\"");
             }
 
             // set different from siblings
@@ -622,10 +627,11 @@ public class ProductionKnowledge
     /**
      *
      * @param res
-     * @throws Exception
+     * @throws InterruptedException
+     * @throws ProductionKnowledgeException
      */
     public void setDifferentFromSiblings(Resource res)
-            throws Exception
+            throws InterruptedException, ProductionKnowledgeException
     {
         synchronized (lock) {
             while (!this.state.equals(ProductionKnowledgeState.NONE)) {
@@ -681,10 +687,10 @@ public class ProductionKnowledge
      *
      * @param res
      * @param others
-     * @throws Exception
+     * @throws InterruptedException
      */
     public void setDifferentFromResources(Resource res, List<Resource> others)
-            throws Exception
+            throws InterruptedException
     {
         synchronized (lock) {
             while (!this.state.equals(ProductionKnowledgeState.NONE)) {
@@ -734,10 +740,10 @@ public class ProductionKnowledge
      * @param propertyUri
      * @param objectUri
      * @return
-     * @throws Exception
+     * @throws InterruptedException
      */
     public Statement addAssertion(String referenceUri, String propertyUri, String objectUri)
-            throws Exception
+            throws InterruptedException
     {
         synchronized (lock) {
             while (!this.state.equals(ProductionKnowledgeState.NONE)) {
@@ -791,10 +797,10 @@ public class ProductionKnowledge
      * @param propertyUri
      * @param objectUri
      * @return
-     * @throws Exception
+     * @throws InterruptedException
      */
     public  List<Statement> removeAssertion(String referenceUri, String propertyUri, String objectUri)
-            throws Exception
+            throws InterruptedException
     {
         synchronized (lock) {
             while (!this.state.equals(ProductionKnowledgeState.NONE)) {
@@ -864,10 +870,10 @@ public class ProductionKnowledge
      * @param p
      * @param o
      * @return
-     * @throws Exception
+     * @throws InterruptedException
      */
     public List<Statement> listStatements(String s, String p, String o)
-            throws Exception
+            throws InterruptedException
     {
         // check status lock
         synchronized (lock) {
@@ -937,9 +943,10 @@ public class ProductionKnowledge
      * @param resource
      * @param classURI
      * @return
+     * @throws InterruptedException
      */
     public boolean hasResourceType(Resource resource, String classURI)
-            throws Exception
+            throws InterruptedException
     {
         // result flag
         boolean hasType = false;
@@ -981,10 +988,10 @@ public class ProductionKnowledge
      *
      * @param resource
      * @return
-     * @throws Exception
+     * @throws InterruptedException
      */
     public Map<Resource, Set<Resource>> retrieveResourceStructure(Resource resource)
-            throws Exception
+            throws InterruptedException
     {
         // set result structure
         HashMap<Resource, Set<Resource>> structure = new HashMap<>();
@@ -1001,9 +1008,10 @@ public class ProductionKnowledge
      * The method retrieves all known individuals of type SOHO:ProductionGoal
      *
      * @return a list of resource of type SOHO:ProductionGoal
-     * @throws Exception
+     * @throws InterruptedException
      */
-    public List<Resource> getProductionGoals() throws Exception
+    public List<Resource> getProductionGoals()
+            throws InterruptedException
     {
 
         // list of production goals
@@ -1033,10 +1041,10 @@ public class ProductionKnowledge
      * The method retrieves all known individuals of type SOHO:AutonomousAgent
      *
      * @return a list of resource of type SOHO:AutonomousAgent
-     * @throws Exception
+     * @throws InterruptedException
      */
     public List<Resource> getAgents()
-            throws Exception
+            throws InterruptedException
     {
         // list of agents
         List<Resource> agents = new ArrayList<>();
@@ -1062,10 +1070,10 @@ public class ProductionKnowledge
      * The method retrieves all known individuals of type SOHO:WorkOperator
      *
      * @return
-     * @throws Exception
+     * @throws InterruptedException
      */
     public List<Resource> getWorkOperators()
-            throws Exception
+            throws InterruptedException
     {
         // list of workers
         List<Resource> workers = new ArrayList<>();
@@ -1092,10 +1100,10 @@ public class ProductionKnowledge
      * The method retrieves all known individuals of type SOHO:Cobot
      *
      * @return
-     * @throws Exception
+     * @throws InterruptedException
      */
     public List<Resource> getCobots()
-            throws Exception
+            throws InterruptedException
     {
         // list of workers
         List<Resource> cobots = new ArrayList<>();
@@ -1123,10 +1131,10 @@ public class ProductionKnowledge
      * The method retrieves all known individuals of type SOHO:Function
      *
      * @return
-     * @throws Exception
+     * @throws InterruptedException
      */
     public List<Resource> getFunctions()
-            throws Exception
+            throws InterruptedException
     {
         // list of agents
         List<Resource> agents = new ArrayList<>();
@@ -1160,10 +1168,10 @@ public class ProductionKnowledge
      *
      * @param agent
      * @return a list of resource of type SOHO:Function
-     * @throws Exception
+     * @throws InterruptedException
      */
     public List<Resource> getFunctionsByAgent(Resource agent)
-            throws Exception
+            throws InterruptedException
     {
         // list of agents
         List<Resource> functions = new ArrayList<>();
@@ -1196,16 +1204,17 @@ public class ProductionKnowledge
      * @param pGoal a resource of type SOHO:ProductionGoal
      * @return a list of maps representing production graphs as hierarchical decompositions
      * of SOHO:ComplexTask, SOHO:SimpleTask and SOHO:Function
-     * @throws throws an exception in case that the type of the parameter is wrong
+     * @throws InterruptedException
+     * @throws ProductionKnowledgeException
      *
      */
     public List<Map<Resource, List<Set<Resource>>>> getDecompositionGraph(Resource pGoal)
-            throws Exception
+            throws InterruptedException, ProductionKnowledgeException
     {
         // check parameter type
         if (!this.hasResourceType(pGoal, ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal")) {
             // wrong parameter type
-            throw new Exception("Wrong parameter type, a resource/individual of type <" + ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal> expected:" +
+            throw new ProductionKnowledgeException("Wrong parameter type, a resource/individual of type <" + ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal> expected:" +
                     "\n- received parameter " + pGoal.getLocalName() + " (" + pGoal.getURI() + ")");
         }
         
@@ -1269,15 +1278,16 @@ public class ProductionKnowledge
      *
      * @param pGoal
      * @return
-     * @throws Exception
+     * @throws InterruptedException
+     * @throws ProductionKnowledgeException
      */
     public Map<Resource, Set<Resource>> getDependencyGraph(Resource pGoal)
-            throws Exception
+            throws InterruptedException, ProductionKnowledgeException
     {
         // check parameter type
         if (!this.hasResourceType(pGoal, ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal")) {
             // wrong parameter type
-            throw new Exception("Wrong parameter type, a resource/individual of type <" + ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal> expected:" +
+            throw new ProductionKnowledgeException("Wrong parameter type, a resource/individual of type <" + ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal> expected:" +
                     "\n- received parameter " + pGoal.getLocalName() + " (" + pGoal.getURI() + ")");
         }
 
@@ -1314,15 +1324,16 @@ public class ProductionKnowledge
      * t
      * @param pGoal
      * @return
-     * @throws Exception
+     * @throws InterruptedException,
+     * @throws ProductionKnowledgeException
      */
     public List<List<Resource>> getProductionHierarchy(Resource pGoal)
-            throws Exception
+            throws InterruptedException, ProductionKnowledgeException
     {
         // check parameter type
         if (!this.hasResourceType(pGoal, ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal")) {
             // wrong parameter type
-            throw new Exception("Wrong parameter type, a resource/individual of type <" + ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal> expected:" +
+            throw new ProductionKnowledgeException("Wrong parameter type, a resource/individual of type <" + ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal> expected:" +
                     "\n- received parameter " + pGoal.getLocalName() + " (" + pGoal.getURI() + ")");
         }
 
@@ -1453,10 +1464,10 @@ public class ProductionKnowledge
      *
      * @param task
      * @param graph
-     * @throws Exception
+     * @throws InterruptedException
      */
     private void retrieveProductionTaskDecomposition(Resource task, Map<Resource, List<Set<Resource>>> graph)
-            throws Exception
+            throws InterruptedException
     {
         // get constituent property
         Property prop = this.getProperty(ProductionKnowledgeDictionary.DUL_NS +  "hasConstituent");
@@ -1538,10 +1549,10 @@ public class ProductionKnowledge
      *
      * @param resource
      * @param subtree
-     * @throws Exception
+     * @throws InterruptedException
      */
     private void retrieveResourceStructure(Resource resource, Map<Resource, Set<Resource>> subtree)
-            throws Exception
+            throws InterruptedException
     {
         // get constituent property
         Property hasConstituent = this.getProperty(ProductionKnowledgeDictionary.DUL_NS + "hasConstituent");
@@ -1581,10 +1592,10 @@ public class ProductionKnowledge
      *
      * @param func
      * @return
-     * @throws Exception
+     * @throws InterruptedException
      */
     public List<Statement> getFunctionDataProperties(Resource func)
-            throws Exception
+            throws InterruptedException
     {
         // list statements
         List<Statement> list = new ArrayList<>();
@@ -1613,6 +1624,12 @@ public class ProductionKnowledge
                 ProductionKnowledgeDictionary.SOHO_NS + "hasDurationUncertainty",
                 null));
 
+        // add all statements
+        list.addAll(this.listStatements(
+                func.getURI() == null ? func.asNode().getBlankNodeLabel(): func.getURI(),
+                ProductionKnowledgeDictionary.SOHO_NS + "hasGoal",
+                null));
+
 
         // get statements
         return list;
@@ -1621,14 +1638,47 @@ public class ProductionKnowledge
     /**
      *
      * @param resource
-     * @throws Exception
+     * @return
+     * @throws InterruptedException
+     * @throws ProductionKnowledgeException
      */
     public Resource getResourceType(Resource resource)
-            throws Exception
+            throws InterruptedException, ProductionKnowledgeException
     {
         // check RDF:type statement
         Statement statement = resource.getProperty(this.getProperty(ProductionKnowledgeDictionary.RDF_NS + "type"));
+        // check if statement exists
+        if (statement == null) {
+            // throw exception
+            throw new ProductionKnowledgeException("Missing RDF:type property for resource\n" +
+                    "- resource: " + resource.getURI() + "\n");
+        }
+
         // get retrieve resource type
+        return statement.getObject().asResource();
+    }
+
+    /**
+     *
+     * @param function
+     * @return
+     * @throws InterruptedException
+     * @throws ProductionKnowledgeException
+     */
+    public Resource getFunctionTarget(Resource function)
+            throws InterruptedException, ProductionKnowledgeException
+    {
+
+        // check SOHO:hasTarget statement
+        Statement statement = function.getProperty(this.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "hasTarget"));
+        // check statement
+        if (statement == null) {
+            // throw exception
+            throw new ProductionKnowledgeException("Missing SOHO:hasTarget property for resource\n" +
+                    "- resource: " + function.getURI() + "\n");
+        }
+
+        // get target
         return statement.getObject().asResource();
     }
 }

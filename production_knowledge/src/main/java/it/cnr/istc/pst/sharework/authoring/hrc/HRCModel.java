@@ -14,8 +14,6 @@ public class HRCModel
     private Map<Resource, HRCTask> robotTasks;
     private Map<Resource, HRCTask> humanTasks;
 
-
-
     /**
      *
      * @param horizon
@@ -38,6 +36,8 @@ public class HRCModel
         HRCTask rf = new HRCTask(function, type, this.horizon);
         this.tasks.put(rf.getResource(), rf);
         this.robotTasks.put(rf.getResource(), rf);
+        // set agent
+        rf.setAgent("robot");
         // get function model
         return rf;
     }
@@ -53,6 +53,8 @@ public class HRCModel
         HRCTask hf = new HRCTask(function, type, this.horizon);
         this.tasks.put(hf.getResource(), hf);
         this.humanTasks.put(hf.getResource(), hf);
+        // set agent
+        hf.setAgent("human");
         // get function model
         return hf;
     }

@@ -9,11 +9,18 @@ import java.util.Objects;
  */
 public class HRCTask
 {
+    private long horizon;                   // known plan horizon
     private Resource resource;              // resource denoting a task instance
     private Resource type;                  // resource denoting task type
-    private String name;
-    private long[] duration;
-    private double uncertainty;
+    private Resource target;                // resource denoting the target of the task
+
+    private String name;                    // unique name of the task
+    private String description;             // task description
+    private String goal;                    // label denoting the goal of the procedure
+    private String agent;                   // label of the agent that would perform the function
+    private long duration;                  // known average duration of task execution
+    private long uncertainty;               // known uncertainty about the duration of a task
+    private double successRate;             // known success rate
 
     /**
      *
@@ -24,13 +31,100 @@ public class HRCTask
     protected HRCTask(Resource function, Resource type, long horizon) {
         // set type
         this.type = type;
+        // set default name taking the name associated to the resource
+        this.name = function.getLocalName() == null ? function.asNode().getBlankNodeLabel() : function.getLocalName();
+        // default agent type
+        this.agent = "any";
+        // set task description
+        this.description = this.name;
         // set function resource
         this.resource = function;
-        // set default duration with maximum uncertainty
-        this.duration = new long[] {
-                1,
-                horizon
-        };
+        // set default average duration
+        this.duration = 1;
+        // set maximum uncertainty [- horizon, +horizon]
+        this.uncertainty = horizon;
+        // set default success rate
+        this.successRate = .99;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public double getSuccessRate() {
+        return successRate;
+    }
+
+    /**
+     *
+     * @param successRate
+     */
+    public void setSuccessRate(double successRate) {
+        this.successRate = successRate;
+    }
+
+    /**
+     *
+     * @param description
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     *
+     * @param goal
+     */
+    public void setGoal(String goal) {
+        this.goal = goal;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getGoal() {
+        return goal;
+    }
+
+    /**
+     *
+     * @param target
+     */
+    public void setTarget(Resource target) {
+        this.target = target;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Resource getTarget() {
+        return target;
+    }
+
+    /**
+     *
+     * @param agent
+     */
+    public void setAgent(String agent) {
+        this.agent = agent;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getAgent() {
+        return this.agent;
     }
 
     /**
@@ -70,31 +164,15 @@ public class HRCTask
      * @param duration
      */
     public void setDuration(long duration) {
-        this.duration = new long[] {
-                duration,
-                duration
-        };
-    }
-
-    /**
-     *
-     * @param duration
-     */
-    public void setDuration(long[] duration) {
         this.duration = duration;
     }
 
     /**
      *
-     * @param duration
      * @param uncertainty
      */
-    public void setDuration(long duration, long uncertainty) {
+    public void setUncertainty(long uncertainty) {
         this.uncertainty = uncertainty;
-        this.duration = new long[] {
-                Math.max(1, duration - uncertainty),
-                Math.min(duration + uncertainty, Long.MAX_VALUE - 1)
-        };
     }
 
     /**
@@ -102,7 +180,30 @@ public class HRCTask
      * @return
      */
     public long[] getDuration() {
-        return duration;
+        // create bounds
+        long[] bounds = new long[] {
+                Math.max(1, this.duration - this.uncertainty),
+                Math.min(this.duration + this.uncertainty, this.horizon)
+        };
+
+        // get bounds
+        return bounds;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public long getAverageDuration() {
+        return this.duration;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public long getUncertainty() {
+        return uncertainty;
     }
 
     /**

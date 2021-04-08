@@ -46,9 +46,10 @@ public abstract class ProductionKnowledgeAuthoring implements ProductionKnowledg
                             // prepare task planning data
                             prepare();
                         }
-                        else {
+                        else
+                            {
                             // restore knowledge
-                            System.out.println("Not valid planing model - restoring default production knowledge");
+                            System.out.println("[Authoring] Not valid planning model - restoring default production knowledge");
                             // not valid - reset production knowledge
                             knowledge.restore();
                         }
@@ -57,9 +58,23 @@ public abstract class ProductionKnowledgeAuthoring implements ProductionKnowledg
                         // stop running
                         run = false;
                     }
-                    catch (Exception ex) {
-                        // print error but keep running
-                        System.err.println(">> " + ex.getMessage());
+                    catch (Exception ex)
+                    {
+                        // model compilation or validation error, keep running but restore knowledge
+                        System.err.println("[Authoring] Task planning model generation error:\n" +
+                                "- message: " + ex.getMessage() + "\n");
+
+                        try
+                        {
+                            // restore knowledge
+                            System.out.println("[Authoring] Not valid planning model - restoring default production knowledge");
+                            // not valid - reset production knowledge
+                            knowledge.restore();
+                        }
+                        catch (InterruptedException exx) {
+                            // sto running
+                            run = false;
+                        }
                     }
                 }
             }
@@ -143,11 +158,11 @@ public abstract class ProductionKnowledgeAuthoring implements ProductionKnowledg
      * @throws Exception
      */
     public String compile()
-            throws Exception
+            throws InterruptedException, ProductionKnowledgeAuthoringException
     {
         // check knowledge
         if (this.knowledge == null) {
-            throw new Exception("No production knowledge has been set!");
+            throw new ProductionKnowledgeAuthoringException("No production knowledge has been set!");
         }
 
         // domain description
@@ -172,19 +187,20 @@ public abstract class ProductionKnowledgeAuthoring implements ProductionKnowledg
     /**
      *
      * @return
-     * @throws Exception
+     * @throws InterruptedException
+     * @throws ProductionKnowledgeAuthoringException
      */
     protected abstract String doCompile()
-            throws Exception;
+            throws InterruptedException, ProductionKnowledgeAuthoringException;
 
     /**
      *
      * @param model
      * @return
-     * @throws Exception
+     * @throws ProductionKnowledgeAuthoringException
      */
     public boolean validate(String model)
-            throws Exception {
+            throws ProductionKnowledgeAuthoringException {
         // actually validate the model
         return this.doValidate(model);
     }
@@ -192,19 +208,22 @@ public abstract class ProductionKnowledgeAuthoring implements ProductionKnowledg
 
     /**
      *
+     * @param model
      * @return
-     * @throws Exception
+     * @throws ProductionKnowledgeAuthoringException
      */
     protected abstract boolean doValidate(String model)
-            throws Exception;
+            throws ProductionKnowledgeAuthoringException;
 
 
     /**
      *
      * @return
+     * @throws InterruptedException
+     * @throws ProductionKnowledgeAuthoringException
      */
     public boolean compileAndValidate()
-            throws Exception
+            throws InterruptedException, ProductionKnowledgeAuthoringException
     {
         // first compile
         String model = this.compile();
