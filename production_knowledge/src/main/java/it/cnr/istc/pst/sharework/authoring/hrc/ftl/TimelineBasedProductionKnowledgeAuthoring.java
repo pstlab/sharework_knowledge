@@ -420,27 +420,24 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 doc.append("type", type.getLocalName() == null ? type.asNode().getBlankNodeLabel() : type.getLocalName());
                 // set task target
                 Resource target = tasks.stream().findFirst().get().getTarget();
-                doc.append("goal", target.getLocalName() == null ? target.asNode().getBlankNodeLabel() : target.getLocalName());
+                doc.append("target", target.getLocalName() == null ? target.asNode().getBlankNodeLabel() : target.getLocalName());
+                // set goal
+                doc.append("goal", tasks.stream().findFirst().get().getGoal());
                 // set description
                 doc.append("description", tasks.stream().findFirst().get().getDescription());
 
                 // set agents
-                String[] agents = new String[tasks.size()];
-                Iterator<HRCTask> it = tasks.iterator();
-                int pos = 0;
-                while (it.hasNext()) {
-                    // task
-                    HRCTask task = it.next();
-                    agents[pos] = task.getAgent();
-                    pos++;
+                List<String> agents = new ArrayList<>();
+                for (HRCTask task : tasks) {
+                    agents.add(task.getAgent());
                 }
+
+                // add agent field with the array of agents that can perform the procedure
+                doc.append("agent", agents);
 
                 // insert document into the collection
                 taskProperties.insertOne(doc);
             }
-
-
-
 
             // get collection concerning task duration
             MongoCollection<Document> taskDurations = db.getCollection(this.prop2value.get(PROPERTY_KEY_MONGODB_COLLECTION_TASK_DURATIONS));

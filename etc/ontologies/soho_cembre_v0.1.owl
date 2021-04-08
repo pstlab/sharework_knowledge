@@ -282,7 +282,6 @@
 
     <owl:DatatypeProperty rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasDuration">
         <rdfs:subPropertyOf rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasProcedureParameter"/>
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
         <rdfs:domain rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Function"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
     </owl:DatatypeProperty>
@@ -615,6 +614,13 @@
                 <owl:someValuesFrom rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Autonomy"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasName"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -716,7 +722,13 @@
         <rdfs:subClassOf rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#WorkPiece"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasConstituent"/>
+                <owl:onProperty rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasQuality"/>
+                <owl:someValuesFrom rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ObjectLocation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.loa-cnr.it/ontologies/DUL.owl#hasPart"/>
                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
                 <owl:onClass rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#WorkPiece"/>
             </owl:Restriction>
@@ -1209,14 +1221,6 @@
     
 
 
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#JointConfiguration -->
-
-    <owl:Class rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#JointConfiguration">
-        <rdfs:subClassOf rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#RobotProperty"/>
-    </owl:Class>
-    
-
-
     <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#LowExperitseLevel -->
 
     <owl:Class rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#LowExperitseLevel">
@@ -1626,6 +1630,18 @@
 
     <owl:Class rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionLocation">
         <rdfs:subClassOf rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionObject"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.loa-cnr.it/ontologies/DUL.owl#hasPart"/>
+                <owl:someValuesFrom rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionLocation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasQuality"/>
+                <owl:someValuesFrom rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#EnvironmentArea"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -2256,6 +2272,12 @@
 
     <owl:Class rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#Tool">
         <rdfs:subClassOf rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionObject"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasQuality"/>
+                <owl:someValuesFrom rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ObjectLocation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -2306,6 +2328,20 @@
                 <owl:someValuesFrom rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#WorkerLevel"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasName"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasSurname"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -2314,6 +2350,12 @@
 
     <owl:Class rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#WorkPiece">
         <rdfs:subClassOf rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionObject"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasQuality"/>
+                <owl:someValuesFrom rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ObjectLocation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -2330,6 +2372,12 @@
 
     <owl:Class rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#WorkerBodyPart">
         <rdfs:subClassOf rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionObject"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.loa-cnr.it/ontologies/DUL.owl#hasPart"/>
+                <owl:someValuesFrom rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#WorkerBodyPart"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasQuality"/>
@@ -2409,589 +2457,428 @@
     
 
 
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#bed-area -->
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#boxA -->
 
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#bed-area">
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#boxA">
         <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionLocation"/>
-        <DUL1:hasLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#bed-env-area"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#bed-env-area -->
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#boxB -->
 
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#bed-env-area">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#EnvironmentArea"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#bolts-frontdoor -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#bolts-frontdoor">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionObject"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#bolts-reardoor -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#bolts-reardoor">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionObject"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#chassis -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#chassis">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#CompoundWorkPiece"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#connect-harness-frontdoor -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#connect-harness-frontdoor">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Assemble"/>
-        <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor"/>
-        <soho:requires rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#harness-frontdoor"/>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">connectHarnessFrontDoor</soho:hasProcedureName>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#connect-harness-reardoor -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#connect-harness-reardoor">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Assemble"/>
-        <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor"/>
-        <soho:requires rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#harness-reardoor"/>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">connectHarnessRearDoor</soho:hasProcedureName>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doorbuffer-area -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doorbuffer-area">
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#boxB">
         <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionLocation"/>
-        <DUL1:hasLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doorbuffer-env-area"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doorbuffer-env-area -->
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#cembre_goal -->
 
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doorbuffer-env-area">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#EnvironmentArea"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#SimpleWorkpiece"/>
-        <DUL1:hasLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor-current-location"/>
-        <DUL1:hasLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor-current-location"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor-area -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor-area">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionLocation"/>
-        <DUL1:hasLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor-env-area"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor-current-location -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor-current-location">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ObjectLocation"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor-env-area -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor-env-area">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#EnvironmentArea"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#h01 -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#h01">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#connect-harness-frontdoor"/>
-        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#independent"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#h02 -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#h02">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#manualguidance-frontdoor"/>
-        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#independent"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#h03 -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#h03">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#setting-nuts-frontdoor"/>
-        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#independent"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#h04 -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#h04">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#tightening-bolts-frontdoor"/>
-        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#independent"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#h05 -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#h05">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#tightening-nuts-frontdoor"/>
-        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#independent"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#h06 -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#h06">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#moveto-bedarea"/>
-        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#independent"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#h07 -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#h07">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#connect-harness-reardoor"/>
-        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#independent"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#h08 -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#h08">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#setting-nuts-reardoor"/>
-        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#independent"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#h09 -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#h09">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#setting-nuts-reardoor"/>
-        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#independent"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#h10 -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#h10">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#tightening-nuts-reardoor"/>
-        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#independent"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#h11 -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#h11">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#tightening-nuts-reardoor"/>
-        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#independent"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#h12 -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#h12">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#moveto-bedarea"/>
-        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#independent"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#harness-frontdoor -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#harness-frontdoor">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionObject"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#harness-reardoor -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#harness-reardoor">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionObject"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#hct-machine -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#hct-machine">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Tool"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#independent -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#independent">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Independent"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#manualguidance-frontdoor -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#manualguidance-frontdoor">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ManualGuidance"/>
-        <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor"/>
-        <soho:requires rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#robotic-arm"/>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">manualGuidanceFrontDoor</soho:hasProcedureName>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#manualguidance-reardoor -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#manualguidance-reardoor">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ManualGuidance"/>
-        <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor"/>
-        <soho:requires rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#robotic-arm"/>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">manualGuidanceRearDoor</soho:hasProcedureName>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#moveto-bedarea -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#moveto-bedarea">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Motion"/>
-        <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker-position"/>
-        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker-body"/>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">moveToBedArea</soho:hasProcedureName>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#nissan-case -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#nissan-case">
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#cembre_goal">
         <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionGoal"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#nissan-method"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#cembre_method_1"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#nissan-method -->
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#cembre_method_1 -->
 
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#nissan-method">
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#cembre_method_1">
         <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionMethod"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#nissan-task"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doCembreAssembly"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#nissan-task -->
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doCembreAssembly -->
 
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#nissan-task">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ConjunctiveComplexTask"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#h01"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#h02"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#h03"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#h04"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#h05"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#h06"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#h07"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#h08"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#h09"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#h10"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#h11"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#h12"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#r01"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#r02"/>
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doCembreAssembly">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraGrande1"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraGrande2"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraPiccola1"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraPiccola2"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#nuts-frontdoor -->
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraGrande1 -->
 
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#nuts-frontdoor">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionObject"/>
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraGrande1">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraGrandeHuman"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraGrandeRobot"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#nuts-reardoor -->
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraGrande2 -->
 
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#nuts-reardoor">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionObject"/>
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraGrande2">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraGrandeHuman"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraGrandeRobot"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#pickplace-frontdoor -->
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraGrandeHuman -->
 
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#pickplace-frontdoor">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraGrandeHuman">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickSquadraGrandeHuman"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceSquadraGrandeHuman"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#op_constraint_1"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraGrandeRobot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraGrandeRobot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickSquadraGrandeRobot"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceSquadraGrandeRobot"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#op_constraint_3"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraPiccola1 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraPiccola1">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraPiccolaHuman"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraPiccolaRobot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraPiccola2 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraPiccola2">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraPiccolaHuman"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraPiccolaRobot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraPiccolaHuman -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraPiccolaHuman">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickSquadraPiccolaHuman"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceSquadraPiccolaHuman"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#op_constraint_2"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraPiccolaRobot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickPlaceSquadraPiccolaRobot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickSquadraPiccolaRobot"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceSquadraPiccolaRobot"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#op_constraint_4"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickSquadraGrandeHuman -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickSquadraGrandeHuman">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#pick_squadra_grande_human"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickSquadraGrandeRobot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickSquadraGrandeRobot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#pick_squadra_grande_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickSquadraPiccolaHuman -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickSquadraPiccolaHuman">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#pick_squadra_piccola_human"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickSquadraPiccolaRobot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickSquadraPiccolaRobot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#pick_squadra_piccola_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceBoxAHuman -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceBoxAHuman">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#place_boxA_human"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceBoxARobot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceBoxARobot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#place_boxA_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceBoxBHuman -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceBoxBHuman">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#place_boxB_human"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceBoxBRobot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceBoxBRobot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#place_boxB_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceSquadraGrandeHuman -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceSquadraGrandeHuman">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceBoxAHuman"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceBoxBHuman"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceSquadraGrandeRobot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceSquadraGrandeRobot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceBoxARobot"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceBoxBRobot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceSquadraPiccolaHuman -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceSquadraPiccolaHuman">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceBoxAHuman"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceBoxBHuman"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceSquadraPiccolaRobot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceSquadraPiccolaRobot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceBoxARobot"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceBoxBRobot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#human_home -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#human_home">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionLocation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#op_constraint_1 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#op_constraint_1">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#SequentialExecutionConstraint"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickSquadraGrandeHuman"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceSquadraGrandeHuman"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#op_constraint_2 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#op_constraint_2">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#SequentialExecutionConstraint"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickSquadraPiccolaHuman"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceSquadraPiccolaHuman"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#op_constraint_3 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#op_constraint_3">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#SequentialExecutionConstraint"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickSquadraGrandeRobot"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceSquadraGrandeRobot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#op_constraint_4 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#op_constraint_4">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#SequentialExecutionConstraint"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPickSquadraPiccolaRobot"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doPlaceSquadraPiccolaRobot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#pick_squadra_grande_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#pick_squadra_grande_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickObject"/>
+        <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#squadra_grande"/>
+        <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">squadra_grande</soho:hasGoal>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pick_squadra_grande</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#pick_squadra_grande_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#pick_squadra_grande_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickObject"/>
         <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10"/>
         <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10"/>
-        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor-current-location"/>
-        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor"/>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickPlaceFrontDoor</soho:hasProcedureName>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#squadra_grande"/>
+        <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">squadra_grande</soho:hasGoal>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pick_squadra_grande</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#pickplace-reardoor -->
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#pick_squadra_piccola_human -->
 
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#pickplace-reardoor">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#pick_squadra_piccola_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickObject"/>
+        <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#squadra_piccola"/>
+        <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">squadra_piccola</soho:hasGoal>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pick_squadra_piccola</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#pick_squadra_piccola_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#pick_squadra_piccola_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickObject"/>
         <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10"/>
         <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10"/>
-        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor-current-location"/>
-        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor"/>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickPlaceRearDoor</soho:hasProcedureName>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#squadra_piccola"/>
+        <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">squadra_piccola</soho:hasGoal>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pick_squadra_piccola</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#r01 -->
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#place_boxA_human -->
 
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#r01">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#pickplace-frontdoor"/>
-        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#independent"/>
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#place_boxA_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PlaceObject"/>
+        <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#boxA"/>
+        <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A1</soho:hasGoal>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">place_box_A</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#r02 -->
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#place_boxA_robot -->
 
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#r02">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#pickplace-reardoor"/>
-        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#independent"/>
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#place_boxA_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PlaceObject"/>
+        <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#boxA"/>
+        <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A1</soho:hasGoal>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">place_box_A</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor -->
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#place_boxB_human -->
 
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor">
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#place_boxB_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PlaceObject"/>
+        <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#boxB"/>
+        <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">B1</soho:hasGoal>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">place_box_B</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#place_boxB_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#place_boxB_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PlaceObject"/>
+        <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#boxB"/>
+        <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">B1</soho:hasGoal>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">place_box_B</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#robot_arm -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#robot_arm">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#RobotInterface"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#robot_home -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#robot_home">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionLocation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#squadra_grande -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#squadra_grande">
         <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#SimpleWorkpiece"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor-area -->
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#squadra_piccola -->
 
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor-area">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionLocation"/>
-        <DUL1:hasLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor-env-area"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor-current-location -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor-current-location">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ObjectLocation"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor-env-area -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor-env-area">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#EnvironmentArea"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#robot-joint-config -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#robot-joint-config">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#JointConfiguration"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#robotic-arm -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#robotic-arm">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#RobotInterface"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#robotic-arm-joint"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#robotic-arm-joint -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#robotic-arm-joint">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#RobotInterface"/>
-        <DUL:hasQuality rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#robot-joint-config"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#screwdriver -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#screwdriver">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Tool"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#setting-nuts-frontdoor -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#setting-nuts-frontdoor">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ChangeOver"/>
-        <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor"/>
-        <soho:requires rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#nuts-frontdoor"/>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">settingNutsFrontDoor</soho:hasProcedureName>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#setting-nuts-reardoor -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#setting-nuts-reardoor">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ChangeOver"/>
-        <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor"/>
-        <soho:requires rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#nuts-reardoor"/>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">settingNutsRearDoor</soho:hasProcedureName>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#simultaneous -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#simultaneous">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Simultaneous"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#supportive -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#supportive">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Supportive"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#synchronous -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#synchronous">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Synchronous"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#tightening-bolts-frontdoor -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#tightening-bolts-frontdoor">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Screw"/>
-        <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor"/>
-        <soho:requires rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#bolts-frontdoor"/>
-        <soho:requires rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#screwdriver"/>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">screwBoltsFrontDoor</soho:hasProcedureName>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#tightening-bolts-reardoor -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#tightening-bolts-reardoor">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Screw"/>
-        <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor"/>
-        <soho:requires rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#bolts-reardoor"/>
-        <soho:requires rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#screwdriver"/>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">screwBoltsRearDoor</soho:hasProcedureName>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#tightening-nuts-frontdoor -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#tightening-nuts-frontdoor">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Assemble"/>
-        <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor"/>
-        <soho:requires rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hct-machine"/>
-        <soho:requires rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#nuts-frontdoor"/>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">assembleNutsFrontDoor</soho:hasProcedureName>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#tightening-nuts-reardoor -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#tightening-nuts-reardoor">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Assemble"/>
-        <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
-        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor"/>
-        <soho:requires rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hct-machine"/>
-        <soho:requires rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#nuts-reardoor"/>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">assembleNutsRearDoor</soho:hasProcedureName>
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#squadra_piccola">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#SimpleWorkpiece"/>
     </owl:NamedIndividual>
     
 
@@ -3000,7 +2887,7 @@
 
     <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10">
         <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Cobot"/>
-        <soho:hasEmbodiment rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#robotic-arm"/>
+        <soho:hasEmbodiment rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#robot_arm"/>
     </owl:NamedIndividual>
     
 
@@ -3009,24 +2896,15 @@
 
     <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker">
         <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#WorkOperator"/>
-        <soho:hasEmbodiment rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker-body"/>
+        <soho:hasEmbodiment rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker_body"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#worker-body -->
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#worker_body -->
 
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker-body">
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker_body">
         <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#WorkerBodyPart"/>
-        <DUL:hasQuality rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker-position"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#worker-position -->
-
-    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker-position">
-        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#BodyPosition"/>
     </owl:NamedIndividual>
     
 

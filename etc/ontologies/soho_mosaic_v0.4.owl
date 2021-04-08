@@ -83,7 +83,7 @@
 
     <owl:ObjectProperty rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasActuatingPart">
         <rdfs:subPropertyOf rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasRobotPart"/>
-        <rdfs:domain rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Cobot"/>
+        <rdfs:domain rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#RobotInterface"/>
         <rdfs:range rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#RobotInterface"/>
     </owl:ObjectProperty>
     
@@ -131,15 +131,6 @@
     
 
 
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#hasPart -->
-
-    <owl:ObjectProperty rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasPart">
-        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasComponent"/>
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
-    </owl:ObjectProperty>
-    
-
-
     <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#hasProductionSetting -->
 
     <owl:ObjectProperty rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasProductionSetting">
@@ -159,8 +150,9 @@
     <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#hasRobotPart -->
 
     <owl:ObjectProperty rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasRobotPart">
-        <rdfs:subPropertyOf rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasPart"/>
-        <rdfs:domain rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Cobot"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasPart"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#RobotInterface"/>
         <rdfs:range rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#RobotInterface"/>
     </owl:ObjectProperty>
     
@@ -170,7 +162,7 @@
 
     <owl:ObjectProperty rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasSensingPart">
         <rdfs:subPropertyOf rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasRobotPart"/>
-        <rdfs:domain rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Cobot"/>
+        <rdfs:domain rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#RobotInterface"/>
         <rdfs:range rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#RobotInterface"/>
     </owl:ObjectProperty>
     
@@ -316,6 +308,16 @@
     
 
 
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#hasGoal -->
+
+    <owl:DatatypeProperty rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasGoal">
+        <rdfs:subPropertyOf rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasProcedureParameter"/>
+        <rdfs:domain rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Function"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#hasId -->
 
     <owl:DatatypeProperty rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasId">
@@ -361,28 +363,6 @@
     <owl:DatatypeProperty rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasProcedureParameter">
         <rdfs:subPropertyOf rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasFunctionParameter"/>
         <rdfs:domain rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Function"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#hasStartLocation -->
-
-    <owl:DatatypeProperty rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasStartLocation">
-        <rdfs:subPropertyOf rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasProcedureParameter"/>
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Function"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#hasStopLocation -->
-
-    <owl:DatatypeProperty rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasStopLocation">
-        <rdfs:subPropertyOf rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasProcedureParameter"/>
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Function"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
 
@@ -1529,20 +1509,6 @@
                 <owl:onClass rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#MoveObjectCapability"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasStartLocation"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasStopLocation"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1645,7 +1611,7 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasPart"/>
+                <owl:onProperty rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasConstituent"/>
                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
                 <owl:onClass rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionMethod"/>
             </owl:Restriction>
@@ -1932,12 +1898,6 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasCapability"/>
                 <owl:someValuesFrom rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Capability"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasPart"/>
-                <owl:someValuesFrom rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#RobotInterface"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
