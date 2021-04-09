@@ -26,6 +26,9 @@ The package has been developed and tested for ROS Melodic distribution on Ubunut
 
 ### Environment Variables
 
+$SHAREWORK_KNOWLEDGE
+
+
 http://wiki.ros.org/rosjava/Build%20Environment%20Variables
 
 
