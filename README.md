@@ -87,14 +87,13 @@ catkin_make
 source devel/setup.bash
 ```
 
-### Environment Variables
+To finalize the installation it is necessary to define the environment variable **SHAREWORK_KNOWLEDGE** in order to point to the folder containing the installed package. 
 
-$SHAREWORK_KNOWLEDGE
+```
+export SHAREWORK_KNOWLEDGE=~/ws/src/sharework_knowledge
+```
 
-
-http://wiki.ros.org/rosjava/Build%20Environment%20Variables
-
-
+The above line of code can be added to the ```.bashrc``` file to automatically export the environment variable when the terminal is open. 
 
 ## Package Usage 
 
