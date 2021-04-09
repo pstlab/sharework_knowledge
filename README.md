@@ -23,6 +23,12 @@ The package has been developed and tested for ROS Melodic distribution on Ubunut
 ### Configuring ROSJava Workspace
 
 
+
+#### Maven Dependencies and ROSJava
+
+http://wiki.ros.org/rosjava/Build%20Environment%20Variables
+
+
 ### Package Configuration Steps
 
 
