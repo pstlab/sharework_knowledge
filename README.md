@@ -8,11 +8,14 @@ The main components are **ProductionKnowledge** and **ProductionKnowledgeAuthori
 
 ### Package Structure
 
+TODO
 
 
 ### Knowledge Access Services
 
 The module offers ROS services to access and update productoin knowledge.
+
+TODO
 
 
 ## Installation
@@ -96,6 +99,34 @@ export SHAREWORK_KNOWLEDGE=~/ws/src/sharework_knowledge
 The above line of code can be added to the ```.bashrc``` file to automatically export the environment variable when the terminal is open. 
 
 ## Package Usage 
+
+If the the installation and configuration of the **sharework_knowledge** package has been successfully done then it should be possible to run the ROS node starting the developed knowledge services.
+
+First open a terminal and start core ROS nodes using ```roscore```. 
+
+Then, open a different terminal and launch the service as follows:
+
+```
+cd ~/ws
+source devel/setup.bash
+rosrun sharework_knowledge production_knowledge it.cnr.istc.pst.sharework.service.KnowledgeService
+```
+
+At this point the service is running and can be called to interact with the knowledg base. As an example considered the following commands to be executed on a third terminal. The commands load one of the ontological models availabine under the folder ```etc/ontologies``` of hte package structure and query the model using respectively the **/sharework/knowledge/update** and **/sharework/knwoledge/api** services.
+
+```
+cd ~/ws
+source devel/setup.bash
+rosservice call /sharework/knowledge/update "load" ["/home/alessandro/ws/robotics/sharework/src/sharework_ontology/soho_cembre_v0.1.owl"]
+rosservice call /sharework/knowledge/api "get_workers" []
+```
+
+The frist call load the ontological model defined for one of the case studies of the project in order to fill the knowledge base with the information characterizing the considered collaborative process. 
+
+_Note that (as can be seen by looking at the output of the terminal running the knowledge services) when the model is loaded the authoring service is triggered to automatically generate and validate an updated timeline-based planning model for the considered HRC scenario. The authoring process runs in background (i.e., it does not slow down queries/updates on the knowledge) and the output is the file ```prod_knowledge.ddl``` under the folder ```gen``` of the package structure._
+
+The second call retrieves information about defined workers i.e., individuals of the ontological class ```SOHO:WorkOperator``` (in shape of RDF resources).
+
 
 
 ## References 
