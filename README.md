@@ -38,15 +38,15 @@ http://wiki.ros.org/rosjava/Build%20Environment%20Variables
 ## Package Usage 
 
 
-## References
+## References 
 
-[1] CIRP-CMS 2020
+(1) Umbrico A., Orlandini A., Cesta A. "An Ontology for Human-Robot Collaboration". Procedia CIRP. Volume 93. 2020. Pages 1097-1102,
 
-[2] Acta Informatica
+(2) Cialdea Mayer, M., Orlandini, A., Umbrico, A. "Planning and execution with flexible timelines: a formal account". Acta Informatica. Volume 53. 2016. Pages 649–680.
 
-[3] Platinum 
+(3) Umbrico A., Cesta A., Cialdea Mayer M., Orlandini A. "PLATINUm: A New Framework for Planning and Acting". In: Esposito F., Basili R., Ferilli S., Lisi F. (eds) AI*IA 2017 Advances in Artificial Intelligence. AI*IA 2017. Lecture Notes in Computer Science, Volume 10640. 2017.
 
-[5] RO-MAN 2020
+(4) M. Faroni, Beschi M., Ghidini S., Pedrocchi N., Umbrico A., Orlandini A., Cesta A. "A Layered Control Approach to Human-Aware Task and Motion Planning for Human-Robot Collaboration". 29th IEEE International Conference on Robot and Human Interactive Communication (RO-MAN). 2020. Pages 1204-1210.
 
-[6] CIRP Annals 2017
-
+(5) Pellegrinelli S., Orlandini A., Pedrocchi N., Umbrico A., Tolio T. "Motion planning and scheduling for human and industrial-robot collaboration". CIRP Annals.
+Volume 66, Issue 1. 2017. Pages 1-4.
