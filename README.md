@@ -30,6 +30,50 @@ cd ~/ws
 catkin_build
 ```
 
+We recommend installing rosjava from source. Here are the instructions for **minimal installation** for rosjava. Please refer to the official Wiki for further support (http://wiki.ros.org/rosjava/Tutorials/kinetic/Source%20Installation).
+
+```
+wstool init -j4 ~/ws/src https://raw.githubusercontent.com/rosjava/rosjava/kinetic/rosjava.rosinstall
+source /opt/ros/melodic/setup.bash
+cd ~/ws
+rosdep update
+rosdep install --from-paths src -i -y
+catkin_make
+```
+
+### Package Configuration Steps
+
+At this point a ROSJava workspace has been successfully set and everything is ready for the installation of the sharework_knowledge package. 
+
+First, it is necessary to install the ROS package defining custom messages and services defined within the knowledge base module of the Sharework. This package is available on GitHub (https://github.com/pstlab/sharework_knowledge_msgs.git) and cna be installed into the ROSJava workspace as follows: 
+
+```
+cd ~/ws/src
+git clone https://github.com/pstlab/sharework_knowledge_msgs.git
+cd ~/ws
+catkin_make
+source ~/ws/devel/setup.bash
+```
+
+It is possible to verify the successful built of the package by checking ROS service description through ```rosserv show```. For example the following commands
+
+```
+cd ~/ws
+source devel/setup.bash
+rossrv show sharework_knowledge_msgs/KnowledgeRDFUpdatePoint
+```
+should give the following output which describes the request and response defined for the service **KnowledgeRDFUpdatePoint**
+
+```
+string updateType
+string[] data
+---
+sharework_knowledge_msgs/KnowledgeRDFTriple[] result
+  string subject
+  string property
+  string object
+
+```
 
 ### Environment Variables
 
@@ -38,8 +82,6 @@ $SHAREWORK_KNOWLEDGE
 
 http://wiki.ros.org/rosjava/Build%20Environment%20Variables
 
-
-### Package Configuration Steps
 
 
 ## Package Usage 
