@@ -24,7 +24,7 @@ The package has been developed and tested for ROS Melodic distribution on Ubunut
 
 
 
-#### Maven Dependencies and ROSJava
+### Environment Variables
 
 http://wiki.ros.org/rosjava/Build%20Environment%20Variables
 
