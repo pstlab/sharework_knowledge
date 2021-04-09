@@ -22,6 +22,13 @@ The package has been developed and tested for ROS Melodic distribution on Ubunut
 
 ### Configuring ROSJava Workspace
 
+Create an empty workspace using catkin 
+
+```
+mkdir -p ~/ws/src
+cd ~/ws
+catkin_build
+```
 
 
 ### Environment Variables
