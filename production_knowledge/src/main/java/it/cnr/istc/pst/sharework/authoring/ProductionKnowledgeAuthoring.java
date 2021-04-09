@@ -2,6 +2,7 @@ package it.cnr.istc.pst.sharework.authoring;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledgeUpdateSubscriber;
+import org.apache.commons.logging.Log;
 
 /**
  *
@@ -12,6 +13,17 @@ public abstract class ProductionKnowledgeAuthoring implements ProductionKnowledg
     private Thread process;
 
     private static final Object signal = new Object();
+
+    private Log log;
+
+    /**
+     *
+     * @param log
+     */
+    public ProductionKnowledgeAuthoring(Log log) {
+        this();
+        this.log = log;
+    }
 
     /**
      *
@@ -32,24 +44,46 @@ public abstract class ProductionKnowledgeAuthoring implements ProductionKnowledg
                 {
                     try
                     {
-                        System.out.println("[Authoring] Wait for some update signal...");
+                        if (log != null) {
+                            log.info("[Authoring] Wait for some update signal...");
+                        }
+
                         synchronized (signal) {
                             // wait an update signal
                             signal.wait();
                         }
 
+                        if (log != null) {
+                            log.info("[Authoring] compiling production knowledge... ");
+                        }
+
                         // compile production knowledge
                         String model = compile();
+                        // check log
+                        if (log != null) {
+                            log.info("[Authoring] validating planning model... ");
+                        }
+
                         // validate
                         if (validate(model))
                         {
+                            if (log != null) {
+                                log.info("[Authoring] Planning model successfully validated... ");
+                            }
+
                             // prepare task planning data
                             prepare();
+                            if (log != null) {
+                                log.info("[Authoring] Data ready for planning and execution! ");
+                            }
                         }
                         else
-                            {
+                        {
                             // restore knowledge
-                            System.out.println("[Authoring] Not valid planning model - restoring default production knowledge");
+                            if (log != null) {
+                                log.warn("[Authoring] Not valid planning model - restoring default production knowledge");
+                            }
+
                             // not valid - reset production knowledge
                             knowledge.restore();
                         }
@@ -61,13 +95,19 @@ public abstract class ProductionKnowledgeAuthoring implements ProductionKnowledg
                     catch (Exception ex)
                     {
                         // model compilation or validation error, keep running but restore knowledge
-                        System.err.println("[Authoring] Task planning model generation error:\n" +
-                                "- message: " + ex.getMessage() + "\n");
+                        if (log != null) {
+                            log.error("[Authoring] Task planning model generation error:\n" +
+                                    "- exception: " + ex.getClass().getName() + "\n" +
+                                    "- message: " + ex.getMessage() + "\n");
+                        }
 
                         try
                         {
                             // restore knowledge
-                            System.out.println("[Authoring] Not valid planning model - restoring default production knowledge");
+                            if (log != null) {
+                                log.warn("[Authoring] Not valid planning model - restoring default production knowledge");
+                            }
+
                             // not valid - reset production knowledge
                             knowledge.restore();
                         }
@@ -129,7 +169,7 @@ public abstract class ProductionKnowledgeAuthoring implements ProductionKnowledg
         // start listener thread
         this.process.start();
         // subscribe to updates
-        this.knowledge.subscrbe(this);
+        this.knowledge.subscribe(this);
     }
 
     /**

@@ -1,7 +1,7 @@
-package it.cnr.istc.pst.sharework.knowledge.service.api;
+package it.cnr.istc.pst.sharework.service.api;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
-import it.cnr.istc.pst.sharework.knowledge.service.api.ex.ApiQueryHandlingException;
+import it.cnr.istc.pst.sharework.service.api.ex.ApiQueryHandlingException;
 
 /**
  *

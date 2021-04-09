@@ -1,9 +1,10 @@
-package it.cnr.istc.pst.sharework.knowledge.service.api;
+package it.cnr.istc.pst.sharework.service.api;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
-import it.cnr.istc.pst.sharework.knowledge.service.api.ex.ApiQueryHandlingException;
+import it.cnr.istc.pst.sharework.service.api.ex.ApiQueryHandlingException;
 import org.apache.jena.rdf.model.Resource;
 import org.ros.node.ConnectedNode;
+import sharework_knowledge_msgs.KnowledgeAPIEndPointRequest;
 import sharework_knowledge_msgs.KnowledgeAPIEndPointResponse;
 
 import java.util.ArrayList;
@@ -12,40 +13,32 @@ import java.util.List;
 /**
  *
  */
-public class GetWorkerFunctionsApiQueryHandler extends ApiQueryHandler<GetWorkerFunctionsApiResult>
-{
+public class GetCobotFunctionsApiRequestHandler extends ApiQueryHandler<GetCobotFunctionsApiRequestResult> {
 
-    /**
-     *
-     * @param knowledge
-     */
-    protected GetWorkerFunctionsApiQueryHandler(ProductionKnowledge knowledge) {
-        super(ApiQueryType.GET_WORKER_FUNCTIONS, knowledge);
+    protected GetCobotFunctionsApiRequestHandler(ProductionKnowledge knowledge) {
+        super(ApiQueryType.GET_COBOT_FUNCTIONS, knowledge);
     }
 
     /**
      *
+     * @param request
      * @return
+     * @throws ApiQueryHandlingException
      */
     @Override
-    public GetWorkerFunctionsApiResult  handle(sharework_knowledge_msgs.KnowledgeAPIEndPointRequest request)
-            throws ApiQueryHandlingException
-    {
+    public GetCobotFunctionsApiRequestResult handle(KnowledgeAPIEndPointRequest request) throws ApiQueryHandlingException {
         return null;
     }
 }
 
-/**
- *
- */
-class GetWorkerFunctionsApiResult extends ApiQueryResult
-{
+class GetCobotFunctionsApiRequestResult extends ApiQueryResult {
+
     private List<Resource> resources;
 
     /**
      *
      */
-    protected GetWorkerFunctionsApiResult() {
+    protected GetCobotFunctionsApiRequestResult() {
         this.resources = new ArrayList<>();
     }
 
@@ -61,7 +54,7 @@ class GetWorkerFunctionsApiResult extends ApiQueryResult
      *
      * @param res
      */
-    public void addResource(Resource res)  {
+    public void addResource(Resource res) {
         if (!this.resources.contains(res)) {
             this.resources.add(res);
         }

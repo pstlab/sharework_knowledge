@@ -1,7 +1,7 @@
-package it.cnr.istc.pst.sharework.knowledge.service.api;
+package it.cnr.istc.pst.sharework.service.api;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
-import it.cnr.istc.pst.sharework.knowledge.service.api.ex.ApiQueryHandlingException;
+import it.cnr.istc.pst.sharework.service.api.ex.ApiQueryHandlingException;
 import org.apache.jena.rdf.model.Resource;
 import org.ros.node.ConnectedNode;
 import sharework_knowledge_msgs.KnowledgeAPIEndPointRequest;
@@ -13,10 +13,14 @@ import java.util.List;
 /**
  *
  */
-public class GetCobotFunctionsApiRequestHandler extends ApiQueryHandler<GetCobotFunctionsApiRequestResult> {
+public class GetProductionGoalTasksApiQueryHandler extends ApiQueryHandler<GetProductionGoalTasksApiQueryResult> {
 
-    protected GetCobotFunctionsApiRequestHandler(ProductionKnowledge knowledge) {
-        super(ApiQueryType.GET_COBOT_FUNCTIONS, knowledge);
+    /**
+     *
+     * @param knowledge
+     */
+    protected GetProductionGoalTasksApiQueryHandler(ProductionKnowledge knowledge) {
+        super(ApiQueryType.GET_PRODUCTION_GOAL_TASKS, knowledge);
     }
 
     /**
@@ -26,19 +30,22 @@ public class GetCobotFunctionsApiRequestHandler extends ApiQueryHandler<GetCobot
      * @throws ApiQueryHandlingException
      */
     @Override
-    public GetCobotFunctionsApiRequestResult handle(KnowledgeAPIEndPointRequest request) throws ApiQueryHandlingException {
+    public GetProductionGoalTasksApiQueryResult handle(KnowledgeAPIEndPointRequest request) throws ApiQueryHandlingException {
         return null;
     }
 }
 
-class GetCobotFunctionsApiRequestResult extends ApiQueryResult {
+/**
+ *
+ */
+class GetProductionGoalTasksApiQueryResult extends ApiQueryResult {
 
     private List<Resource> resources;
 
     /**
      *
      */
-    protected GetCobotFunctionsApiRequestResult() {
+    protected GetProductionGoalTasksApiQueryResult() {
         this.resources = new ArrayList<>();
     }
 

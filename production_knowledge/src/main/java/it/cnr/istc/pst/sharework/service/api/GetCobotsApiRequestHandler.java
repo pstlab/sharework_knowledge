@@ -1,60 +1,60 @@
-package it.cnr.istc.pst.sharework.knowledge.service.api;
+package it.cnr.istc.pst.sharework.service.api;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
-import it.cnr.istc.pst.sharework.knowledge.service.api.ex.ApiQueryHandlingException;
+import it.cnr.istc.pst.sharework.service.api.ex.ApiQueryHandlingException;
 import org.apache.jena.rdf.model.Resource;
 import org.ros.node.ConnectedNode;
+import sharework_knowledge_msgs.KnowledgeAPIEndPointRequest;
 import sharework_knowledge_msgs.KnowledgeAPIEndPointResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  *
  */
-public class GetWorkerProfileApiQueryHandler extends ApiQueryHandler<GetWorkersApiQueryResult>
-{
+public class GetCobotsApiRequestHandler extends ApiQueryHandler<GetCobotsApiRequestResult> {
+
     /**
      *
      * @param knowledge
      */
-    protected GetWorkerProfileApiQueryHandler(ProductionKnowledge knowledge) {
-        super(ApiQueryType.GET_WORKER_PROFILE, knowledge);
+    protected GetCobotsApiRequestHandler(ProductionKnowledge knowledge) {
+        super(ApiQueryType.GET_COBOTS, knowledge);
+    }
+
+    /**
+     *
+     * @param request
+     * @return
+     * @throws ApiQueryHandlingException
+     */
+    @Override
+    public GetCobotsApiRequestResult handle(KnowledgeAPIEndPointRequest request) throws ApiQueryHandlingException {
+        return null;
+    }
+}
+
+/**
+ *
+ */
+class GetCobotsApiRequestResult extends ApiQueryResult {
+
+    private List<Resource> resources;
+
+    /**
+     *
+     */
+    protected GetCobotsApiRequestResult() {
+        this.resources = new ArrayList<>();
     }
 
     /**
      *
      * @return
      */
-    @Override
-    public GetWorkersApiQueryResult  handle(sharework_knowledge_msgs.KnowledgeAPIEndPointRequest request)
-            throws ApiQueryHandlingException
-    {
-        return null;
-    }
-}
-
-
-/**
- *
- */
-class GetWorkerProfileApiQueryResult extends ApiQueryResult
-{
-    private List<Resource> resources;
-
-    /**
-     *
-     */
-    protected GetWorkerProfileApiQueryResult() {
-        this.resources = new ArrayList<>();
-    }
-
-    /**
-     *
-     */
     public List<Resource> getResources() {
-        return new ArrayList<>(this.resources);
+        return new ArrayList<>(resources);
     }
 
     /**

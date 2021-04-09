@@ -1,8 +1,7 @@
-package it.cnr.istc.pst.sharework.knowledge.service;
+package it.cnr.istc.pst.sharework.service;
 
-import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledgeDictionary;
-import it.cnr.istc.pst.sharework.knowledge.service.update.UpdateQueryType;
+import it.cnr.istc.pst.sharework.service.update.UpdateQueryType;
 import org.apache.commons.logging.Log;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
@@ -62,16 +61,29 @@ public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBui
     {
         // check request type
         String updateType = knowledgeRDFUpdatePointRequest.getUpdateType();
-        try
-        {
-            // get known update
-            UpdateQueryType type = UpdateQueryType.getType(updateType);
-            // check type
-            switch (type)
-            {
-                // add assertion update
-                case ADD_ASSERTION: {
+        // get update query type
+        UpdateQueryType type = null;
+        try {
 
+            // get known update
+            type = UpdateQueryType.getType(updateType);
+        }
+        catch (Exception ex) {
+            // unknown query type
+            throw new ServiceException("\n[ProductionKnowledge] Knowledge update error\n" +
+                    "- error: " + ex.getClass().getName() + "\n" +
+                    "- message: " + ex.getMessage() + "\n" +
+                    "- request type: \"" + updateType + "\"\n" +
+                    "- message: " + ex.getMessage() + "\n");
+        }
+
+        // check type
+        switch (type)
+        {
+            // add assertion update
+            case ADD_ASSERTION: {
+
+                try {
                     // check data
                     List<String> data = knowledgeRDFUpdatePointRequest.getData();
                     // three parameters expected
@@ -112,11 +124,21 @@ public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBui
                     // set response
                     knowledgeRDFUpdatePointResponse.setResult(list);
                 }
-                break;
+                catch (Exception ex) {
+                    // unknown query type
+                    throw new ServiceException("\n[ProductionKnowledge] Knowledge update error\n" +
+                            "- error: " + ex.getClass().getName() + "\n" +
+                            "- message: " + ex.getMessage() + "\n" +
+                            "- request type: \"" + updateType + "\"\n" +
+                            "- message: " + ex.getMessage() + "\n");
+                }
+            }
+            break;
 
-                // remove assertion update
-                case REMOVE_ASSERTION: {
+            // remove assertion update
+            case REMOVE_ASSERTION: {
 
+                try {
                     // check data
                     List<String> data = knowledgeRDFUpdatePointRequest.getData();
                     // three parameters expected
@@ -160,11 +182,21 @@ public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBui
                     // set response
                     knowledgeRDFUpdatePointResponse.setResult(list);
                 }
-                break;
+                catch (Exception ex) {
+                    // unknown query type
+                    throw new ServiceException("\n[ProductionKnowledge] Knowledge update error\n" +
+                            "- error: " + ex.getClass().getName() + "\n" +
+                            "- message: " + ex.getMessage() + "\n" +
+                            "- request type: \"" + updateType + "\"\n" +
+                            "- message: " + ex.getMessage() + "\n");
+                }
+            }
+            break;
 
-                // create individual
-                case CREATE_INDIVIDUAL: {
+            // create individual
+            case CREATE_INDIVIDUAL: {
 
+                try {
                     // check data
                     List<String> data = knowledgeRDFUpdatePointRequest.getData();
                     // three parameters expected
@@ -200,11 +232,21 @@ public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBui
                     // set response data
                     knowledgeRDFUpdatePointResponse.setResult(list);
                 }
-                break;
+                catch (Exception ex) {
+                    // unknown query type
+                    throw new ServiceException("\n[ProductionKnowledge] Knowledge update error\n" +
+                            "- error: " + ex.getClass().getName() + "\n" +
+                            "- message: " + ex.getMessage() + "\n" +
+                            "- request type: \"" + updateType + "\"\n" +
+                            "- message: " + ex.getMessage() + "\n");
+                }
+            }
+            break;
 
-                // create distinct individual
-                case CREATE_UNIQUE_INDIVIDUAL: {
+            // create distinct individual
+            case CREATE_UNIQUE_INDIVIDUAL: {
 
+                try {
                     // check data
                     List<String> data = knowledgeRDFUpdatePointRequest.getData();
                     // three parameters expected
@@ -240,65 +282,98 @@ public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBui
                     // set response data
                     knowledgeRDFUpdatePointResponse.setResult(list);
                 }
-                break;
+                catch (Exception ex) {
+                    // unknown query type
+                    throw new ServiceException("\n[ProductionKnowledge] Knowledge update error\n" +
+                            "- error: " + ex.getClass().getName() + "\n" +
+                            "- message: " + ex.getMessage() + "\n" +
+                            "- request type: \"" + updateType + "\"\n" +
+                            "- message: " + ex.getMessage() + "\n");
+                }
+            }
+            break;
 
-                // load an ontological model from file
-                case LOAD : {
+            // load an ontological model from file
+            case LOAD : {
 
-                    // check data
-                    List<String> data = knowledgeRDFUpdatePointRequest.getData();
-                    // three parameters expected
-                    if (data == null || data.isEmpty()) {
-                        // wrong number of parameters
-                        throw new ServiceException("Wrong number of parameters:\n" +
-                                "- parameters: " + Arrays.toString(UpdateQueryType.LOAD.getParameters()));
+                // check data
+                List<String> data = knowledgeRDFUpdatePointRequest.getData();
+                // three parameters expected
+                if (data == null || data.isEmpty()) {
+                    // wrong number of parameters
+                    throw new ServiceException("Wrong number of parameters:\n" +
+                            "- parameters: " + Arrays.toString(UpdateQueryType.LOAD.getParameters()));
+                }
+
+                // get ontological model file
+                String ontoFile = data.get(0);
+                // check rule file
+                String ruleFile = data.size() > 1 ? data.get(1) : null;
+                // restore flag
+                boolean restore = false;
+
+                try
+                {
+                    // load file
+                    if (ruleFile != null)
+                    {
+                        if (log != null) {
+                            log.info("[ProductionKnowledge] Loading ontological model \"" + ontoFile + "\" (with rules \"" + ruleFile + "\")");
+                        }
+
+                        // load ontological model
+                        this.service.knowledge.load(ontoFile, ruleFile);
+                    }
+                    else
+                    {
+                        if (log != null) {
+                            log.info("[ProductionKnowledge] Loading ontological model \"" + ontoFile + "\"");
+                        }
+
+                        // load ontological file
+                        this.service.knowledge.load(ontoFile);
                     }
 
-                    // get ontological model file
-                    String ontoFile = data.get(0);
-                    // check rule file
-                    String ruleFile = data.size() > 1 ? data.get(1) : null;
+                    if (log != null) {
+                        log.info("[ProductionKnowledge] Ontological model successfully updated!");
+                    }
 
-                    try
-                    {
-                        // load file
-                        if (ruleFile != null) {
-                            // load ontological model
-                            this.service.knowledge.load(ontoFile, ruleFile);
-                        }
-                        else {
-                            // load ontological file
-                            this.service.knowledge.load(ontoFile);
+                    // set (successful) empty response
+                    knowledgeRDFUpdatePointResponse.setResult(new ArrayList<KnowledgeRDFTriple>());
+                }
+                catch (Exception ex) {
+                    // set flag
+                    restore = true;
+                    // throw exception
+                    throw new ServiceException("\n[ProductionKnowledge] Failure while loading ontological model\n" +
+                            "- error: " + ex.getClass().getName() + "\n" +
+                            "- message: " + ex.getMessage() + "\n" +
+                            "- file: " + ontoFile + "\n" +
+                            "- the default ontological model has been restored...\n");
+                }
+                finally {
+
+                    try {
+                        if (restore) {
+                            // restore ontological model
+                            this.service.knowledge.restore();
                         }
                     }
                     catch (Exception ex) {
-                        // restore ontological model
-                        this.service.knowledge.restore();
-                        // throw exception
-                        throw new ServiceException("Failure while loading ontological model\n" +
-                                "- file: " + ontoFile + "\n" +
-                                "- the default ontological model has been restored...");
+                        if (log != null) {
+                            log.error("[ProductionKnowledge] Error while restoring default ontological model...");
+                        }
                     }
-                    finally {
-
-                        // set empty response
-                        knowledgeRDFUpdatePointResponse.setResult(new ArrayList<KnowledgeRDFTriple>());
-                    }
-                }
-                break;
-
-                default : {
-                    // unknown query type
-                    throw new ServiceException("Unknown update type \"" + updateType + "\"\n" +
-                            "Expected types:\n" + Arrays.deepToString(UpdateQueryType.values()));
                 }
             }
+            break;
+
+            default : {
+                // unknown query type
+                throw new ServiceException("Unknown update type \"" + updateType + "\"\n" +
+                        "Expected types:\n" + Arrays.deepToString(UpdateQueryType.values()));
+            }
         }
-        catch (Exception ex) {
-            // unknown query type
-            throw new ServiceException("Knowledge update error\n" +
-                    "- request type: \"" + updateType + "\"\n" +
-                    "- message: " + ex.getMessage() + "\n");
-        }
+
     }
 }

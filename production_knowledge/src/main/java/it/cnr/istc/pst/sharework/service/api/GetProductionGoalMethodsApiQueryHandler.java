@@ -1,7 +1,7 @@
-package it.cnr.istc.pst.sharework.knowledge.service.api;
+package it.cnr.istc.pst.sharework.service.api;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
-import it.cnr.istc.pst.sharework.knowledge.service.api.ex.ApiQueryHandlingException;
+import it.cnr.istc.pst.sharework.service.api.ex.ApiQueryHandlingException;
 import org.apache.jena.rdf.model.Resource;
 import org.ros.node.ConnectedNode;
 import sharework_knowledge_msgs.KnowledgeAPIEndPointRequest;
@@ -10,14 +10,17 @@ import sharework_knowledge_msgs.KnowledgeAPIEndPointResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetCobotFunctionsByGoalApiQueryHandler extends ApiQueryHandler<GetCobotFunctionsByGoalApiQueryResult> {
+/**
+ *
+ */
+public class GetProductionGoalMethodsApiQueryHandler extends ApiQueryHandler<GetProductoinGoalMethodsApiQueryResult> {
 
     /**
      *
      * @param knowledge
      */
-    protected GetCobotFunctionsByGoalApiQueryHandler(ProductionKnowledge knowledge) {
-        super(ApiQueryType.GET_COBOT_FUNCTIONS_GOAL, knowledge);
+    protected GetProductionGoalMethodsApiQueryHandler(ProductionKnowledge knowledge) {
+        super(ApiQueryType.GET_PRODUCTION_GOAL_METHODS, knowledge);
     }
 
     /**
@@ -27,19 +30,22 @@ public class GetCobotFunctionsByGoalApiQueryHandler extends ApiQueryHandler<GetC
      * @throws ApiQueryHandlingException
      */
     @Override
-    public GetCobotFunctionsByGoalApiQueryResult handle(KnowledgeAPIEndPointRequest request) throws ApiQueryHandlingException {
+    public GetProductoinGoalMethodsApiQueryResult handle(KnowledgeAPIEndPointRequest request) throws ApiQueryHandlingException {
         return null;
     }
 }
 
-class GetCobotFunctionsByGoalApiQueryResult extends ApiQueryResult {
+/**
+ *
+ */
+class GetProductoinGoalMethodsApiQueryResult extends ApiQueryResult {
 
     private List<Resource> resources;
 
     /**
      *
      */
-    protected GetCobotFunctionsByGoalApiQueryResult() {
+    protected GetProductoinGoalMethodsApiQueryResult() {
         this.resources = new ArrayList<>();
     }
 
@@ -48,7 +54,7 @@ class GetCobotFunctionsByGoalApiQueryResult extends ApiQueryResult {
      * @return
      */
     public List<Resource> getResources() {
-        return new ArrayList<>(resources);
+        return new ArrayList<>(this.resources);
     }
 
     /**

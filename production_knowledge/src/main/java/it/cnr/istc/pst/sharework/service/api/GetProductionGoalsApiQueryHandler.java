@@ -1,7 +1,7 @@
-package it.cnr.istc.pst.sharework.knowledge.service.api;
+package it.cnr.istc.pst.sharework.service.api;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
-import it.cnr.istc.pst.sharework.knowledge.service.api.ex.ApiQueryHandlingException;
+import it.cnr.istc.pst.sharework.service.api.ex.ApiQueryHandlingException;
 import org.apache.jena.rdf.model.Resource;
 import org.ros.node.ConnectedNode;
 import sharework_knowledge_msgs.KnowledgeAPIEndPointResponse;
@@ -13,14 +13,14 @@ import java.util.List;
 /**
  *
  */
-public class GetWorkersApiQueryHandler extends ApiQueryHandler<GetWorkersApiQueryResult>
+public class GetProductionGoalsApiQueryHandler extends ApiQueryHandler<GetProductionGoalsApiQueryResult>
 {
     /**
      *
      * @param knowledge
      */
-    protected GetWorkersApiQueryHandler(ProductionKnowledge knowledge) {
-        super(ApiQueryType.GET_WORKERS, knowledge);
+    protected GetProductionGoalsApiQueryHandler(ProductionKnowledge knowledge) {
+        super(ApiQueryType.GET_PRODUCTION_GOALS, knowledge);
     }
 
     /**
@@ -28,14 +28,15 @@ public class GetWorkersApiQueryHandler extends ApiQueryHandler<GetWorkersApiQuer
      * @return
      */
     @Override
-    public GetWorkersApiQueryResult  handle(sharework_knowledge_msgs.KnowledgeAPIEndPointRequest request)
+    public GetProductionGoalsApiQueryResult  handle(sharework_knowledge_msgs.KnowledgeAPIEndPointRequest request)
             throws ApiQueryHandlingException
     {
         // prepare response
-        GetWorkersApiQueryResult response = new GetWorkersApiQueryResult();
-        try {
-            // get resources representing known workers
-            List<Resource> goals = this.knowledge.getWorkOperators();
+        GetProductionGoalsApiQueryResult response = new GetProductionGoalsApiQueryResult();
+        try
+        {
+            // get resources representing known production goals
+            List<Resource> goals = this.knowledge.getProductionGoals();
             for (Resource goal : goals) {
                 // add the goal the the response
                 response.addResource(goal);
@@ -48,29 +49,22 @@ public class GetWorkersApiQueryHandler extends ApiQueryHandler<GetWorkersApiQuer
         // get result
         return response;
     }
+
 }
 
 
 /**
  *
  */
-class GetWorkersApiQueryResult extends ApiQueryResult {
-
+class GetProductionGoalsApiQueryResult extends ApiQueryResult
+{
     private List<Resource> resources;
 
     /**
      *
      */
-    protected GetWorkersApiQueryResult() {
-        this.resources = new ArrayList<Resource>();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public List<Resource> getResources() {
-        return new ArrayList<>(resources);
+    protected GetProductionGoalsApiQueryResult() {
+        this.resources = new ArrayList<>();
     }
 
     /**
@@ -85,8 +79,15 @@ class GetWorkersApiQueryResult extends ApiQueryResult {
 
     /**
      *
+     * @return
+     */
+    public List<Resource> getResources() {
+        return new ArrayList<>(resources);
+    }
+
+    /**
+     *
      * @param response
-     * @param cNode
      */
     @Override
     public void prepare(KnowledgeAPIEndPointResponse response, ConnectedNode cNode)
@@ -109,6 +110,8 @@ class GetWorkersApiQueryResult extends ApiQueryResult {
         // set response data
         response.setResources(data);
         response.setResult("SUCCESS");
-        response.setExplanation("List of knowledge RDF resources representing known workers");
+        response.setExplanation("List of knowledge RDF resources representing known production goals");
     }
+
 }
+

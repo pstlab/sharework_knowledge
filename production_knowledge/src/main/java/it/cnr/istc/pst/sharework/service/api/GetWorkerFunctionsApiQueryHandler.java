@@ -1,10 +1,9 @@
-package it.cnr.istc.pst.sharework.knowledge.service.api;
+package it.cnr.istc.pst.sharework.service.api;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
-import it.cnr.istc.pst.sharework.knowledge.service.api.ex.ApiQueryHandlingException;
+import it.cnr.istc.pst.sharework.service.api.ex.ApiQueryHandlingException;
 import org.apache.jena.rdf.model.Resource;
 import org.ros.node.ConnectedNode;
-import sharework_knowledge_msgs.KnowledgeAPIEndPointRequest;
 import sharework_knowledge_msgs.KnowledgeAPIEndPointResponse;
 
 import java.util.ArrayList;
@@ -13,25 +12,23 @@ import java.util.List;
 /**
  *
  */
-public class GetWorkerFunctionsByGoalApiQueryHandler extends ApiQueryHandler<GetWorkerFunctionsByGoalApiQueryResult>
+public class GetWorkerFunctionsApiQueryHandler extends ApiQueryHandler<GetWorkerFunctionsApiResult>
 {
+
     /**
      *
      * @param knowledge
      */
-    protected GetWorkerFunctionsByGoalApiQueryHandler(ProductionKnowledge knowledge) {
-        super(ApiQueryType.GET_WORKER_FUNCTIONS_GOAL, knowledge);
+    protected GetWorkerFunctionsApiQueryHandler(ProductionKnowledge knowledge) {
+        super(ApiQueryType.GET_WORKER_FUNCTIONS, knowledge);
     }
-
 
     /**
      *
-     * @param request
      * @return
-     * @throws ApiQueryHandlingException
      */
     @Override
-    public GetWorkerFunctionsByGoalApiQueryResult handle(KnowledgeAPIEndPointRequest request)
+    public GetWorkerFunctionsApiResult  handle(sharework_knowledge_msgs.KnowledgeAPIEndPointRequest request)
             throws ApiQueryHandlingException
     {
         return null;
@@ -41,14 +38,14 @@ public class GetWorkerFunctionsByGoalApiQueryHandler extends ApiQueryHandler<Get
 /**
  *
  */
-class GetWorkerFunctionsByGoalApiQueryResult extends ApiQueryResult
+class GetWorkerFunctionsApiResult extends ApiQueryResult
 {
     private List<Resource> resources;
 
     /**
      *
      */
-    protected GetWorkerFunctionsByGoalApiQueryResult() {
+    protected GetWorkerFunctionsApiResult() {
         this.resources = new ArrayList<>();
     }
 
@@ -57,14 +54,14 @@ class GetWorkerFunctionsByGoalApiQueryResult extends ApiQueryResult
      * @return
      */
     public List<Resource> getResources() {
-        return new ArrayList<>(resources);
+        return new ArrayList<>(this.resources);
     }
 
     /**
      *
      * @param res
      */
-    public void addResource(Resource res) {
+    public void addResource(Resource res)  {
         if (!this.resources.contains(res)) {
             this.resources.add(res);
         }

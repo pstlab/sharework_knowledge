@@ -13,6 +13,7 @@ import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledgeDictionary;
 import it.cnr.istc.pst.sharework.authoring.ProductionKnowledgeAuthoring;
 import it.cnr.istc.pst.sharework.knowledge.ex.ProductionKnowledgeException;
+import org.apache.commons.logging.Log;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
@@ -52,6 +53,31 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
      */
     public TimelineBasedProductionKnowledgeAuthoring() {
         super();
+        this.setup();
+    }
+
+    /**
+     *
+     */
+    public TimelineBasedProductionKnowledgeAuthoring(Log log) {
+        super(log);
+        this.setup();
+    }
+
+    /**
+     *
+     * @param pdlPath
+     */
+    public TimelineBasedProductionKnowledgeAuthoring(String pdlPath) {
+        super();
+        this.setup();
+        this.pdlPath = pdlPath;
+    }
+
+    /**
+     *
+     */
+    private void setup() {
         // index properties
         this.prop2value = new HashMap<>();
         try
@@ -131,15 +157,6 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
     /**
      *
-     * @param pdlPath
-     */
-    public TimelineBasedProductionKnowledgeAuthoring(String pdlPath) {
-        this();
-        this.pdlPath = pdlPath;
-    }
-
-    /**
-     *
      * @return
      */
     public int getNumberOfConstraints() {
@@ -213,7 +230,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
             // get production goals
             List<Resource> goals = this.knowledge.getProductionGoals();
-            // index goalsdoCompile
+            // index goals
             for (Resource goal : goals) {
                 vIndex.put(goal, "Goal.goals");
             }
@@ -226,6 +243,12 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
             // get workers
             List<Resource> workers = this.knowledge.getWorkOperators();
+            // exactly one worker expected
+            if (workers.isEmpty()) {
+                throw new ProductionKnowledgeAuthoringException("No individual of SOHO:WorkOperator found into the Knowledge Base!");
+            }
+
+
             // get functions
             List<Resource> hFuncs = this.knowledge.getFunctionsByAgent(workers.get(0));
             // index functions
@@ -248,6 +271,11 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
             // get cobots
             List<Resource> cobots = this.knowledge.getCobots();
+            // exactly one robot expected
+            if (cobots.isEmpty()) {
+                throw new ProductionKnowledgeAuthoringException("No individual of SOHO:Cobot found into the Knowledge Base!");
+            }
+
             // get functions
             List<Resource> rFuncs = this.knowledge.getFunctionsByAgent(cobots.get(0));
             // index functions

@@ -1,7 +1,7 @@
-package it.cnr.istc.pst.sharework.knowledge.service.api;
+package it.cnr.istc.pst.sharework.service.api;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
-import it.cnr.istc.pst.sharework.knowledge.service.api.ex.ApiQueryHandlingException;
+import it.cnr.istc.pst.sharework.service.api.ex.ApiQueryHandlingException;
 import org.apache.jena.rdf.model.Resource;
 import org.ros.node.ConnectedNode;
 import sharework_knowledge_msgs.KnowledgeAPIEndPointRequest;
@@ -13,15 +13,16 @@ import java.util.List;
 /**
  *
  */
-public class GetCobotsApiRequestHandler extends ApiQueryHandler<GetCobotsApiRequestResult> {
-
+public class GetWorkerFunctionsByGoalApiQueryHandler extends ApiQueryHandler<GetWorkerFunctionsByGoalApiQueryResult>
+{
     /**
      *
      * @param knowledge
      */
-    protected GetCobotsApiRequestHandler(ProductionKnowledge knowledge) {
-        super(ApiQueryType.GET_COBOTS, knowledge);
+    protected GetWorkerFunctionsByGoalApiQueryHandler(ProductionKnowledge knowledge) {
+        super(ApiQueryType.GET_WORKER_FUNCTIONS_GOAL, knowledge);
     }
+
 
     /**
      *
@@ -30,7 +31,9 @@ public class GetCobotsApiRequestHandler extends ApiQueryHandler<GetCobotsApiRequ
      * @throws ApiQueryHandlingException
      */
     @Override
-    public GetCobotsApiRequestResult handle(KnowledgeAPIEndPointRequest request) throws ApiQueryHandlingException {
+    public GetWorkerFunctionsByGoalApiQueryResult handle(KnowledgeAPIEndPointRequest request)
+            throws ApiQueryHandlingException
+    {
         return null;
     }
 }
@@ -38,14 +41,14 @@ public class GetCobotsApiRequestHandler extends ApiQueryHandler<GetCobotsApiRequ
 /**
  *
  */
-class GetCobotsApiRequestResult extends ApiQueryResult {
-
+class GetWorkerFunctionsByGoalApiQueryResult extends ApiQueryResult
+{
     private List<Resource> resources;
 
     /**
      *
      */
-    protected GetCobotsApiRequestResult() {
+    protected GetWorkerFunctionsByGoalApiQueryResult() {
         this.resources = new ArrayList<>();
     }
 

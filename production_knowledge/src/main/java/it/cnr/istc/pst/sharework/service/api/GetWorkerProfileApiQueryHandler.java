@@ -1,57 +1,57 @@
-package it.cnr.istc.pst.sharework.knowledge.service.api;
+package it.cnr.istc.pst.sharework.service.api;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
-import it.cnr.istc.pst.sharework.knowledge.service.api.ex.ApiQueryHandlingException;
+import it.cnr.istc.pst.sharework.service.api.ex.ApiQueryHandlingException;
 import org.apache.jena.rdf.model.Resource;
 import org.ros.node.ConnectedNode;
-import sharework_knowledge_msgs.KnowledgeAPIEndPointRequest;
 import sharework_knowledge_msgs.KnowledgeAPIEndPointResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  *
  */
-public class GetProductionGoalTasksApiQueryHandler extends ApiQueryHandler<GetProductionGoalTasksApiQueryResult> {
-
+public class GetWorkerProfileApiQueryHandler extends ApiQueryHandler<GetWorkersApiQueryResult>
+{
     /**
      *
      * @param knowledge
      */
-    protected GetProductionGoalTasksApiQueryHandler(ProductionKnowledge knowledge) {
-        super(ApiQueryType.GET_PRODUCTION_GOAL_TASKS, knowledge);
+    protected GetWorkerProfileApiQueryHandler(ProductionKnowledge knowledge) {
+        super(ApiQueryType.GET_WORKER_PROFILE, knowledge);
     }
 
     /**
      *
-     * @param request
      * @return
-     * @throws ApiQueryHandlingException
      */
     @Override
-    public GetProductionGoalTasksApiQueryResult handle(KnowledgeAPIEndPointRequest request) throws ApiQueryHandlingException {
+    public GetWorkersApiQueryResult  handle(sharework_knowledge_msgs.KnowledgeAPIEndPointRequest request)
+            throws ApiQueryHandlingException
+    {
         return null;
     }
 }
 
+
 /**
  *
  */
-class GetProductionGoalTasksApiQueryResult extends ApiQueryResult {
-
+class GetWorkerProfileApiQueryResult extends ApiQueryResult
+{
     private List<Resource> resources;
 
     /**
      *
      */
-    protected GetProductionGoalTasksApiQueryResult() {
+    protected GetWorkerProfileApiQueryResult() {
         this.resources = new ArrayList<>();
     }
 
     /**
      *
-     * @return
      */
     public List<Resource> getResources() {
         return new ArrayList<>(this.resources);

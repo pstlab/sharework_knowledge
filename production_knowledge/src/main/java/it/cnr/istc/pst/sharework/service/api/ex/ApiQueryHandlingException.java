@@ -1,4 +1,4 @@
-package it.cnr.istc.pst.sharework.knowledge.service.api.ex;
+package it.cnr.istc.pst.sharework.service.api.ex;
 
 
 /**

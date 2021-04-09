@@ -1,10 +1,10 @@
-package it.cnr.istc.pst.sharework.knowledge.service;
+package it.cnr.istc.pst.sharework.service;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
-import it.cnr.istc.pst.sharework.knowledge.service.api.ApiQueryHandler;
-import it.cnr.istc.pst.sharework.knowledge.service.api.ApiQueryResult;
-import it.cnr.istc.pst.sharework.knowledge.service.api.ApiQueryType;
-import it.cnr.istc.pst.sharework.knowledge.service.api.ex.ApiQueryHandlingException;
+import it.cnr.istc.pst.sharework.service.api.ApiQueryHandler;
+import it.cnr.istc.pst.sharework.service.api.ApiQueryResult;
+import it.cnr.istc.pst.sharework.service.api.ApiQueryType;
+import it.cnr.istc.pst.sharework.service.api.ex.ApiQueryHandlingException;
 import org.apache.commons.logging.Log;
 import org.ros.exception.ServiceException;
 import org.ros.node.ConnectedNode;

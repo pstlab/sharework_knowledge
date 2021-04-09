@@ -1,6 +1,5 @@
-package it.cnr.istc.pst.sharework.knowledge.service;
+package it.cnr.istc.pst.sharework.service;
 
-import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import org.apache.commons.logging.Log;
 import org.apache.jena.rdf.model.Statement;
 import org.ros.exception.ServiceException;
@@ -8,7 +7,6 @@ import org.ros.node.ConnectedNode;
 import org.ros.node.service.ServiceResponseBuilder;
 import sharework_knowledge_msgs.KnowledgeRDFTriple;
 
-import javax.xml.ws.Service;
 import java.util.ArrayList;
 import java.util.List;
 

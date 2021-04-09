@@ -1,6 +1,4 @@
-package it.cnr.istc.pst.sharework.knowledge.service.update;
-
-import it.cnr.istc.pst.sharework.knowledge.service.api.*;
+package it.cnr.istc.pst.sharework.service.update;
 
 import java.util.Arrays;
 

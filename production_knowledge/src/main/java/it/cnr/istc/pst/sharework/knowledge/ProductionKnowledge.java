@@ -1,6 +1,7 @@
 package it.cnr.istc.pst.sharework.knowledge;
 
 import it.cnr.istc.pst.sharework.knowledge.ex.ProductionKnowledgeException;
+import org.apache.commons.logging.Log;
 import org.apache.jena.ontology.*;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.reasoner.rulesys.*;
@@ -33,6 +34,8 @@ public class ProductionKnowledge
     private OntModel ontoModel;             // reference to the ontology model
     private InfModel infModel;              // the actual knowledge performing inference
 
+    private Log log;
+
 
     private List<ProductionKnowledgeUpdateSubscriber> subscribers;
 
@@ -52,9 +55,6 @@ public class ProductionKnowledge
         this.doLoad(ontoFile, ruleFile);
         // set default state
         this.state = ProductionKnowledgeState.NONE;
-        // set ontology file
-        this.ontoFile = ontoFile;
-        this.ruleFile = ruleFile;
         // set default files
         this.defaultOntoFile = ontoFile;
         this.defaultRuleFile = ruleFile;
@@ -66,10 +66,26 @@ public class ProductionKnowledge
     }
 
     /**
+     * Create the element responsible for actually managing production knowledge.
+     *
+     * This object encapsulates Apache Jena functionalities to build an OWL model
+     * of the dataset. On top of this model, a rule-based inference engine extends
+     * OWL semantics (OWLMicro) to refine the internal knowledge graph.
+     */
+    public ProductionKnowledge(Log log) {
+        // set default ontology model
+        this(SHAREWORK_KNOWLEDGE + "etc/ontologies/soho_core_v0.3.owl",
+                SHAREWORK_KNOWLEDGE + "etc/ontologies/soho_rules_v1.0.rules");
+
+        // set logger
+        this.log = log;
+    }
+
+    /**
      *
      * @param subscriber
      */
-    public synchronized void subscrbe(ProductionKnowledgeUpdateSubscriber subscriber) {
+    public synchronized void subscribe(ProductionKnowledgeUpdateSubscriber subscriber) {
         // add to list
         if (!this.subscribers.contains(subscriber)) {
             this.subscribers.add(subscriber);
@@ -82,19 +98,6 @@ public class ProductionKnowledge
      */
     public synchronized void unsubscribe(ProductionKnowledgeUpdateSubscriber subscriber) {
         this.subscribers.remove(subscriber);
-    }
-
-    /**
-     * Create the element responsible for actually managing production knowledge.
-     *
-     * This object encapsulates Apache Jena functionalities to build an OWL model
-     * of the dataset. On top of this model, a rule-based inference engine extends
-     * OWL semantics (OWLMicro) to refine the internal knowledge graph.
-     */
-    public ProductionKnowledge() {
-        // set default ontology model
-        this(SHAREWORK_KNOWLEDGE + "etc/ontologies/soho_core_v0.1.owl",
-                SHAREWORK_KNOWLEDGE + "etc/ontologies/soho_rules_v1.0.rules");
     }
 
     /**
@@ -126,6 +129,10 @@ public class ProductionKnowledge
 
         // create an inference model attached to the ontological model schema
         this.infModel = ModelFactory.createInfModel(reasoner, this.ontoModel);
+
+        // set file reference
+        this.ontoFile = ontoFile;
+        this.ruleFile = ruleFile;
     }
 
 
@@ -194,8 +201,6 @@ public class ProductionKnowledge
         {
             // load ontological model using the current rule file
             this.doLoad(ontoFile, this.ruleFile);
-            // update internal reference
-            this.ontoFile = ontoFile;
         }
         finally
         {

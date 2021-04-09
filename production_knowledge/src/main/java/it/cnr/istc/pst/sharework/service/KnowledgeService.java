@@ -1,10 +1,9 @@
-package it.cnr.istc.pst.sharework.knowledge.service;
+package it.cnr.istc.pst.sharework.service;
 
 import it.cnr.istc.pst.sharework.authoring.ProductionKnowledgeAuthoring;
 import it.cnr.istc.pst.sharework.authoring.hrc.ftl.TimelineBasedProductionKnowledgeAuthoring;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import org.apache.commons.logging.Log;
-import org.ros.exception.ServiceException;
 import org.ros.namespace.GraphName;
 import org.ros.node.AbstractNodeMain;
 import org.ros.node.ConnectedNode;
@@ -67,9 +66,9 @@ public class KnowledgeService extends AbstractNodeMain
 
 
             // create production knowledge manager
-            this.knowledge = new ProductionKnowledge();
+            this.knowledge = new ProductionKnowledge(this.log);
             // create authoring process
-            this.authoring = new TimelineBasedProductionKnowledgeAuthoring();
+            this.authoring = new TimelineBasedProductionKnowledgeAuthoring(this.log);
             // bind authoring process
             this.authoring.bind(this.knowledge);
         }

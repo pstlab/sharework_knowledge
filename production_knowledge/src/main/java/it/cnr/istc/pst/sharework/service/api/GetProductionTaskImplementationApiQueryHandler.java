@@ -1,7 +1,7 @@
-package it.cnr.istc.pst.sharework.knowledge.service.api;
+package it.cnr.istc.pst.sharework.service.api;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
-import it.cnr.istc.pst.sharework.knowledge.service.api.ex.ApiQueryHandlingException;
+import it.cnr.istc.pst.sharework.service.api.ex.ApiQueryHandlingException;
 import org.apache.jena.rdf.model.Resource;
 import org.ros.node.ConnectedNode;
 import sharework_knowledge_msgs.KnowledgeAPIEndPointRequest;
@@ -13,14 +13,14 @@ import java.util.List;
 /**
  *
  */
-public class GetFunctionEffectsApiQueryHandler extends ApiQueryHandler<GetFunctionEffectsApiQueryResult> {
+public class GetProductionTaskImplementationApiQueryHandler extends ApiQueryHandler<GetProductoinTaskImplementationApiQueryResult> {
 
     /**
      *
      * @param knowledge
      */
-    protected GetFunctionEffectsApiQueryHandler(ProductionKnowledge knowledge) {
-        super(ApiQueryType.GET_FUNCTION_EFFECTS, knowledge);
+    protected GetProductionTaskImplementationApiQueryHandler(ProductionKnowledge knowledge) {
+        super(ApiQueryType.GET_PRODUCTION_TASK_IMPLEMENTATION, knowledge);
     }
 
     /**
@@ -30,23 +30,19 @@ public class GetFunctionEffectsApiQueryHandler extends ApiQueryHandler<GetFuncti
      * @throws ApiQueryHandlingException
      */
     @Override
-    public GetFunctionEffectsApiQueryResult handle(KnowledgeAPIEndPointRequest request) throws ApiQueryHandlingException {
+    public GetProductoinTaskImplementationApiQueryResult handle(KnowledgeAPIEndPointRequest request) throws ApiQueryHandlingException {
         return null;
     }
 }
 
+class GetProductoinTaskImplementationApiQueryResult extends ApiQueryResult {
 
-/**
- *
- */
-class GetFunctionEffectsApiQueryResult extends ApiQueryResult {
-
-    protected List<Resource> resources;
+    private List<Resource> resources;
 
     /**
      *
      */
-    protected GetFunctionEffectsApiQueryResult() {
+    protected GetProductoinTaskImplementationApiQueryResult() {
         this.resources = new ArrayList<>();
     }
 

@@ -1,7 +1,7 @@
-package it.cnr.istc.pst.sharework.knowledge.service.api;
+package it.cnr.istc.pst.sharework.service.api;
 
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
-import it.cnr.istc.pst.sharework.knowledge.service.api.ex.ApiQueryHandlingException;
+import it.cnr.istc.pst.sharework.service.api.ex.ApiQueryHandlingException;
 import org.apache.jena.rdf.model.Resource;
 import org.ros.node.ConnectedNode;
 import sharework_knowledge_msgs.KnowledgeAPIEndPointRequest;
@@ -13,14 +13,14 @@ import java.util.List;
 /**
  *
  */
-public class GetProductionGoalMethodsApiQueryHandler extends ApiQueryHandler<GetProductoinGoalMethodsApiQueryResult> {
+public class GetFunctionEffectsApiQueryHandler extends ApiQueryHandler<GetFunctionEffectsApiQueryResult> {
 
     /**
      *
      * @param knowledge
      */
-    protected GetProductionGoalMethodsApiQueryHandler(ProductionKnowledge knowledge) {
-        super(ApiQueryType.GET_PRODUCTION_GOAL_METHODS, knowledge);
+    protected GetFunctionEffectsApiQueryHandler(ProductionKnowledge knowledge) {
+        super(ApiQueryType.GET_FUNCTION_EFFECTS, knowledge);
     }
 
     /**
@@ -30,22 +30,23 @@ public class GetProductionGoalMethodsApiQueryHandler extends ApiQueryHandler<Get
      * @throws ApiQueryHandlingException
      */
     @Override
-    public GetProductoinGoalMethodsApiQueryResult handle(KnowledgeAPIEndPointRequest request) throws ApiQueryHandlingException {
+    public GetFunctionEffectsApiQueryResult handle(KnowledgeAPIEndPointRequest request) throws ApiQueryHandlingException {
         return null;
     }
 }
 
+
 /**
  *
  */
-class GetProductoinGoalMethodsApiQueryResult extends ApiQueryResult {
+class GetFunctionEffectsApiQueryResult extends ApiQueryResult {
 
-    private List<Resource> resources;
+    protected List<Resource> resources;
 
     /**
      *
      */
-    protected GetProductoinGoalMethodsApiQueryResult() {
+    protected GetFunctionEffectsApiQueryResult() {
         this.resources = new ArrayList<>();
     }
 
