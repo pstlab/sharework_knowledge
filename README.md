@@ -26,7 +26,8 @@ In addition, the package requires a locally running instance of mongodb server. 
 
 ### Configuring ROSJava Workspace
 
-Create an empty workspace using catkin 
+Create an empty workspace using catkin rosservice call /sharework/knowledge/update "load" ["/home/alessandro/ws/robotics/sharework/src/sharework_ontology/soho_cembre_v0.1.owl"]
+
 
 ```
 mkdir -p ~/ws/src
@@ -117,13 +118,13 @@ At this point the service is running and can be called to interact with the know
 ```
 cd ~/ws
 source devel/setup.bash
-rosservice call /sharework/knowledge/update "load" ["/home/alessandro/ws/robotics/sharework/src/sharework_ontology/soho_cembre_v0.1.owl"]
+rosservice call /sharework/knowledge/update "load" ["<absolute_path>/ws/src/sharework_ontology/soho_cembre_v0.1.owl"]
 rosservice call /sharework/knowledge/api "get_workers" []
 ```
 
-The frist call load the ontological model defined for one of the case studies of the project in order to fill the knowledge base with the information characterizing the considered collaborative process. 
+The frist call load the ontological model defined for one of the case studies of the project in order to fill the knowledge base with the information characterizing the considered collaborative process. _Please note that the file path specified into the "load request" should be absolute._ 
 
-_Note that (as can be seen by looking at the output of the terminal running the knowledge services) when the model is loaded the authoring service is triggered to automatically generate and validate an updated timeline-based planning model for the considered HRC scenario. The authoring process runs in background (i.e., it does not slow down queries/updates on the knowledge) and the output is the file ```prod_knowledge.ddl``` under the folder ```gen``` of the package structure._
+_Note also that when the model is loaded the authoring service is triggered to automatically generate and validate an updated timeline-based planning model for the considered HRC scenario. The authoring process runs in background (i.e., it does not slow down queries/updates on the knowledge) and the output is the file ```prod_knowledge.ddl``` under the folder ```gen``` of the package structure._
 
 The second call retrieves information about defined workers i.e., individuals of the ontological class ```SOHO:WorkOperator``` (in shape of RDF resources).
 
