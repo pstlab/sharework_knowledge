@@ -19,6 +19,7 @@ The module offers ROS services to access and update productoin knowledge.
 
 The package has been developed and tested for ROS Melodic distribution on Ubunut 18.04. It requires a ROSJava workspace for correct execution and generation of the Java artifacts needed for custom messages and installed JDK 8 or higher.
 
+In addition, the package requires a locally running instance of mongodb server. The current package has been developed and tested using MongDB Cumminuty Server v.4.4.5 that can be downloade from the following official link https://www.mongodb.com/try/download/community 
 
 ### Configuring ROSJava Workspace
 
@@ -45,7 +46,7 @@ catkin_make
 
 At this point a ROSJava workspace has been successfully set and everything is ready for the installation of the sharework_knowledge package. 
 
-First, it is necessary to install the ROS package defining custom messages and services defined within the knowledge base module of the Sharework. This package is available on GitHub (https://github.com/pstlab/sharework_knowledge_msgs.git) and cna be installed into the ROSJava workspace as follows: 
+First, it is necessary to install the ROSjava package **sharework_knowledge_msgs** defining custom messages and services defined within the knowledge base module of the Sharework. This package is available on GitHub (https://github.com/pstlab/sharework_knowledge_msgs.git) and can be installed into the ROSJava workspace as follows: 
 
 ```
 cd ~/ws/src
@@ -55,7 +56,7 @@ catkin_make
 source ~/ws/devel/setup.bash
 ```
 
-It is possible to verify the successful built of the package by checking ROS service description through ```rosserv show```. For example the following commands
+It is possible to verify the successful built of the package by checking ROS service description through ```rossrv show```. For example the following commands
 
 ```
 cd ~/ws
@@ -73,6 +74,17 @@ sharework_knowledge_msgs/KnowledgeRDFTriple[] result
   string property
   string object
 
+```
+
+Now it is possible to install the **sharework_knowledge** package into the ROSJava workspace by cloning and installing the current repository as follows: 
+
+```
+cd ~/ws/src
+git clone https://github.com/pstlab/sharework_knowledge.git
+cd ..
+source devel/setup.bash
+catkin_make
+source devel/setup.bash
 ```
 
 ### Environment Variables
