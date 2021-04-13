@@ -22,7 +22,7 @@ TODO
 
 The package has been developed and tested for ROS Melodic distribution on Ubunut 18.04. It requires a ROSJava workspace for correct execution and generation of the Java artifacts needed for custom messages and installed Java software.
 
-_We recommend the use of Java 8 since other higher or lower versions of Java may have some dependency issues with rosjava)_
+_We recommend the use of Java 8 since other higher or lower versions of Java may have some dependency issues with rosjava._
 
 In addition, the package requires a locally running instance of mongodb server. The current package has been developed and tested using MongDB Cumminuty Server v.4.4.5 that can be downloade from the following official link https://www.mongodb.com/try/download/community 
 
