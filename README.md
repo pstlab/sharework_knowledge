@@ -49,7 +49,7 @@ catkin_make
 
 ### Package Preparation 
 
-At this point a ROSJava workspace has been successfully set and everything is ready for the installation of the sharework_knowledge package. 
+Once that a ROSJava workspace has been successfully configured everything is ready for the installation of the **sharework_knowledge package**. 
 
 First, it is necessary to install the ROSjava package **sharework_knowledge_msgs** defining custom messages and services defined within the knowledge base module of the Sharework. This package is available on GitHub (https://github.com/pstlab/sharework_knowledge_msgs.git) and can be installed into the ROSJava workspace as follows: 
 
@@ -93,17 +93,17 @@ gpr.token=<github-personal-access-token>
 gpr.ws=<absolute-path-to-the-workspace>
 ```
 
-As an alternative to the file ```gradle.properties``` the same configuration parameters can be specified using environment variables. For example add to the ```.bashrc``` the definition of the following variables:
+As an alternative to the file ```gradle.properties``` the same configuration parameters can be specified using environment variables. For example add to  ```.bashrc``` the definition of the following variables:
 
 ```
 export GITHUB_USER=<github-user>
 export GITHUB_TOKEN=<github-personal-access-token>
-export SHAREWORK_WS=<path-to-the-workspace>
+export SHAREWORK_WS=<path-to-the-workspace>           # e.g., ~/ws
 ```
 
 ### Bulding the Package
 
-At this point, install the **sharework_knowledge** package into the ROSJava workspace by cloning and installing the current repository as follows: 
+At this point install the **sharework_knowledge package** into the ROSJava workspace by cloning and installing the current repository.
 
 ```
 cd ~/ws/src
