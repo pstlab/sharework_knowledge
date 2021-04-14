@@ -1,10 +1,10 @@
 # Knowledge Base Module for Sharework
 
-This repository contains a ROSjava (http://wiki.ros.org/rosjava) package enriching ROS with knowledge representation and reasoning services. The module has been specifically designed for Human-Robot Collaboration. The objective of the package is twofold: (i) the package proposes the use of standard semantic technologies (OWL/RDFS) based on an ontological framework for Human-Robot Collaboration (1) to represent and reason about production knowledge; (ii) the package implements knowledge reasoning and extraction mechanisms to facilitate the deployment of timeline-based task planning technologies (2) in HRC production scenarios.
+This repository contains a ROSjava (http://wiki.ros.org/rosjava) package enriching ROS with knowledge representation and reasoning services. The module has been specifically designed for Human-Robot Collaboration. The objective of the package is twofold: (i) the package proposes the use of standard semantic technologies (OWL/RDFS) based on an ontological framework for Human-Robot Collaboration [1] to represent and reason about production knowledge; (ii) the package implements knowledge reasoning and extraction mechanisms to facilitate the deployment of timeline-based task planning technologies [2] in HRC production scenarios.
 
 ## Overview
 
-The main components are **ProductionKnowledge** and **ProductionKnowledgeAuthoring**. The former encapsulates a **Knowledge Graph** representing information about  HRC processes, collaborative tasks and human and robot capabilities/skills and, support reasoning and mechanisms. The latter support automatic generation of task planning models. It specificallly compiles the knowledge to dynamically generate a valid and updated timeline-based planning model (2) that can be used by tools like e.g., PLATINUm (3) to coordinate Human and Robot behaviors at task planning level (4,5).
+The main components are **ProductionKnowledge** and **ProductionKnowledgeAuthoring**. The former encapsulates a **Knowledge Graph** representing information about  HRC processes, collaborative tasks and human and robot capabilities/skills and, support reasoning and mechanisms. The latter support automatic generation of task planning models. It specificallly compiles the knowledge to dynamically generate a valid and updated timeline-based planning model [2] that can be used by tools like e.g., PLATINUm [3] to coordinate Human and Robot behaviors at task planning level [4,5].
 
 ### Package Structure
 
@@ -26,7 +26,7 @@ _We recommend the use of Java 8 since other higher or lower versions of Java may
 
 In addition, the package requires a locally running instance of mongodb server. The current package has been developed and tested using MongDB Cumminuty Server v.4.4.5 that can be downloade from the following official link https://www.mongodb.com/try/download/community 
 
-### Configuring ROSJava Workspace
+### ROSJava Workspace Configuration
 
 Create an empty workspace using catkin rosservice call /sharework/knowledge/update "load" ["/home/alessandro/ws/robotics/sharework/src/sharework_ontology/soho_cembre_v0.1.owl"]
 
@@ -48,7 +48,7 @@ rosdep install --from-paths src -i -y
 catkin_make
 ```
 
-### Package Configuration Steps
+### Package Setup 
 
 At this point a ROSJava workspace has been successfully set and everything is ready for the installation of the sharework_knowledge package. 
 
@@ -82,7 +82,29 @@ sharework_knowledge_msgs/KnowledgeRDFTriple[] result
 
 ```
 
-Now it is possible to install the **sharework_knowledge** package into the ROSJava workspace by cloning and installing the current repository as follows: 
+### Gradle Configuration
+
+Before buliding the ROS package configure **gradle** so that all the dependencies are correctly downloaded. This module indeed relies on some packages (e.g., [https://github.com/pstlab/PLATINUm](PLATINUm)) that are not deployed on maven central but on GitHub. 
+
+To allow gradle to download packages from GitHub repositories create a text file ```gradle.properties``` under the folder ```sharework_knowledge/production_knowledge```. This file should specifiy a **GitHub username**, a **GitHub access token** (_see how to create personal access token on [https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token](the official GitHub page) if necessary) and the **absolute path to workspace** as follows: 
+
+```
+gpr.user=<github-user>
+gpr.token=<github-personal-access-token>
+gpr.ws=<absolute-path-to-the-workspace>
+```
+
+As an alternative to the file ```gradle.properties``` the same configuration parameters can be specified using environment variables. For example add to the ```.bashrc``` the definition of the following variables:
+
+```
+export GITHUB_USER=<github-user>
+export GITHUB_TOKEN=<github-personal-access-token>
+export SHAREWORK_WS=<path-to-the-workspace>
+```
+
+### Bulding the Package
+
+At this point, install the **sharework_knowledge** package into the ROSJava workspace by cloning and installing the current repository as follows: 
 
 ```
 cd ~/ws/src
@@ -93,7 +115,7 @@ catkin_make
 source devel/setup.bash
 ```
 
-To finalize the installation it is necessary to define the environment variable **SHAREWORK_KNOWLEDGE** in order to point to the folder containing the installed package. 
+To finalize the installation just define the environment variable **SHAREWORK_KNOWLEDGE** in order to point to the folder containing the installed package. 
 
 ```
 export SHAREWORK_KNOWLEDGE=~/ws/src/sharework_knowledge
@@ -134,13 +156,13 @@ The second call retrieves information about defined workers i.e., individuals of
 
 ## References 
 
-(1) Umbrico A., Orlandini A., Cesta A. "An Ontology for Human-Robot Collaboration". Procedia CIRP. Volume 93. 2020. Pages 1097-1102,
+[1] Umbrico A., Orlandini A., Cesta A. "An Ontology for Human-Robot Collaboration". Procedia CIRP. Volume 93. 2020. Pages 1097-1102,
 
-(2) Cialdea Mayer, M., Orlandini, A., Umbrico, A. "Planning and execution with flexible timelines: a formal account". Acta Informatica. Volume 53. 2016. Pages 649–680.
+[2] Cialdea Mayer, M., Orlandini, A., Umbrico, A. "Planning and execution with flexible timelines: a formal account". Acta Informatica. Volume 53. 2016. Pages 649–680.
 
-(3) Umbrico A., Cesta A., Cialdea Mayer M., Orlandini A. "PLATINUm: A New Framework for Planning and Acting". In: Esposito F., Basili R., Ferilli S., Lisi F. (eds) AI*IA 2017 Advances in Artificial Intelligence. AI*IA 2017. Lecture Notes in Computer Science, Volume 10640. 2017.
+[3] Umbrico A., Cesta A., Cialdea Mayer M., Orlandini A. "PLATINUm: A New Framework for Planning and Acting". In: Esposito F., Basili R., Ferilli S., Lisi F. (eds) AI*IA 2017 Advances in Artificial Intelligence. AI*IA 2017. Lecture Notes in Computer Science, Volume 10640. 2017.
 
-(4) M. Faroni, Beschi M., Ghidini S., Pedrocchi N., Umbrico A., Orlandini A., Cesta A. "A Layered Control Approach to Human-Aware Task and Motion Planning for Human-Robot Collaboration". 29th IEEE International Conference on Robot and Human Interactive Communication (RO-MAN). 2020. Pages 1204-1210.
+[4] M. Faroni, Beschi M., Ghidini S., Pedrocchi N., Umbrico A., Orlandini A., Cesta A. "A Layered Control Approach to Human-Aware Task and Motion Planning for Human-Robot Collaboration". 29th IEEE International Conference on Robot and Human Interactive Communication (RO-MAN). 2020. Pages 1204-1210.
 
-(5) Pellegrinelli S., Orlandini A., Pedrocchi N., Umbrico A., Tolio T. "Motion planning and scheduling for human and industrial-robot collaboration". CIRP Annals.
+[5] Pellegrinelli S., Orlandini A., Pedrocchi N., Umbrico A., Tolio T. "Motion planning and scheduling for human and industrial-robot collaboration". CIRP Annals.
 Volume 66, Issue 1. 2017. Pages 1-4.
