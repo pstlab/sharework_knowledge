@@ -34,10 +34,22 @@ mainClassName = 'org.ros.RosRun'
 */
 
 repositories {
+
   mavenCentral()
+
   mavenLocal()
+
   maven {
-    url "file://home/alessandro/ws/robotics/sharework/devel/share/maven"
+    url "file://" + (project.findProperty("gpr.ws") ?: System.getenv("SHAREWORK_WS")) + "/devel/share/maven"
+  }
+
+  maven {
+    name = "GiHubPackages"
+    url = uri("https://maven.pkg.github.com/pstlab/PLATINUm")
+    credentials {
+      username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
+      password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+    }
   }
 }
 

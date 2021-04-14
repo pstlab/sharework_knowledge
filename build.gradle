@@ -18,9 +18,12 @@ task wrapper(type: Wrapper) {
     gradleVersion = '4.10.2'
 }
 
+
 buildscript {
   apply from: "https://github.com/rosjava/rosjava_bootstrap/raw/kinetic/buildscript.gradle"
 }
+
+
 
 apply plugin: 'catkin'
 

@@ -1,6 +1,5 @@
 package it.cnr.istc.pst.sharework.testing.authoring.mosaic;
 
-import it.cnr.istc.pst.platinum.ai.framework.domain.component.PlanDataBase;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledgeDictionary;
 import it.cnr.istc.pst.sharework.authoring.hrc.ftl.TimelineBasedProductionKnowledgeAuthoring;
@@ -405,6 +404,47 @@ public class MosaicAuthoringTest
      *
      */
     @Test
+    public void authoringCompilationAndValidationTest()
+    {
+        System.out.println("*********************************************");
+        System.out.println("***** Test: authoringCompilationAndValidationTest() *****");
+
+        // create production knowledge
+        TimelineBasedProductionKnowledgeAuthoring authoring = new TimelineBasedProductionKnowledgeAuthoring();
+        Assert.assertNotNull(authoring);
+        try
+        {
+            // load knowledge base
+            authoring.setProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
+            // get data structure
+            boolean valid = authoring.compileAndValidate();
+            Assert.assertTrue(valid);
+
+            // print some statistics
+            System.out.println("Authoring statistics:\n" +
+                    "- Number of SV: " + authoring.getNumberOfVariables() + "\n" +
+                    "- Number of predicates: " + authoring.getNumberOfPredicates() + "\n" +
+                    "- Number of synchronizations: " + authoring.getNumberOfSynchronizations() + "\n" +
+                    "- Number of constraints: " + authoring.getNumberOfConstraints() + "\n" +
+                    "- Time: " + authoring.getTime() + " (msecs)\n\n");
+        }
+        catch (Exception ex) {
+            // print error message
+            System.err.println(ex.getMessage());
+            Assert.assertTrue(false);
+        }
+        finally
+        {
+            // close test
+            System.out.println("*********************************************");
+            System.out.println();
+        }
+    }
+
+    /**
+     *
+     */
+    @Test
     public void authoringTest()
     {
         System.out.println("*********************************************");
@@ -420,6 +460,9 @@ public class MosaicAuthoringTest
             // get data structure
             boolean valid = authoring.compileAndValidate();
             Assert.assertTrue(valid);
+
+            // export data
+            authoring.export();
 
             // print some statistics
             System.out.println("Authoring statistics:\n" +
