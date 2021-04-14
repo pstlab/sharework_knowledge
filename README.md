@@ -149,8 +149,7 @@ The frist call load the ontological model defined for one of the case studies of
 
 _Note also that when the model is loaded the authoring service is triggered to automatically generate and validate an updated timeline-based planning model for the considered HRC scenario. The authoring process runs in background (i.e., it does not slow down queries/updates on the knowledge) and the output is the file ```prod_knowledge.ddl``` under the folder ```gen``` of the package structure._
 
-The second call retrieves information about defined workers i.e., individuals of the ontological class ```SOHO:WorkOperator``` (in shape of RDF resources).
-
+The second call retrieves information about defined workers i.e., individuals of the ontological class ```SOHO:WorkOperator```.
 
 
 ## References 
