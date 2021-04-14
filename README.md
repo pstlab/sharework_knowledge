@@ -48,7 +48,7 @@ rosdep install --from-paths src -i -y
 catkin_make
 ```
 
-### Package Setup 
+### Package Preparation 
 
 At this point a ROSJava workspace has been successfully set and everything is ready for the installation of the sharework_knowledge package. 
 
