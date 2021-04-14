@@ -1,6 +1,6 @@
 # Knowledge Base Module for Sharework
 
-This repository contains a ROSjava (http://wiki.ros.org/rosjava) package enriching ROS with knowledge representation and reasoning services. The module has been specifically designed for Human-Robot Collaboration. The objective of the package is twofold: (i) the package proposes the use of standard semantic technologies (OWL/RDFS) based on an ontological framework for Human-Robot Collaboration [1] to represent and reason about production knowledge; (ii) the package implements knowledge reasoning and extraction mechanisms to facilitate the deployment of timeline-based task planning technologies [2] in HRC production scenarios.
+This repository contains a **ROSjava package** enriching **ROS** with **knowledge representation and reasoning services**. The module has been specifically designed for **Human-Robot Collaboration**. The objective of the package is twofold: (i) the package proposes the use of standard semantic technologies (OWL/RDFS) based on an ontological framework for Human-Robot Collaboration [1] to represent and reason about production knowledge; (ii) the package implements knowledge reasoning and extraction mechanisms to facilitate the deployment of timeline-based task planning technologies [2] in HRC production scenarios.
 
 ## Overview
 
