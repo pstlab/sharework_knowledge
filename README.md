@@ -24,12 +24,11 @@ The package has been developed and tested for ROS Melodic distribution on Ubunut
 
 _We recommend the use of Java 8 since other higher or lower versions of Java may have some dependency issues with rosjava._
 
-In addition, the package requires a locally running instance of mongodb server. The current package has been developed and tested using MongDB Cumminuty Server v.4.4.5 that can be downloade from the following official link https://www.mongodb.com/try/download/community 
+In addition, the package requires a locally running instance of mongodb server. The current package has been developed and tested using _MongDB Cumminuty Server v.4.4.5_ that can be downloade from [the official web page](https://www.mongodb.com/try/download/community). 
 
 ### ROSJava Workspace Configuration
 
-Create an empty workspace using catkin rosservice call /sharework/knowledge/update "load" ["/home/alessandro/ws/robotics/sharework/src/sharework_ontology/soho_cembre_v0.1.owl"]
-
+Create an empty workspace.
 
 ```
 mkdir -p ~/ws/src
@@ -37,7 +36,7 @@ cd ~/ws
 catkin_build
 ```
 
-We recommend installing rosjava from source. Here are the instructions for **minimal installation** for rosjava. Please refer to the official Wiki for further support (http://wiki.ros.org/rosjava/Tutorials/kinetic/Source%20Installation).
+Here are the instructions for downloading and building **ROSJava from source** (recommended). Please refer to the official [ROSJava Wiki](http://wiki.ros.org/rosjava) for further details about installation and availabe distributions.
 
 ```
 wstool init -j4 ~/ws/src https://raw.githubusercontent.com/rosjava/rosjava/kinetic/rosjava.rosinstall
@@ -84,9 +83,9 @@ sharework_knowledge_msgs/KnowledgeRDFTriple[] result
 
 ### Gradle Configuration
 
-Before buliding the ROS package configure **gradle** so that all the dependencies are correctly downloaded. This module indeed relies on some packages (e.g., [https://github.com/pstlab/PLATINUm](PLATINUm)) that are not deployed on maven central but on GitHub. 
+Before buliding the ROS package configure **gradle** so that all the dependencies are correctly downloaded. This module indeed relies on some packages (e.g., [PLATINUm](https://github.com/pstlab/PLATINUm)) that are not deployed on maven central but on GitHub. 
 
-To allow gradle to download packages from GitHub repositories create a text file ```gradle.properties``` under the folder ```sharework_knowledge/production_knowledge```. This file should specifiy a **GitHub username**, a **GitHub access token** (_see how to create personal access token on [https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token](the official GitHub page) if necessary) and the **absolute path to workspace** as follows: 
+To allow gradle to download packages from GitHub repositories create a text file ```gradle.properties``` under the folder ```sharework_knowledge/production_knowledge```. This file should specifiy a **GitHub username**, a **GitHub access token** (_see how to create personal access token on [the official GitHub page](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) if necessary_) and the **absolute path to workspace** as follows: 
 
 ```
 gpr.user=<github-user>
