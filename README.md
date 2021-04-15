@@ -14,7 +14,7 @@ _We recommend the use of Java 8 since other higher or lower versions of Java may
 
 ```sudo update-alternatives --config java```
 
-In addition, the package requires an installed localhostand locally running instance of **MongoDB server**. The current package has been developed and tested using [_MongDB Cumminuty Server v.4.4.5_](https://www.mongodb.com/try/download/community). 
+In addition, the package requires an installed locally running instance of **MongoDB server**. The current package has been developed and tested using [_MongDB Cumminuty Server v.4.4.5_](https://www.mongodb.com/try/download/community). 
 
 ### ROSJava Workspace Configuration
 
