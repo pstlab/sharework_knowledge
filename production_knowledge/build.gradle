@@ -33,32 +33,12 @@ mainClassName = 'org.ros.RosRun'
    version number changes.
 */
 
-repositories {
-
-  mavenCentral()
-
-  mavenLocal()
-
-  maven {
-    url "file://" + (project.findProperty("gpr.ws") ?: System.getenv("SHAREWORK_WS")) + "/devel/share/maven"
-  }
-
-  maven {
-    name = "GiHubPackages"
-    url = uri("https://maven.pkg.github.com/pstlab/PLATINUm")
-    credentials {
-      username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
-      password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
-    }
-  }
-}
-
 dependencies {
   /* An external maven artifact dependency */
   compile 'org.ros.rosjava_core:rosjava:[0.3,)'
   compile 'junit:junit:4.12'
   compile 'org.apache.jena:jena-core:3.17.0'
-  compile 'it.cnr.istc.pst:platinum:[1.0,)'
+  compile 'it.cnr.istc.pst:platinum:[1.1.1,)'
   compile 'org.ros.rosjava_messages:sharework_knowledge_msgs:[0.1.0,)'
   compile 'org.mongodb:mongo-java-driver:[3.12,)'
   /* Example of a local subproject dependency */

@@ -35,6 +35,23 @@ allprojects {
     */
     group 'com.github.rosjava.sharework_knowledge'
     version = project.catkin.pkg.version
+
+    repositories {
+
+        mavenCentral()
+
+        maven {
+            url "file://" + (project.findProperty("gpr.ws") ?: System.getenv("SHAREWORK_WS")) + "/devel/share/maven"
+        }
+
+        maven {
+            url  'https://maven.pkg.github.com/pstlab/PLATINUm'
+            credentials {
+                username project.findProperty("gpr.user").toString() ?:  System.getenv("GITHUB_USER").toString()
+                password project.findProperty("gpr.token").toString() ?: System.getenv("GITHUB_TOKEN").toString()
+            }
+        }
+    }
 }
 
 subprojects {
