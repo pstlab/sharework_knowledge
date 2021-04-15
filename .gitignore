@@ -3,5 +3,4 @@
 .gradle/*
 .idea/*
 *.dot
-/gen/
 gradle.properties

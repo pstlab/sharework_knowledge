@@ -45,6 +45,7 @@ allprojects {
         }
 
         maven {
+
             url  'https://maven.pkg.github.com/pstlab/PLATINUm'
             credentials {
                 username project.findProperty("gpr.user").toString() ?:  System.getenv("GITHUB_USER").toString()
