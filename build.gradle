@@ -41,6 +41,7 @@ allprojects {
         mavenCentral()
 
         maven {
+
             url "file://" + (project.findProperty("gpr.ws") ?: System.getenv("SHAREWORK_WS")) + "/devel/share/maven"
         }
 
@@ -56,6 +57,7 @@ allprojects {
 }
 
 subprojects {
+
     /*
      * The ros-java plugin configures a few things:
      *
@@ -67,12 +69,16 @@ subprojects {
      *
      *   https://github.com/rosjava/rosjava_bootstrap/blob/kinetic/gradle_plugins/src/main/groovy/org/ros/gradle_plugins/RosPlugin.groovy#L31
      */
+
     apply plugin: "ros-java"
+
     /*
      * Some IDE support if you use it.
      */
+
     apply plugin: "eclipse"
     apply plugin: "idea"
+
 }
 
 /*
