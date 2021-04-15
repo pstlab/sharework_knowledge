@@ -137,7 +137,7 @@ At this point the service is running and can be called to interact with the know
 ```
 cd ~/ws
 source devel/setup.bash
-rosservice call /sharework/knowledge/update "load" ["<absolute_path>/ws/src/sharework_ontology/soho_cembre_v0.1.owl"]
+rosservice call /sharework/knowledge/update "load" ["<absolute_path>/ws/src/sharework_knowledge/etc/ontologies/soho_cembre_v0.1.owl"]
 rosservice call /sharework/knowledge/api "get_workers" []
 ```
 
