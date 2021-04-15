@@ -14,7 +14,7 @@ _We recommend the use of Java 8 since other higher or lower versions of Java may
 
 ```sudo update-alternatives --config java```
 
-In addition, the package requires an installed and locally running instance of **MongoDB server**. The current package has been developed and tested using [_MongDB Cumminuty Server v.4.4.5_](https://www.mongodb.com/try/download/community). 
+In addition, the package requires an installed localhostand locally running instance of **MongoDB server**. The current package has been developed and tested using [_MongDB Cumminuty Server v.4.4.5_](https://www.mongodb.com/try/download/community). 
 
 ### ROSJava Workspace Configuration
 
@@ -80,20 +80,21 @@ sharework_knowledge_msgs/KnowledgeRDFTriple[] result
 
 Before buliding the ROS package configure **gradle** so that all the dependencies are correctly downloaded. This module indeed relies on some packages (e.g., [PLATINUm](https://github.com/pstlab/PLATINUm)) that are not deployed on maven central but on GitHub. 
 
-To allow gradle to download packages from GitHub repositories create a text file ```gradle.properties``` under the folder ```sharework_knowledge/production_knowledge```. This file should specifiy a **GitHub username**, a **GitHub access token** (_see how to create personal access token on [the official GitHub page](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) if necessary_) and the **absolute path to workspace** as follows: 
+To allow gradle to download packages from GitHub repositories create a text file ```gradle.properties``` under ```sharework_knowledge```. This file should specifiy a **GitHub username**, a **GitHub access token** and the **absolute path to workspace** as follows: 
 
 ```
 gpr.user=<github-user>
 gpr.token=<github-personal-access-token>
 gpr.ws=<absolute-path-to-the-workspace>
 ```
+See how to create personal access token on [the official GitHub page](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) if necessary). Be sure to select the scope ```read:packages``` when creating the personal access token in order to successfully read GitHub packages.
 
-As an alternative to the file ```gradle.properties``` the same configuration parameters can be specified using environment variables. For example add to  ```.bashrc``` the definition of the following variables:
+As alternative to the file ```gradle.properties``` the same configuration parameters can be specified using environment variables. For example add to  ```.bashrc``` the definition of the following variables:
 
 ```
 export GITHUB_USER=<github-user>
 export GITHUB_TOKEN=<github-personal-access-token>
-export SHAREWORK_WS=<path-to-the-workspace>           # e.g., ~/ws
+export SHAREWORK_WS=<path-to-the-workspace>
 ```
 
 ### Bulding the Package
