@@ -33,7 +33,7 @@ Create an empty workspace.
 ```
 mkdir -p ~/ws/src
 cd ~/ws
-catkin_build
+catkin_make
 ```
 
 Here are the instructions for downloading and building **ROSJava from source** (recommended). Please refer to the official [ROSJava Wiki](http://wiki.ros.org/rosjava) for further details about installation and availabe distributions.
