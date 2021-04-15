@@ -36,7 +36,7 @@ rosdep update
 rosdep install --from-paths src -i -y
 catkin_make
 ```
-Note that one of the dependecies of **rosjava_messages** package is [world_canvas_msgs](http://wiki.ros.org/world_canvas_msgs) which is supported by ROS Melodic. To successfully build **rosjava** thus remove this dependency by editing the file ```package.xml``` of ```rosjava_messages``` and commenting the following line
+Note that one of the dependecies of **rosjava_messages** package is [world_canvas_msgs](http://wiki.ros.org/world_canvas_msgs) which is not supported by ROS Melodic. To successfully build **rosjava** thus remove this dependency by editing the file ```package.xml``` of ```rosjava_messages``` and commenting the following line
 
 ```
 <build_depend>world_canvas_msgs</build_depend>
