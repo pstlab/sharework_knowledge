@@ -46,7 +46,7 @@ Note that one of the dependecies of **rosjava_messages** package is [world_canva
 
 Once that a ROSJava workspace has been successfully configured everything is ready for the installation of the **sharework_knowledge package**. 
 
-First, it is necessary to install the ROSjava package **sharework_knowledge_msgs** defining custom messages and services defined within the knowledge base module of the Sharework. This package is available on GitHub (https://github.com/pstlab/sharework_knowledge_msgs.git) and can be installed into the ROSJava workspace as follows: 
+First, it is necessary to install the ROSjava package **sharework_knowledge_msgs** defining custom messages and services. This package is available on GitHub (https://github.com/pstlab/sharework_knowledge_msgs.git) and can be installed into the ROSJava workspace as follows: 
 
 ```
 cd ~/ws/src
