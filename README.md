@@ -6,25 +6,15 @@ This repository contains a **ROSjava package** enriching **ROS** with **knowledg
 
 The main components are **ProductionKnowledge** and **ProductionKnowledgeAuthoring**. The former encapsulates a **Knowledge Graph** representing information about  HRC processes, collaborative tasks and human and robot capabilities/skills and, support reasoning and mechanisms. The latter support automatic generation of task planning models. It specificallly compiles the knowledge to dynamically generate a valid and updated timeline-based planning model [2] that can be used by tools like e.g., PLATINUm [3] to coordinate Human and Robot behaviors at task planning level [4,5].
 
-### Package Structure
-
-TODO
-
-
-### Knowledge Access Services
-
-The module offers ROS services to access and update productoin knowledge.
-
-TODO
-
-
 ## Installation
 
-The package has been developed and tested for ROS Melodic distribution on Ubunut 18.04. It requires a ROSJava workspace for correct execution and generation of the Java artifacts needed for custom messages and installed Java software.
+The package has been developed and tested for **ROS Melodic** distribution on **Ubunut 18.04**. It requires a ROSJava workspace for correct execution and generation of the Java artifacts needed for custom messages and installed Java software.
 
-_We recommend the use of Java 8 since other higher or lower versions of Java may have some dependency issues with rosjava._
+_We recommend the use of Java 8 since other higher or lower versions of Java may have some dependency issues with rosjava. Alternative versions of Java can be installed using the following command:_ 
 
-In addition, the package requires a locally running instance of mongodb server. The current package has been developed and tested using _MongDB Cumminuty Server v.4.4.5_ that can be downloade from [the official web page](https://www.mongodb.com/try/download/community). 
+```sudo update-alternatives --config java```
+
+In addition, the package requires an installed and locally running instance of **MongoDB server**. The current package has been developed and tested using [_MongDB Cumminuty Server v.4.4.5_](https://www.mongodb.com/try/download/community). 
 
 ### ROSJava Workspace Configuration
 
@@ -45,6 +35,11 @@ cd ~/ws
 rosdep update
 rosdep install --from-paths src -i -y
 catkin_make
+```
+Note that one of the dependecies of **rosjava_messages** package is [world_canvas_msgs](http://wiki.ros.org/world_canvas_msgs) which is supported by ROS Melodic. To successfully build **rosjava** thus remove this dependency by editing the file ```package.xml``` of ```rosjava_messages``` and commenting the following line
+
+```
+<build_depend>world_canvas_msgs</build_depend>
 ```
 
 ### Package Preparation 
