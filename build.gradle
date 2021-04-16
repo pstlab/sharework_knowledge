@@ -42,7 +42,7 @@ allprojects {
 
         maven {
 
-            url "file://" + project.getProjectDir().getAbsolutePath() + "/../../devel/share/maven"
+            url "file://" + project.getProjectDir().getAbsolutePath() + "/../../../devel/share/maven"
         }
 
         maven {
