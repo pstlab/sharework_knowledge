@@ -93,7 +93,6 @@ As alternative to the file ```gradle.properties``` the same configuration parame
 ```
 export GITHUB_USER=<github-user>
 export GITHUB_TOKEN=<github-personal-access-token>
-export SHAREWORK_WS=<path-to-the-workspace>
 ```
 
 ### Bulding the Package
@@ -112,7 +111,8 @@ source devel/setup.bash
 To finalize the installation just define the environment variable **SHAREWORK_KNOWLEDGE** in order to point to the folder containing the installed package. 
 
 ```
-export SHAREWORK_KNOWLEDGE=~/ws/src/sharework_knowledge
+export SHAREWORK_WS=<path-to-the-workspace>
+export SHAREWORK_KNOWLEDGE=$SHAREWORK_WS/src/sharework_knowledge
 ```
 
 The above line of code can be added to the ```.bashrc``` file to automatically export the environment variable when the terminal is open. 
