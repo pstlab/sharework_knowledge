@@ -80,12 +80,11 @@ sharework_knowledge_msgs/KnowledgeRDFTriple[] result
 
 Before buliding the ROS package configure **gradle** so that all the dependencies are correctly downloaded. This module indeed relies on some packages (e.g., [PLATINUm](https://github.com/pstlab/PLATINUm)) that are not deployed on maven central but on GitHub. 
 
-To allow gradle to download packages from GitHub repositories create a text file ```gradle.properties``` under ```sharework_knowledge```. This file should specifiy a **GitHub username**, a **GitHub access token** and the **absolute path to workspace** as follows: 
+To allow gradle to download packages from GitHub repositories create a text file ```gradle.properties``` under ```sharework_knowledge```. This file should specifiy a **GitHub username** and a **GitHub access token** as follows: 
 
 ```
 gpr.user=<github-user>
 gpr.token=<github-personal-access-token>
-gpr.ws=<absolute-path-to-the-workspace>
 ```
 See how to create personal access token on [the official GitHub page](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) if necessary). Be sure to select the scope ```read:packages``` when creating the personal access token in order to successfully read GitHub packages.
 
@@ -94,7 +93,6 @@ As alternative to the file ```gradle.properties``` the same configuration parame
 ```
 export GITHUB_USER=<github-user>
 export GITHUB_TOKEN=<github-personal-access-token>
-export SHAREWORK_WS=<path-to-the-workspace>
 ```
 
 ### Bulding the Package
@@ -113,7 +111,8 @@ source devel/setup.bash
 To finalize the installation just define the environment variable **SHAREWORK_KNOWLEDGE** in order to point to the folder containing the installed package. 
 
 ```
-export SHAREWORK_KNOWLEDGE=~/ws/src/sharework_knowledge
+export SHAREWORK_WS=<path-to-the-workspace>
+export SHAREWORK_KNOWLEDGE=$SHAREWORK_WS/src/sharework_knowledge
 ```
 
 The above line of code can be added to the ```.bashrc``` file to automatically export the environment variable when the terminal is open. 
