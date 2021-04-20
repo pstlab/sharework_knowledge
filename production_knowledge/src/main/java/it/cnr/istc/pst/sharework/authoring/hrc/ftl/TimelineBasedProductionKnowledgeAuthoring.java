@@ -236,7 +236,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
             }
 
             // add SV description
-            ddl += this.sv("GoalVariableType", goals);
+            ddl += this.sv("GoalVariableType", goals, false);
             // prepare also component declaration
             String comps = "\tCOMPONENT Goal {FLEXIBLE goals(functional)} : GoalVariableType;\n";
 
@@ -265,7 +265,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
             }
 
             // add SV description
-            ddl += this.sv("WorkerVariableType", hFuncs);
+            ddl += this.sv("WorkerVariableType", hFuncs, true);
             // create also component declaration
             comps += "\tCOMPONENT Worker {FLEXIBLE operations(primitive)} :  WorkerVariableType;\n";
 
@@ -291,7 +291,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
             }
 
             // add SV description
-            ddl += this.sv("CobotVariableType", rFuncs);
+            ddl += this.sv("CobotVariableType", rFuncs, true);
             // create also component declaration
             comps += "\tCOMPONENT Cobot {FLEXIBLE tasks(primitive)} : CobotVariableType;\n";
 
@@ -309,7 +309,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 }
 
                 // get production values
-                ddl += this.sv("ProductionHierarchyL" + index + "Type", values);
+                ddl += this.sv("ProductionHierarchyL" + index + "Type", values, false);
                 // create also component declaration
                 comps += "\tCOMPONENT ProductionL" + index + " {FLEXIBLE tasks_l" + index + "(primitive)} : ProductionHierarchyL" + index + "Type;\n";
             }
@@ -547,7 +547,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 writer.write("executive=com.github.sharework_taskplanner.taskplanner.ShareworkExecutive\n");
                 writer.write("platform=com.github.roxanne_rosjava.roxanne_rosjava_core.control.platform.RosJavaPlatformProxy\n");
                 // set default platform XML document
-                writer.write(ProductionKnowledge.SHAREWORK_KNOWLEDGE + "gen/platform.xml\n");
+                writer.write("platform_config_file=" + ProductionKnowledge.SHAREWORK_KNOWLEDGE + "gen/platform.xml\n");
             }
         }
         catch (IOException ex) {
@@ -775,7 +775,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                                     String predicateComponent = value2component.get(predicate);
                                     // add value  synchronization
                                     synchBody += "\t\tVALUE " + referenceName + "() {\n\n" +
-                                            "\t\t\td0 " + predicateComponent + "." + predicateName + "();\n" +
+                                            "\t\t\td0 " + predicateComponent + "._" + predicateName + "();\n" +
                                             "\t\t\tCONTAINS [0, +INF] [0, +INF] d0;\n" +
                                             "\t\t}\n\n";
 
@@ -865,9 +865,10 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
      *
      * @param typeName
      * @param values
+     * @param partiallyControllable
      * @return
      */
-    private String sv(String typeName, List<Resource> values)
+    private String sv(String typeName, List<Resource> values, boolean partiallyControllable)
     {
         // increment the number of generated state variables
         this.numberOfVariables++;
@@ -880,8 +881,15 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                     val.getLocalName() == null ? val.asNode().getBlankNodeLabel() : val.getLocalName() :
                     this.hrc.getHRCTask(val).getName();
 
-            // add predicate
-            sv += valName + "(), ";
+            // check controllability tag
+            if (partiallyControllable) {
+                // add predicate
+                sv += "_" + valName + "(), ";
+            } else {
+                // add predicate
+                sv += valName + "(), ";
+            }
+
             // increment the number of created predicates
             this.numberOfPredicates++;
 
@@ -902,23 +910,41 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                     val.getLocalName() == null ? val.asNode().getBlankNodeLabel() : val.getLocalName() :
                     this.hrc.getHRCTask(val).getName();
 
-            sv += "\t\t\t" + valName + "();\n";
+            // check controllability tag
+            if (partiallyControllable) {
+                // add predicate
+                sv += "\t\t\t_" + valName + "();\n";
+            } else {
+                // add predicate
+                sv += "\t\t\t" + valName + "();\n";
+            }
         }
         // close transition
         sv += "\t\t}\n\n";
 
         // add transitions for all goals
         for (Resource val : values) {
+
             // get value name
             String valName = this.hrc.getHRCTask(val) == null || this.hrc.getHRCTask(val).getName() == null ?
                     val.getLocalName() == null ? val.asNode().getBlankNodeLabel() : val.getLocalName() :
                     this.hrc.getHRCTask(val).getName();
 
-            sv += "\t\tVALUE " + valName + "() [1, +INF]\n" +
-                    "\t\tMEETS {\n" +
-                    "\t\t\tIdle();\n" +
-                    "\t\t}\n\n";
+            // check controllability
+            if (partiallyControllable) {
 
+                sv += "\t\tVALUE _" + valName + "() [1, +INF]\n" +
+                        "\t\tMEETS {\n" +
+                        "\t\t\tIdle();\n" +
+                        "\t\t}\n\n";
+
+            } else {
+
+                sv += "\t\tVALUE " + valName + "() [1, +INF]\n" +
+                        "\t\tMEETS {\n" +
+                        "\t\t\tIdle();\n" +
+                        "\t\t}\n\n";
+            }
         }
 
         // close SV

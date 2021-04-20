@@ -4,33 +4,33 @@
 
     <goal-topic
             name="/sharework/taskplanner/goal"
-            msg="sharework_taskplanner_msgs/TaskPlanningRequest"
+            msg="task_planner_interface_msgs/TaskPlanningRequest"
             delegate="com.github.sharework_taskplanner.taskplanner.platform.TaskPlanningRequestListener" />
 
-    <command component="Cobot" name="*" >
+    <command component="Cobot" name="*" exclude="idle">
 
         <dispatch-topic
                 name="/sharework/test/stiima/motion"
-                msg="sharework_taskplanner_msgs/MotionTaskExecutionRequestArray"
+                msg="task_planner_interface_msgs/MotionTaskExecutionRequestArray"
                 publisher="com.github.sharework_taskplanner.taskplanner.platform.stiima.MotionTaskRequestPublisher" />
 
         <feedback-topic
                 name="/sharework/test/stiima/motion/feedback"
-                msg="sharework_taskplanner_msgs/MotionTaskExecutionFeedback"
+                msg="task_planner_interface_msgs/MotionTaskExecutionFeedback"
                 delegate="com.github.sharework_taskplanner.taskplanner.platform.stiima.MotionTaskFeedbackListener" />
 
     </command>
 
-    <command component="Worker" name="*" >
+    <command component="Worker" name="*" exclude="idle">
 
         <dispatch-topic
                 name="/sharework/test/stiima/human"
-                msg="sharework_taskplanner_msgs/MotionTaskExecutionRequestArray"
+                msg="task_planner_interface_msgs/MotionTaskExecutionRequestArray"
                 publisher="com.github.sharework_taskplanner.taskplanner.platform.stiima.MotionTaskRequestPublisher" />
 
         <feedback-topic
                 name="/sharework/test/stiima/human/feedback"
-                msg="sharework_taskplanner_msgs/MotionTaskExecutionFeedback"
+                msg="task_planner_interface_msgs/MotionTaskExecutionFeedback"
                 delegate="com.github.sharework_taskplanner.taskplanner.platform.stiima.MotionTaskFeedbackListener" />
 
     </command>
