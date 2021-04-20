@@ -1,4 +1,4 @@
-package it.cnr.istc.pst.sharework.authoring;
+package it.cnr.istc.pst.sharework.authoring.ex;
 
 /**
  *

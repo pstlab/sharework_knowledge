@@ -1,5 +1,6 @@
 package it.cnr.istc.pst.sharework.authoring;
 
+import it.cnr.istc.pst.sharework.authoring.ex.ProductionKnowledgeAuthoringException;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledgeUpdateSubscriber;
 import org.apache.commons.logging.Log;
@@ -29,6 +30,7 @@ public abstract class ProductionKnowledgeAuthoring implements ProductionKnowledg
      *
      */
     public ProductionKnowledgeAuthoring() {
+
         // initialize variable
         this.knowledge = null;
         // create listener thread
@@ -207,15 +209,15 @@ public abstract class ProductionKnowledgeAuthoring implements ProductionKnowledg
 
         // domain description
         String dom = null;
-        try
-        {
+        try {
+
             // begin read transaction
             this.knowledge.beginReadTransaction();
             // actually compile the knowledge
             dom = this.doCompile();
         }
-        finally
-        {
+        finally  {
+
             // finish read transaction
             this.knowledge.finishReadTransaction();
         }

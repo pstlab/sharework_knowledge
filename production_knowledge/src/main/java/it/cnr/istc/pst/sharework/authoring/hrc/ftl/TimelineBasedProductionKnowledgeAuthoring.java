@@ -6,7 +6,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import it.cnr.istc.pst.platinum.ai.framework.domain.PlanDataBaseBuilder;
 import it.cnr.istc.pst.platinum.ai.framework.domain.component.PlanDataBase;
-import it.cnr.istc.pst.sharework.authoring.ProductionKnowledgeAuthoringException;
+import it.cnr.istc.pst.sharework.authoring.ex.ProductionKnowledgeAuthoringException;
 import it.cnr.istc.pst.sharework.authoring.hrc.HRCTask;
 import it.cnr.istc.pst.sharework.authoring.hrc.HRCModel;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
@@ -395,6 +395,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
      *
      */
     public void export() {
+
         // create mongo client
         try (MongoClient client = MongoClients.create(this.prop2value.get(PROPERTY_KEY_MONGODB_HOST)))
         {
@@ -528,8 +529,30 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
      */
     @Override
     protected void prepare() {
-        // export knowledge to data-sets
-        this.export();
+
+        try {
+
+            // export knowledge to data-sets
+            this.export();
+
+            // write agent configuration properties
+            File ddlFile = new File(ProductionKnowledge.SHAREWORK_KNOWLEDGE + "gen/agent.properties");
+            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(ddlFile), "UTF-8"))) {
+                // print model file path
+                writer.write("model=" + this.ddlPath + "\n");
+                // print other configuration data
+                writer.write("display_plan=0\n");
+                // set default task planner configuration
+                writer.write("planner=com.github.sharework_taskplanner.taskplanner.ShareworkPlanner\n");
+                writer.write("executive=com.github.sharework_taskplanner.taskplanner.ShareworkExecutive\n");
+                writer.write("platform=com.github.roxanne_rosjava.roxanne_rosjava_core.control.platform.RosJavaPlatformProxy\n");
+                // set default platform XML document
+                writer.write(ProductionKnowledge.SHAREWORK_KNOWLEDGE + "gen/platform.xml\n");
+            }
+        }
+        catch (IOException ex) {
+            System.err.println(ex.getMessage());
+        }
     }
 
     /**
