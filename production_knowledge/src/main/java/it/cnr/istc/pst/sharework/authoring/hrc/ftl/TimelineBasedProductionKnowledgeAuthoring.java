@@ -25,8 +25,8 @@ import java.util.*;
 /**
  *
  */
-public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowledgeAuthoring
-{
+public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowledgeAuthoring {
+
     private int numberOfVariables;                      // number of generated variables
     private int numberOfPredicates;                     // number of generated predicates
     private int numberOfSynchronizations;               // number of generated synchronizations
@@ -219,11 +219,10 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
         this.numberOfSynchronizations = 0;
         this.time = 0;
 
-        try
-        {
+        try {
+
             // map resource values to components
             Map<Resource, String> vIndex = new HashMap<>();
-
             // prepare domain description
             ddl = "DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {\n\n" +
                     "\tTEMPORAL_MODULE temporal_module = [0, " + this.horizon + "], 100;\n\n";
@@ -343,19 +342,18 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
      * @throws ProductionKnowledgeException
      */
     private void doRetrieveHRCTaskKnowledge(Resource function, HRCTask task)
-            throws InterruptedException, ProductionKnowledgeException
-    {
+            throws InterruptedException, ProductionKnowledgeException {
+
         // retrieve data properties
         List<Statement> stats = this.knowledge.getFunctionDataProperties(function);
-        for (Statement stat : stats)
-        {
+        for (Statement stat : stats) {
+
             // check function name
             Property prop = stat.getPredicate();
-
             // check function (unique) name
             if (prop.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "hasProcedureName")) {
                 // get function name
-                String name = (String) stat.getObject().asNode().getLiteralValue();
+                String name = stat.getObject().asLiteral().getString();
                 // set name
                 task.setName(name);
             }
@@ -363,7 +361,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
             // check function goal
             if (prop.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "hasGoal")) {
                 // get function goal
-                String goal = (String) stat.getObject().asNode().getLiteralValue();
+                String goal = stat.getObject().asLiteral().getString();
                 // set goal
                 task.setGoal(goal);
             }
@@ -371,7 +369,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
             // check function duration
             if (prop.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "hasDuration")) {
                 // get function duration
-                long duration = (long) stat.getObject().asNode().getLiteralValue();
+                long duration = stat.getObject().asLiteral().getLong();
                 // set duration
                 task.setDuration(duration);
             }
@@ -379,9 +377,9 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
             // check function uncertainty
             if (prop.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "hasDurationUncertainty")) {
                 // get function uncertainty
-                long uncertainty = (long) stat.getObject().asNode().getLiteralValue();
+                long uncertainty = stat.getObject().asLiteral().getLong();
                 // set uncertainty
-                task.setDuration(uncertainty);
+                task.setUncertainty(uncertainty);
             }
         }
 
@@ -397,11 +395,10 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
     public void export() {
 
         // create mongo client
-        try (MongoClient client = MongoClients.create(this.prop2value.get(PROPERTY_KEY_MONGODB_HOST)))
-        {
+        try (MongoClient client = MongoClients.create(this.prop2value.get(PROPERTY_KEY_MONGODB_HOST))) {
+
             // get DB
             MongoDatabase db = client.getDatabase(this.prop2value.get(PROPERTY_KEY_MONGODB_NAME));
-
             // get collection concerning task properties
             MongoCollection<Document> taskProperties = db.getCollection(this.prop2value.get(PROPERTY_KEY_MONGODB_COLLECTION_TASK_PROPERTIES));
             // clear collection before entering data
@@ -435,8 +432,8 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
 
             // check index
-            for (String taskName : index.keySet())
-            {
+            for (String taskName : index.keySet()) {
+
                 // get associated functions
                 Set<HRCTask> tasks = index.get(taskName);
 
@@ -868,14 +865,14 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
      * @param partiallyControllable
      * @return
      */
-    private String sv(String typeName, List<Resource> values, boolean partiallyControllable)
-    {
+    private String sv(String typeName, List<Resource> values, boolean partiallyControllable) {
+
         // increment the number of generated state variables
         this.numberOfVariables++;
         // prepare SV description
         String sv = "\tCOMP_TYPE SingletonStateVariable " + typeName + "(";
-        for (Resource val : values)
-        {
+        for (Resource val : values) {
+
             // get value name
             String valName = this.hrc.getHRCTask(val) == null || this.hrc.getHRCTask(val).getName() == null ?
                     val.getLocalName() == null ? val.asNode().getBlankNodeLabel() : val.getLocalName() :
@@ -922,6 +919,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
         // close transition
         sv += "\t\t}\n\n";
 
+
         // add transitions for all goals
         for (Resource val : values) {
 
@@ -930,17 +928,21 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                     val.getLocalName() == null ? val.asNode().getBlankNodeLabel() : val.getLocalName() :
                     this.hrc.getHRCTask(val).getName();
 
+            // get HRC task
+            HRCTask task = this.hrc.getHRCTask(val);
+            // set duration
+            String bounds = task == null ? "[1, + INF]" : "[" + task.getDuration()[0] + ", " + task.getDuration()[1] + "]";
             // check controllability
             if (partiallyControllable) {
 
-                sv += "\t\tVALUE _" + valName + "() [1, +INF]\n" +
+                sv += "\t\tVALUE _" + valName + "() " + bounds + "\n" +
                         "\t\tMEETS {\n" +
                         "\t\t\tIdle();\n" +
                         "\t\t}\n\n";
 
             } else {
 
-                sv += "\t\tVALUE " + valName + "() [1, +INF]\n" +
+                sv += "\t\tVALUE " + valName + "() " + bounds + "\n" +
                         "\t\tMEETS {\n" +
                         "\t\t\tIdle();\n" +
                         "\t\t}\n\n";

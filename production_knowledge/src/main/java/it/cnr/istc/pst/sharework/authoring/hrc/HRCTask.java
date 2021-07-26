@@ -7,8 +7,8 @@ import java.util.Objects;
 /**
  *
  */
-public class HRCTask
-{
+public class HRCTask {
+
     private long horizon;                   // known plan horizon
     private Resource resource;              // resource denoting a task instance
     private Resource type;                  // resource denoting task type
@@ -45,6 +45,9 @@ public class HRCTask
         this.uncertainty = horizon;
         // set default success rate
         this.successRate = .99;
+
+        // set horizon
+        this.horizon = horizon;
     }
 
     /**

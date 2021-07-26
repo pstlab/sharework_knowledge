@@ -283,7 +283,7 @@
     <owl:DatatypeProperty rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasDuration">
         <rdfs:subPropertyOf rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasProcedureParameter"/>
         <rdfs:domain rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Function"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
     </owl:DatatypeProperty>
     
 
@@ -294,7 +294,7 @@
         <rdfs:subPropertyOf rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hasUncertainty"/>
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
         <rdfs:domain rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Function"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
     </owl:DatatypeProperty>
     
 
@@ -2676,6 +2676,8 @@
         <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#equipment"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#long">7</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#long">3</soho:hasDurationUncertainty>
         <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">equipment</soho:hasGoal>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Clean piece&apos;s support surface</soho:hasProcedureDescription>
         <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CleanSurface</soho:hasProcedureName>
@@ -2690,6 +2692,8 @@
         <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#equipment"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#long">10</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#long">3</soho:hasDurationUncertainty>
         <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">equipment</soho:hasGoal>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Check diameter holes 8,1+/-0,02</soho:hasProcedureDescription>
         <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HolesDimaeterCheck</soho:hasProcedureName>
@@ -2704,6 +2708,8 @@
         <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#equipment"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#long">11</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#long">5</soho:hasDurationUncertainty>
         <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">equipment</soho:hasGoal>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dimensional and visual check</soho:hasProcedureDescription>
         <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">InitialCheck</soho:hasProcedureName>
@@ -2718,6 +2724,8 @@
         <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#equipment"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#long">7</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#long">3</soho:hasDurationUncertainty>
         <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">equipment</soho:hasGoal>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Check location holes 8,1+/-0,02</soho:hasProcedureDescription>
         <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">LocationHolesCheck</soho:hasProcedureName>
@@ -2732,6 +2740,8 @@
         <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#equipment"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#long">7</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#long">3</soho:hasDurationUncertainty>
         <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">equipment</soho:hasGoal>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move locking bracket</soho:hasProcedureDescription>
         <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MoveLockingBracket</soho:hasProcedureName>
@@ -2746,6 +2756,8 @@
         <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#equipment"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#long">11</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#long">4</soho:hasDurationUncertainty>
         <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">equipment</soho:hasGoal>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move locking bracket in locking piece position</soho:hasProcedureDescription>
         <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MoveLockingBracket</soho:hasProcedureName>
@@ -2774,6 +2786,8 @@
         <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#equipment"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#long">11</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#long">3</soho:hasDurationUncertainty>
         <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">equipment</soho:hasGoal>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Screw 17 nut</soho:hasProcedureDescription>
         <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Screw</soho:hasProcedureName>
@@ -2788,6 +2802,8 @@
         <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#equipment"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#long">11</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#long">3</soho:hasDurationUncertainty>
         <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ButtonHolesSizeCheck</soho:hasGoal>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Check size buttonhole 12,5+/0,05</soho:hasProcedureDescription>
         <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SizeButtonHolesCheck</soho:hasProcedureName>
@@ -2802,6 +2818,8 @@
         <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#equipment"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#long">12</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#long">3</soho:hasDurationUncertainty>
         <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">equipment</soho:hasGoal>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Visual check smooth 30° 6mm</soho:hasProcedureDescription>
         <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SmoothCheck</soho:hasProcedureName>
@@ -2816,6 +2834,8 @@
         <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#long">12</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#long">2</soho:hasDurationUncertainty>
         <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">completed-piece</soho:hasGoal>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Store completed piece</soho:hasProcedureDescription>
         <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">StoreCompletePiece</soho:hasProcedureName>
@@ -2830,9 +2850,11 @@
         <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#equipment"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#long">5</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#long">3</soho:hasDurationUncertainty>
         <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">equipment</soho:hasGoal>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Unscrew 17 nut</soho:hasProcedureName>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">unscrew1</soho:hasProcedureName>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Unscrew 17 nut</soho:hasProcedureDescription>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Unscrew1</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -2858,6 +2880,8 @@
         <soho:canBeAssignedTo rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
         <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#long">11</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#long">4</soho:hasDurationUncertainty>
         <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">completed-piece</soho:hasGoal>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Withdraw completed piece</soho:hasProcedureDescription>
         <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">WithdrawCompletePiece</soho:hasProcedureName>
