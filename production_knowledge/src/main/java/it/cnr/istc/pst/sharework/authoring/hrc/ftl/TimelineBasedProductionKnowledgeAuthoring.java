@@ -449,7 +449,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 // create document to insert
                 Document doc = new Document();
                 // set task name
-                doc.append("name", taskName);
+                doc.append("name", taskName.toLowerCase());
                 // set task type
                 Resource type = tasks.stream().findFirst().get().getType();;
                 doc.append("type", type.getLocalName() == null ? type.asNode().getBlankNodeLabel() : type.getLocalName());
@@ -480,15 +480,14 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
             taskDurations.drop();
 
             // check task index
-            for (String taskName : index.keySet())
-            {
+            for (String taskName : index.keySet()) {
+
                 // get associated tasks
                 Set<HRCTask> tasks = index.get(taskName);
-
                 // create document to insert
                 Document doc = new Document();
                 // set task name
-                doc.append("name", taskName);
+                doc.append("name", taskName.toLowerCase());
                 // add duration and uncertainty data for each "agent" task
                 for (HRCTask task : tasks) {
                     // add agent related property of the task
