@@ -358,6 +358,14 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 task.setName(name);
             }
 
+            // check function description
+            if (prop.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "hasProcedureDescription")) {
+                // get function description
+                String desc = stat.getObject().asLiteral().getString();
+                // set description
+                task.setDescription(desc);
+            }
+
             // check function goal
             if (prop.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "hasGoal")) {
                 // get function goal
@@ -381,6 +389,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 // set uncertainty
                 task.setUncertainty(uncertainty);
             }
+
         }
 
         // get target
