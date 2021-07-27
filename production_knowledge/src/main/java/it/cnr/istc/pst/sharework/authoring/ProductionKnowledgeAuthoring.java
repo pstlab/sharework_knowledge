@@ -8,8 +8,8 @@ import org.apache.commons.logging.Log;
 /**
  *
  */
-public abstract class ProductionKnowledgeAuthoring implements ProductionKnowledgeUpdateSubscriber
-{
+public abstract class ProductionKnowledgeAuthoring implements ProductionKnowledgeUpdateSubscriber {
+
     protected ProductionKnowledge knowledge;
     private Thread process;
 
