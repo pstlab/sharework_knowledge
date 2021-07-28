@@ -2743,8 +2743,8 @@
         <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#long">7</soho:hasDuration>
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#long">3</soho:hasDurationUncertainty>
         <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">equipment</soho:hasGoal>
-        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move locking bracket</soho:hasProcedureDescription>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MoveLockingBracket</soho:hasProcedureName>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Open locking bracket</soho:hasProcedureDescription>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">OpenLockingBracket</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -2759,8 +2759,8 @@
         <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#long">11</soho:hasDuration>
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#long">4</soho:hasDurationUncertainty>
         <soho:hasGoal rdf:datatype="http://www.w3.org/2001/XMLSchema#string">equipment</soho:hasGoal>
-        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move locking bracket in locking piece position</soho:hasProcedureDescription>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MoveLockingBracket</soho:hasProcedureName>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Close locking bracket in locking piece position</soho:hasProcedureDescription>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CloseLockingBracket</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
