@@ -753,7 +753,84 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                             } else if (knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "SupportiveHRCTask")) {
                                 // TODO supportive constraint
                             } else if (knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "SynchronousHRCTask")) {
-                                // TODO synchronous constraint
+
+                                // check possible decompositions
+                                for (Set<Resource> decomposition : graph.get(reference)) {
+
+                                    // check if synchronization description has been opened
+                                    if (!comp2sync.containsKey(refComp)) {
+                                        // open synchronization description
+                                        comp2sync.put(refComp, "\tSYNCHRONIZE " + refComp + " {\n\n");
+                                    }
+
+                                    // get component synchronization body
+                                    String synchBody = comp2sync.get(refComp);
+                                    // add value  synchronization
+                                    synchBody += "\t\tVALUE " + referenceName + "() {\n\n";
+
+
+                                    // get target components (two expected a human and a robot)
+                                    Iterator<Resource> it = decomposition.iterator();
+                                    Resource first = null;
+                                    Resource second = null;
+
+                                    // TODO : CHECK FUNCTION ORDERING FROM THE KNOWLEDGE
+
+                                    // build synchronous task implementation
+                                    while (it.hasNext() && second == null) {
+
+                                        // get next target predicate
+                                        Resource predicate = it.next();
+                                        // get predicate name
+                                        String predicateName = this.hrc.getHRCTask(predicate) == null || this.hrc.getHRCTask(predicate).getName() == null ?
+                                                predicate.getLocalName() == null ? predicate.asNode().getBlankNodeLabel() : predicate.getLocalName() :
+                                                this.hrc.getHRCTask(predicate).getName();
+
+                                        // get component
+                                        String predicateComponent = value2component.get(predicate);
+                                        // update first and second
+                                        if (first == null) {
+
+                                            // add value  synchronization
+                                            synchBody += "\t\t\td0 " + predicateComponent + "._" + predicateName + "();\n" +
+                                                    "\t\t\tCONTAINS [0, +INF] [0, +INF] d0;\n";
+                                            // set variable
+                                            first = predicate;
+
+                                        } else {
+
+                                            // add value  synchronization
+                                            synchBody += "\t\t\td1 " + predicateComponent + "._" + predicateName + "();\n" +
+                                                    "\t\t\tCONTAINS [0, +INF] [0, +INF] d1;\n";
+                                            // set variable
+                                            second = predicate;
+                                        }
+
+                                    }
+
+                                    // check that both predicates have been set
+                                    if (first != null && second != null) {
+
+                                        // add precedence constraint
+                                        synchBody += "\t\t\td0 BEFORE [0, +INF] d1;\n";
+
+                                        // close synch
+                                        synchBody += "\t\t}\n\n";
+                                        // update description
+                                        comp2sync.put(refComp, synchBody);
+                                        // increment the number of synchronizations
+                                        this.numberOfSynchronizations++;
+                                        // increment the number of constraints
+                                        this.numberOfConstraints++;
+
+                                    } else {
+
+                                        throw new ProductionKnowledgeAuthoringException("HRC pattern not satisfied for the following task declared as synchronous (SOHO:SynchronousHRCTask):\n" +
+                                                "\t- resource: " + referenceName + "\n" +
+                                                "\t- reference: " + refComp + "." + referenceName + "\n");
+                                    }
+                                }
+
                             } else    // independent task
                             {
                                 // check possible decompositions
