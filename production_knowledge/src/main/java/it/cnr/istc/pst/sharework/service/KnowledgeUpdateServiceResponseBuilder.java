@@ -1,5 +1,7 @@
 package it.cnr.istc.pst.sharework.service;
 
+import it.cnr.istc.pst.sharework.cognition.EnvironmentCognitionMonitor;
+import it.cnr.istc.pst.sharework.cognition.GoizperEnvironmentCognitionMonitor;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledgeDictionary;
 import it.cnr.istc.pst.sharework.service.update.UpdateQueryType;
 import org.apache.commons.logging.Log;
@@ -25,6 +27,8 @@ public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBui
     private KnowledgeService service;
     private ConnectedNode cNode;
 
+
+
     /**
      *
      * @param log
@@ -33,8 +37,8 @@ public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBui
      */
     protected KnowledgeUpdateServiceResponseBuilder(Log log,
                                                     KnowledgeService service,
-                                                    ConnectedNode node)
-    {
+                                                    ConnectedNode node) {
+
         this.log = log;
         this.service = service;
         this.cNode = node;
@@ -315,27 +319,28 @@ public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBui
                 try
                 {
                     // load file
-                    if (ruleFile != null)
-                    {
-                        if (log != null) {
-                            log.info("[ProductionKnowledge] Loading ontological model \"" + ontoFile + "\" (with rules \"" + ruleFile + "\")");
-                        }
+                    if (ruleFile != null) {
 
+                        log.info("[ProductionKnowledge] Loading ontological model \"" + ontoFile + "\" (with rules \"" + ruleFile + "\")");
                         // load ontological model
                         this.service.knowledge.load(ontoFile, ruleFile);
-                    }
-                    else
-                    {
-                        if (log != null) {
-                            log.info("[ProductionKnowledge] Loading ontological model \"" + ontoFile + "\"");
-                        }
 
+                    }  else  {
+
+                        log.info("[ProductionKnowledge] Loading ontological model \"" + ontoFile + "\"");
                         // load ontological file
                         this.service.knowledge.load(ontoFile);
                     }
 
-                    if (log != null) {
-                        log.info("[ProductionKnowledge] Ontological model successfully updated!");
+                    log.info("[ProductionKnowledge] Ontological model successfully updated!");
+                    // load environment monitor
+                    if (ontoFile.contains("goizper")) {
+                        // create environment monitor
+                        log.info("[ProductionKnowledge] Starting environment monitor...");
+                        // create monitor
+                        EnvironmentCognitionMonitor monitor = EnvironmentCognitionMonitor.create(GoizperEnvironmentCognitionMonitor.class, this.cNode);
+                        // register monitor
+                        this.service.register(monitor);
                     }
 
                     // set (successful) empty response

@@ -18,6 +18,13 @@ import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.bson.Document;
+import org.ros.exception.RemoteException;
+import org.ros.exception.ServiceNotFoundException;
+import org.ros.node.ConnectedNode;
+import org.ros.node.service.ServiceClient;
+import org.ros.node.service.ServiceResponseListener;
+import roxanne_rosjava_msgs.ActingConfigurationService;
+import roxanne_rosjava_msgs.ActingConfigurationServiceResponse;
 
 import java.io.*;
 import java.util.*;
@@ -50,26 +57,20 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
     /**
      *
+     * @param node
      */
-    public TimelineBasedProductionKnowledgeAuthoring() {
-        super();
+    public TimelineBasedProductionKnowledgeAuthoring(ConnectedNode node) {
+        super(node);
         this.setup();
     }
 
     /**
      *
-     */
-    public TimelineBasedProductionKnowledgeAuthoring(Log log) {
-        super(log);
-        this.setup();
-    }
-
-    /**
-     *
+     * @param node
      * @param pdlPath
      */
-    public TimelineBasedProductionKnowledgeAuthoring(String pdlPath) {
-        super();
+    public TimelineBasedProductionKnowledgeAuthoring(ConnectedNode node, String pdlPath) {
+        super(node);
         this.setup();
         this.pdlPath = pdlPath;
     }
@@ -533,16 +534,16 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
      *
      */
     @Override
-    protected void prepare() {
+    protected void prepare(String model) {
 
         try {
 
-            // export knowledge to data-sets
+            // export knowledge to local (shared) DB
             this.export();
 
             // write agent configuration properties
-            File ddlFile = new File(ProductionKnowledge.SHAREWORK_KNOWLEDGE + "gen/agent.properties");
-            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(ddlFile), "UTF-8"))) {
+            File configFile = new File(ProductionKnowledge.SHAREWORK_KNOWLEDGE + "gen/agent.properties");
+            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(configFile), "UTF-8"))) {
                 // print model file path
                 writer.write("model=" + this.ddlPath + "\n");
                 // print other configuration data
@@ -554,6 +555,59 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 // set default platform XML document
                 writer.write("platform_config_file=" + ProductionKnowledge.SHAREWORK_KNOWLEDGE + "gen/platform.xml\n");
             }
+
+
+            // client of the configuration service
+            ServiceClient<roxanne_rosjava_msgs.ActingConfigurationServiceRequest, roxanne_rosjava_msgs.ActingConfigurationServiceResponse> configClient = null;
+            while (configClient == null) {
+                try {
+
+                    // call the configuration service of the task planner
+                    configClient = this.node.newServiceClient(
+                            "/sharework/taskplanner/configuration",
+                            ActingConfigurationService._TYPE);
+
+                } catch (ServiceNotFoundException ex) {
+
+                    log.warn("[Authoring] Task planning configuration service not found... waiting.. ");
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException exx) {
+                        // ignore
+                    }
+
+                }
+            }
+
+            // prepare request
+            roxanne_rosjava_msgs.ActingConfigurationServiceRequest confRequest = configClient.newMessage();
+            // set absolute path to the generated configuration file
+            confRequest.setConfigFilePath(configFile.getAbsolutePath());
+
+            // check if GOIZPER case
+            if (model.contains("table-assembly-goal")) {
+                // set path to specific configuration data
+                confRequest.setConfigFilePath(ProductionKnowledge.SHAREWORK_KNOWLEDGE + "etc/goizper/agent.properties");
+            }
+
+            // call service to configure task planning module
+            configClient.call(confRequest, new ServiceResponseListener<ActingConfigurationServiceResponse>() {
+
+                /**
+                 *
+                 * @param actingConfigurationServiceResponse
+                 */
+                @Override
+                public void onSuccess(ActingConfigurationServiceResponse actingConfigurationServiceResponse) {
+                    log.info("[Authoring] Task planning module configured correctly");
+                }
+
+                @Override
+                public void onFailure(RemoteException e) {
+                    log.warn("[Authoring] Error while configuring task planning module...");
+                }
+            });
+
         }
         catch (IOException ex) {
             System.err.println(ex.getMessage());

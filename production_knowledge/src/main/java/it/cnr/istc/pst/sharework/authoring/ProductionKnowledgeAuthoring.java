@@ -4,6 +4,7 @@ import it.cnr.istc.pst.sharework.authoring.ex.ProductionKnowledgeAuthoringExcept
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledgeUpdateSubscriber;
 import org.apache.commons.logging.Log;
+import org.ros.node.ConnectedNode;
 
 /**
  *
@@ -15,21 +16,23 @@ public abstract class ProductionKnowledgeAuthoring implements ProductionKnowledg
 
     private static final Object signal = new Object();
 
-    private Log log;
+    protected Log log;
+    protected ConnectedNode node;
 
     /**
      *
-     * @param log
+     * @param node
      */
-    public ProductionKnowledgeAuthoring(Log log) {
+    public ProductionKnowledgeAuthoring(ConnectedNode node) {
         this();
-        this.log = log;
+        this.node = node;
+        this.log = this.node.getLog();
     }
 
     /**
      *
      */
-    public ProductionKnowledgeAuthoring() {
+    private ProductionKnowledgeAuthoring() {
 
         // initialize variable
         this.knowledge = null;
@@ -42,60 +45,42 @@ public abstract class ProductionKnowledgeAuthoring implements ProductionKnowledg
             @Override
             public void run() {
                 boolean run = true;
-                while (run)
-                {
-                    try
-                    {
-                        if (log != null) {
-                            log.info("[Authoring] Wait for some update signal...");
-                        }
+                while (run) {
+                    try {
 
+                        log.info("[Authoring] Wait for some update signal...");
                         synchronized (signal) {
                             // wait an update signal
                             signal.wait();
                         }
 
-                        if (log != null) {
-                            log.info("[Authoring] compiling production knowledge... ");
-                        }
-
+                        log.info("[Authoring] compiling production knowledge... ");
                         // compile production knowledge
                         String model = compile();
-                        // check log
-                        if (log != null) {
-                            log.info("[Authoring] validating planning model... ");
-                        }
+                        log.info("[Authoring] validating planning model... ");
 
                         // validate
-                        if (validate(model))
-                        {
-                            if (log != null) {
-                                log.info("[Authoring] Planning model successfully validated... ");
-                            }
+                        if (validate(model)) {
 
+                            log.info("[Authoring] Planning model successfully validated... ");
                             // prepare task planning data
-                            prepare();
-                            if (log != null) {
-                                log.info("[Authoring] Data ready for planning and execution! ");
-                            }
-                        }
-                        else
-                        {
-                            // restore knowledge
-                            if (log != null) {
-                                log.warn("[Authoring] Not valid planning model - restoring default production knowledge");
-                            }
+                            prepare(model);
+                            log.info("[Authoring] Data ready for planning and execution! ");
 
+                        } else {
+
+                            // restore knowledge
+                            log.warn("[Authoring] Not valid planning model - restoring default production knowledge");
                             // not valid - reset production knowledge
                             knowledge.restore();
                         }
-                    }
-                    catch (InterruptedException ex) {
+
+                    } catch (InterruptedException ex) {
                         // stop running
                         run = false;
-                    }
-                    catch (Exception ex)
-                    {
+
+                    }  catch (Exception ex) {
+
                         // model compilation or validation error, keep running but restore knowledge
                         if (log != null) {
                             log.error("[Authoring] Task planning model generation error:\n" +
@@ -103,17 +88,14 @@ public abstract class ProductionKnowledgeAuthoring implements ProductionKnowledg
                                     "- message: " + ex.getMessage() + "\n");
                         }
 
-                        try
-                        {
-                            // restore knowledge
-                            if (log != null) {
-                                log.warn("[Authoring] Not valid planning model - restoring default production knowledge");
-                            }
+                        try {
 
+                            // restore knowledge
+                            log.warn("[Authoring] Not valid planning model - restoring default production knowledge");
                             // not valid - reset production knowledge
                             knowledge.restore();
-                        }
-                        catch (InterruptedException exx) {
+
+                        } catch (InterruptedException exx) {
                             // sto running
                             run = false;
                         }
@@ -211,7 +193,7 @@ public abstract class ProductionKnowledgeAuthoring implements ProductionKnowledg
         String dom = null;
         try {
 
-            // begin read transaction
+            // read transaction
             this.knowledge.beginReadTransaction();
             // actually compile the knowledge
             dom = this.doCompile();
@@ -273,9 +255,9 @@ public abstract class ProductionKnowledgeAuthoring implements ProductionKnowledg
         return this.validate(model);
     }
 
-
     /**
      *
+     * @param model
      */
-    protected abstract void prepare();
+    protected abstract void prepare(String model);
 }

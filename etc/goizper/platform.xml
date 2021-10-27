@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ros>
+
+	<goal-topic
+			name="/sharework/taskplanner/goal"
+			msg="task_planner_interface_msgs/TaskPlanningRequest"
+			delegate="com.github.sharework_taskplanner.taskplanner.platform.TaskPlanningRequestListener" />
+
+i	<command component="CobotMotion" name="*" exclude="at">
+
+		<dispatch-topic
+				name="/cartesian_pose"
+				msg="geometry_msgs/Pose"
+				publisher="com.github.sharework_taskplanner.taskplanner.platform.goizper.MotionRequestPublisher" />
+
+		<feedback-topic
+				name="/execute_trajectory/feedback"
+				msg="moveit_msgs/ExecuteTrajectoryActionFeedback"
+				delegate="com.github.sharework_taskplanner.taskplanner.platform.goizper.MotionFeedbackListener" />
+
+	</command>
+
+	<command component="CobotScrewDriver" name="*" exclude="idle">
+
+		<dispatch-topic
+				name="/sharework/taskplanner/dispatch/cobot/tool"
+				msg="task_planner_interface_msgs/TaskExecutionRequest"
+				publisher="com.github.sharework_taskplanner.taskplanner.platform.TaskExecutionRequestPublisher" />
+
+		<feedback-topic
+				name="/sharework/taskplanner/feedback/cobot/tool"
+				msg="task_planner_interface_msgs/TaskExecutionFeedback"
+				delegate="com.github.sharework_taskplanner.taskplanner.platform.TaskExecutionFeedbackListener" />
+
+	</command>
+	
+	<command component="Worker" name="*" exclude="idle">
+	
+		<dispatch-topic 
+			name="/sharework/taskplanner/dispatch/worker" 
+			msg="task_planner_interface_msgs/TaskExecutionRequest"
+			publisher="com.github.sharework_taskplanner.taskplanner.platform.TaskExecutionRequestPublisher" />
+			
+		<feedback-topic 
+			name="/sharework/taskplanner/feedback/worker" 
+			msg="task_planner_interface_msgs/TaskExecutionFeedback"
+			delegate="com.github.sharework_taskplanner.taskplanner.platform.TaskExecutionFeedbackListener" />
+			
+	</command>
+	
+</ros>

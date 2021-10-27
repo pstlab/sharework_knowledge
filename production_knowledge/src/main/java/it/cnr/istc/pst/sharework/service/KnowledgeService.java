@@ -2,12 +2,16 @@ package it.cnr.istc.pst.sharework.service;
 
 import it.cnr.istc.pst.sharework.authoring.ProductionKnowledgeAuthoring;
 import it.cnr.istc.pst.sharework.authoring.hrc.ftl.TimelineBasedProductionKnowledgeAuthoring;
+import it.cnr.istc.pst.sharework.cognition.EnvironmentCognitionMonitor;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import org.apache.commons.logging.Log;
 import org.ros.namespace.GraphName;
 import org.ros.node.AbstractNodeMain;
 import org.ros.node.ConnectedNode;
 import org.ros.node.Node;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -19,11 +23,13 @@ import org.ros.node.Node;
  * functionalities encapsulated by KnowledgeGraphFacade
  *
  */
-public class KnowledgeService extends AbstractNodeMain
-{
+public class KnowledgeService extends AbstractNodeMain {
+
     private Log log;
     protected ProductionKnowledge knowledge;                      // internal knowledge base
     protected ProductionKnowledgeAuthoring authoring;             // planing model authoring service
+
+    private List<EnvironmentCognitionMonitor> monitors;             // register of environment monitors
 
     /**
      *
@@ -42,6 +48,8 @@ public class KnowledgeService extends AbstractNodeMain
     @Override
     public void onStart(final ConnectedNode connectedNode) {
 
+        // set list of moniors
+        this.monitors = new ArrayList<>();
         // get system log
         this.log = connectedNode.getLog();
         try
@@ -64,11 +72,10 @@ public class KnowledgeService extends AbstractNodeMain
                     KnowledgeUpdateServiceResponseBuilder.getServiceType(),
                     new KnowledgeUpdateServiceResponseBuilder(this.log, this, connectedNode));
 
-
             // create production knowledge manager
             this.knowledge = new ProductionKnowledge(this.log);
             // create authoring process
-            this.authoring = new TimelineBasedProductionKnowledgeAuthoring(this.log);
+            this.authoring = new TimelineBasedProductionKnowledgeAuthoring(connectedNode);
             // bind authoring process
             this.authoring.bind(this.knowledge);
         }
@@ -94,8 +101,24 @@ public class KnowledgeService extends AbstractNodeMain
             this.log.error(ex.getMessage());
         }
 
+        // clear monitors
+        for (EnvironmentCognitionMonitor monitor : this.monitors) {
+            monitor.close();
+        }
+
+        // clear data structure
+        this.monitors.clear();
         // complete shutdown handling
         super.onShutdown(node);
+    }
+
+    /**
+     * Register a monitor into the knowldege service
+     *
+     * @param monitor
+     */
+    protected void register(EnvironmentCognitionMonitor monitor) {
+        this.monitors.add(monitor);
     }
 
     /**
