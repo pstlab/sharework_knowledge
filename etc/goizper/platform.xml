@@ -29,24 +29,10 @@ i	<command component="CobotMotion" name="*" exclude="at">
 				publisher="com.github.sharework_taskplanner.taskplanner.platform.TaskExecutionRequestPublisher" />
 
 		<feedback-topic
-				name="/sharework/taskplanner/feedback/cobot/tool"
+				name="/sharework/taskplanner/feedback/cobot"
 				msg="task_planner_interface_msgs/TaskExecutionFeedback"
 				delegate="com.github.sharework_taskplanner.taskplanner.platform.TaskExecutionFeedbackListener" />
 
 	</command>
-	
-	<command component="Worker" name="*" exclude="idle">
-	
-		<dispatch-topic 
-			name="/sharework/taskplanner/dispatch/worker" 
-			msg="task_planner_interface_msgs/TaskExecutionRequest"
-			publisher="com.github.sharework_taskplanner.taskplanner.platform.TaskExecutionRequestPublisher" />
-			
-		<feedback-topic 
-			name="/sharework/taskplanner/feedback/worker" 
-			msg="task_planner_interface_msgs/TaskExecutionFeedback"
-			delegate="com.github.sharework_taskplanner.taskplanner.platform.TaskExecutionFeedbackListener" />
-			
-	</command>
-	
+
 </ros>
