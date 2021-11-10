@@ -15,8 +15,8 @@ i	<command component="CobotMotion" name="*" exclude="at">
 				publisher="com.github.sharework_taskplanner.taskplanner.platform.goizper.MotionRequestPublisher" />
 
 		<feedback-topic
-				name="/execute_trajectory/feedback"
-				msg="moveit_msgs/ExecuteTrajectoryActionFeedback"
+				name="/motion_result"
+				msg="task_planner_interface_msgs/MotionResult"
 				delegate="com.github.sharework_taskplanner.taskplanner.platform.goizper.MotionFeedbackListener" />
 
 	</command>
