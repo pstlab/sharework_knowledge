@@ -4,6 +4,8 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import geometry_msgs.Point;
+import geometry_msgs.Pose;
+import geometry_msgs.Quaternion;
 import org.apache.commons.logging.Log;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -25,9 +27,9 @@ import static com.mongodb.client.model.Filters.eq;
 public class GoizperEnvironmentCognitionMonitor extends EnvironmentCognitionMonitor {
 
     private static final AtomicLong RequestIdCounter = new AtomicLong(0);
-    private static final AtomicLong PoseIdCounter = new AtomicLong(1);              // pose 0 is reserved for default
+    private static final AtomicLong PoseIdCounter = new AtomicLong(1);                  // pose 0 is reserved for default
     private static final String ENVIRONMENT_TOPIC = "/screw_detector/screw_to_be_tightened";
-    private static final String TASKPLANNER_GOAL_TOPIC = "/sharework/taskplanner/goal";
+    private static final String TASKPLANNER_GOAL_TOPIC = "/sharework/taskplanner/request";
     private Subscriber<DetectionResult> subscriber;
     private Publisher<task_planner_interface_msgs.TaskPlanningRequest> publisher;
     private Log log;
@@ -83,16 +85,31 @@ public class GoizperEnvironmentCognitionMonitor extends EnvironmentCognitionMoni
                     Document doc = new Document();
                     // set data
                     doc.put("poseId", poseId);
-                    // append detected points
-                    for (Point point : detection.getPoints()) {
+                    // get the list of detected points as Pose objects
+                    for (Pose pose : detection.getPoints()) {
 
+                        // get position point
+                        Point point = pose.getPosition();
                         // create point document
                         Document dPoint = new Document();
                         dPoint.put("x", point.getX());
                         dPoint.put("y", point.getY());
                         dPoint.put("z", point.getZ());
+
                         // add points
                         doc.append("points", dPoint);
+
+                        // get quaternion
+                        Quaternion quat = pose.getOrientation();
+                        // create quaternion document
+                        Document dQuat = new Document();
+                        dQuat.put("x", quat.getX());
+                        dQuat.put("y", quat.getY());
+                        dQuat.put("z", quat.getZ());
+                        dQuat.put("w", quat.getW());
+
+                        // add quaternion
+                        doc.append("quaternions", dQuat);
                     }
 
                     // append results
