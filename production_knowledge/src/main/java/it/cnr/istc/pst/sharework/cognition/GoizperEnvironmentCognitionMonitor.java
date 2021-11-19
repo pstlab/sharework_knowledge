@@ -52,17 +52,15 @@ public class GoizperEnvironmentCognitionMonitor extends EnvironmentCognitionMoni
             // set dataset
             this.dataset = db.getCollection("goizper");
 
+            // create topic listener
+            this.subscriber = this.connectedNode.newSubscriber(
+                    ENVIRONMENT_TOPIC,
+                    sharework_cognition_msgs.DetectionResult._TYPE);
 
             // create task planner goal publisher
             this.publisher = connectedNode.newPublisher(
                     TASKPLANNER_GOAL_TOPIC,
                     task_planner_interface_msgs.TaskPlanningRequest._TYPE);
-
-
-            // create topic listener
-            this.subscriber = this.connectedNode.newSubscriber(
-                    ENVIRONMENT_TOPIC,
-                    sharework_cognition_msgs.DetectionResult._TYPE);
 
             // message listener
             this.subscriber.addMessageListener(new MessageListener<DetectionResult>() {
@@ -74,54 +72,56 @@ public class GoizperEnvironmentCognitionMonitor extends EnvironmentCognitionMoni
                 @Override
                 public void onNewMessage(DetectionResult detection) {
 
-                    // get an ID for the detected pose
-                    long poseId = PoseIdCounter.getAndIncrement();
-                    // get received data
-                    log.info("[GoizperEnvironmentCognitionMonitor] Received data from environment cognition module:\n" +
-                            "- poseId: " + poseId + "\n" +
-                            "- data: " + detection + "\n");
+                // get received data
+                log.info("[GoizperEnvironmentCognitionMonitor] Received data from environment cognition module:\n" +
+                        "- #points: " + detection.getPoints().size() + "\n");
 
-                    // create document to insert into the dataset
+                // create documents for received Poses
+                Document[] docs = new Document[detection.getPoints().size()];
+                // check received points
+                for (int index = 0; index < detection.getPoints().size(); index++) {
+
+                    // get pose
+                    Pose pose = detection.getPoints().get(index);
+                    // get position point
+                    Point point = pose.getPosition();
+                    // get orientation
+                    Quaternion quat = pose.getOrientation();
+
+                    // create document
                     Document doc = new Document();
-                    // set data
-                    doc.put("poseId", poseId);
-                    // get the list of detected points as Pose objects
-                    for (Pose pose : detection.getPoints()) {
+                    // get an ID for the detected pose
+                    doc.put("poseId", PoseIdCounter.getAndIncrement());
 
-                        // get position point
-                        Point point = pose.getPosition();
-                        // create point document
-                        Document dPoint = new Document();
-                        dPoint.put("x", point.getX());
-                        dPoint.put("y", point.getY());
-                        dPoint.put("z", point.getZ());
+                    // create point document
+                    Document dPoint = new Document();
+                    dPoint.put("x", point.getX());
+                    dPoint.put("y", point.getY());
+                    dPoint.put("z", point.getZ());
 
-                        // add points
-                        doc.append("points", dPoint);
+                    // add points
+                    doc.append("point", dPoint);
 
-                        // get quaternion
-                        Quaternion quat = pose.getOrientation();
-                        // create quaternion document
-                        Document dQuat = new Document();
-                        dQuat.put("x", quat.getX());
-                        dQuat.put("y", quat.getY());
-                        dQuat.put("z", quat.getZ());
-                        dQuat.put("w", quat.getW());
+                    // create quaternion document
+                    Document dQuat = new Document();
+                    dQuat.put("x", quat.getX());
+                    dQuat.put("y", quat.getY());
+                    dQuat.put("z", quat.getZ());
+                    dQuat.put("w", quat.getW());
 
-                        // add quaternion
-                        doc.append("quaternions", dQuat);
-                    }
+                    // add quaternion
+                    doc.append("quaternion", dQuat);
 
-                    // append results
-                    for (short result : detection.getResults()) {
-                        //  append result data
-                        doc.append("results", result);
-                    }
+                    // get result
+                    short result = detection.getResults()[index];
+                    // put result
+                    doc.put("result", result);
 
-                    Bson filter = eq("poseId", poseId);
-                    Document result = dataset.find(filter).first();
+                    // save document into the local DB
+                    Bson filter = eq("poseId", PoseIdCounter.getAndIncrement());
+                    Document qResult = dataset.find(filter).first();
                     // delete data if already stored
-                    if (result != null) {
+                    if (qResult != null) {
                         // update collection
                         dataset.deleteOne(filter);
                     }
@@ -129,9 +129,16 @@ public class GoizperEnvironmentCognitionMonitor extends EnvironmentCognitionMoni
                     // store document
                     dataset.insertOne(doc);
 
+                    // add stored document to the list
+                    docs[index] = doc;
+                }
 
-                    // get message factory
-                    MessageFactory factory = connectedNode.getTopicMessageFactory();
+
+                // get message factory for task requets
+                MessageFactory factory = connectedNode.getTopicMessageFactory();
+                // create a task planning request for each detected screw
+                for (Document doc : docs) {
+
                     // create task planning request from factory
                     task_planner_interface_msgs.TaskPlanningRequest goal = factory.
                             newFromType(task_planner_interface_msgs.TaskPlanningRequest._TYPE);
@@ -143,14 +150,39 @@ public class GoizperEnvironmentCognitionMonitor extends EnvironmentCognitionMoni
                     goal.setComponent("Goal");
                     goal.setGoal("screw-on-pose");
                     goal.setParameters(Arrays.asList(new String[] {
-                            Long.toString(poseId)
+                            Long.toString(doc.getLong("poseId"))
                     }));
 
                     // print info
                     log.info("[GoizperEnvironmentCognitionMonitor] Publishing task planning request on topic \"" + TASKPLANNER_GOAL_TOPIC + "\":\n" +
-                            "- request: " + goal + "\n");
+                            "- ID: " + goal.getRequestId() + "\n" +
+                            "- Component: " + goal.getComponent() + "\n" +
+                            "- Goal: " + goal.getGoal() + "\n");
+                    
                     // publish task planning request on topic
                     publisher.publish(goal);
+
+                }
+
+
+                // create task planning request from factory
+                task_planner_interface_msgs.TaskPlanningRequest terminate = factory.
+                        newFromType(task_planner_interface_msgs.TaskPlanningRequest._TYPE);
+
+                // set request info
+                terminate.setRequestId(RequestIdCounter.getAndIncrement());
+                terminate.setComponent("Goal");
+                terminate.setGoal("terminate");
+
+                // print info
+                log.info("[GoizperEnvironmentCognitionMonitor] Publishing task planning request on topic \"" + TASKPLANNER_GOAL_TOPIC + "\":\n" +
+                            "- ID: " + terminate.getRequestId() + "\n" +
+                            "- Component: " + terminate.getComponent() + "\n" +
+                            "- Goal: " + terminate.getGoal() + "\n");
+
+                // publish request
+                publisher.publish(terminate);
+
                 }
             });
 

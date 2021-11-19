@@ -5,13 +5,14 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 	PAR_TYPE EnumerationParameterType holes = {h1, h2, h3, h4, h5, h6, h7, h8};
 	PAR_TYPE NumericParameterType pose = [0, 10000];
 
-	COMP_TYPE SingletonStateVariable GoalVariableType(table-assembly-goal(), screw-goal(holes), screw-on-pose(pose), Idle()) {
+	COMP_TYPE SingletonStateVariable GoalVariableType(table-assembly-goal(), screw-goal(holes), screw-on-pose(pose), terminate(), Idle()) {
 
 		VALUE Idle() [1, +INF]
 		MEETS {
 			table-assembly-goal();
 			screw-goal(?h);
 			screw-on-pose(?p);
+			terminate();
 		}
 
 		VALUE table-assembly-goal() [1, + INF]
@@ -25,6 +26,11 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
         }
 
         VALUE screw-on-pose(?p) [1, +INF]
+        MEETS {
+            Idle();
+        }
+
+        VALUE terminate() [1, +INF]
         MEETS {
             Idle();
         }
@@ -179,9 +185,23 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 	}
 
+	COMP_TYPE SingletonStateVariable HumanRobotInterfaceType (Idle(), ScrewingComplete()) {
+
+	    VALUE Idle() [1, +INF]
+	    MEETS {
+	        ScrewingComplete();
+	    }
+
+	    VALUE ScrewingComplete() [1, 1]
+	    MEETS {
+	        Idle();
+	    }
+	}
+
 
 	COMPONENT Goal {FLEXIBLE goals(functional)} : GoalVariableType;
 	COMPONENT Worker {FLEXIBLE operations(primitive)} :  WorkerVariableType;
+	COMPONENT HumanRobotInterface {FLEXIBLE msgs(primitive)} : HumanRobotInterfaceType;
 	COMPONENT Cobot {FLEXIBLE tasks(primitive)} : CobotVariableType;
 	COMPONENT CobotMotion {FLEXIBLE arm(primitive)} : CobotMotionType;
 	COMPONENT CobotScrewDriver {FLEXIBLE tool(primitive)} : CobotScrewDriverType;
@@ -333,6 +353,13 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 	}
 
 	SYNCHRONIZE Goal.goals {
+
+	    VALUE terminate() {
+
+            cd0 HumanRobotInterface.msgs.ScrewingComplete();
+
+            CONTAINS [0, +INF] [0, +INF] cd0;
+        }
 
 		VALUE table-assembly-goal() {
 

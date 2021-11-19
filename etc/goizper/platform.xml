@@ -7,7 +7,7 @@
 			msg="task_planner_interface_msgs/TaskPlanningRequest"
 			delegate="com.github.sharework_taskplanner.taskplanner.platform.TaskPlanningRequestListener" />
 
-i	<command component="CobotMotion" name="*" exclude="at">
+	<command component="CobotMotion" name="*" exclude="at">
 
 		<dispatch-topic
 				name="/cartesian_pose"
@@ -31,8 +31,19 @@ i	<command component="CobotMotion" name="*" exclude="at">
 		<feedback-topic
 				name="/sharework/taskplanner/feedback/cobot"
 				msg="task_planner_interface_msgs/TaskExecutionFeedback"
-				delegate="com.github.sharework_taskplanner.taskplanner.platform.TaskExecutionFeedbackListener" />
+				delegate="com.github.sharework_taskplanner.taskplanner.platform.goizper.ScrewFeedbackListener" />
 
 	</command>
+
+
+	<command component="HumanRobotInterface" name="*" exclude="idle">
+
+		<dispatch-topic
+				name="/sharework/taskplanner/feedback/screwing_terminated"
+				msg="std_msgs/String"
+				publisher="com.github.sharework_taskplanner.taskplanner.platform.goizper.HriMessagePublisher" />
+
+	</command>
+
 
 </ros>
