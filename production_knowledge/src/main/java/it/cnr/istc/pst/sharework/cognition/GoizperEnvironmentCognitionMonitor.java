@@ -51,6 +51,8 @@ public class GoizperEnvironmentCognitionMonitor extends EnvironmentCognitionMoni
             MongoDatabase db = client.getDatabase("sharework_deployment");
             // set dataset
             this.dataset = db.getCollection("goizper");
+            // drop dataset
+            //this.dataset.drop();
 
             // create topic listener
             this.subscriber = this.connectedNode.newSubscriber(
@@ -90,8 +92,10 @@ public class GoizperEnvironmentCognitionMonitor extends EnvironmentCognitionMoni
 
                     // create document
                     Document doc = new Document();
+                    // compute ID
+                    long poseId = PoseIdCounter.getAndIncrement();
                     // get an ID for the detected pose
-                    doc.put("poseId", PoseIdCounter.getAndIncrement());
+                    doc.put("poseId", poseId);
 
                     // create point document
                     Document dPoint = new Document();
@@ -118,12 +122,12 @@ public class GoizperEnvironmentCognitionMonitor extends EnvironmentCognitionMoni
                     doc.put("result", result);
 
                     // save document into the local DB
-                    Bson filter = eq("poseId", PoseIdCounter.getAndIncrement());
+                    Bson filter = eq("poseId", poseId);
                     Document qResult = dataset.find(filter).first();
                     // delete data if already stored
                     if (qResult != null) {
                         // update collection
-                        dataset.deleteOne(filter);
+                        dataset.deleteMany(filter);
                     }
 
                     // store document
@@ -134,7 +138,7 @@ public class GoizperEnvironmentCognitionMonitor extends EnvironmentCognitionMoni
                 }
 
 
-                // get message factory for task requets
+                // get message factory for task requests
                 MessageFactory factory = connectedNode.getTopicMessageFactory();
                 // create a task planning request for each detected screw
                 for (Document doc : docs) {
