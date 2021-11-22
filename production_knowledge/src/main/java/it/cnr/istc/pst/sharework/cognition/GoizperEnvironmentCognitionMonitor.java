@@ -156,6 +156,16 @@ public class GoizperEnvironmentCognitionMonitor extends EnvironmentCognitionMoni
 
                     // publish task planning request on topic
                     publisher.publish(goal);
+
+                    try {
+
+                        // put some sleep
+                        Thread.sleep(2000);
+
+                    } catch (Exception ex) {
+                        // runtime exception
+                        throw new RuntimeException(ex.getMessage());
+                    }
                 }
 
                 // create task planning request from factory
