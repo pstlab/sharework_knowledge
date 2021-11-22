@@ -52,7 +52,7 @@ public class GoizperEnvironmentCognitionMonitor extends EnvironmentCognitionMoni
             // set dataset
             this.dataset = db.getCollection("goizper");
             // drop dataset
-            //this.dataset.drop();
+            this.dataset.drop();
 
             // create topic listener
             this.subscriber = this.connectedNode.newSubscriber(
@@ -78,8 +78,8 @@ public class GoizperEnvironmentCognitionMonitor extends EnvironmentCognitionMoni
                 log.info("[GoizperEnvironmentCognitionMonitor] Received data from environment cognition module:\n" +
                         "- #points: " + detection.getPoints().size() + "\n");
 
-                // create documents for received Poses
-                Document[] docs = new Document[detection.getPoints().size()];
+                // get message factory for task requests
+                MessageFactory factory = connectedNode.getTopicMessageFactory();
                 // check received points
                 for (int index = 0; index < detection.getPoints().size(); index++) {
 
@@ -133,16 +133,6 @@ public class GoizperEnvironmentCognitionMonitor extends EnvironmentCognitionMoni
                     // store document
                     dataset.insertOne(doc);
 
-                    // add stored document to the list
-                    docs[index] = doc;
-                }
-
-
-                // get message factory for task requests
-                MessageFactory factory = connectedNode.getTopicMessageFactory();
-                // create a task planning request for each detected screw
-                for (Document doc : docs) {
-
                     // create task planning request from factory
                     task_planner_interface_msgs.TaskPlanningRequest goal = factory.
                             newFromType(task_planner_interface_msgs.TaskPlanningRequest._TYPE);
@@ -154,20 +144,19 @@ public class GoizperEnvironmentCognitionMonitor extends EnvironmentCognitionMoni
                     goal.setComponent("Goal");
                     goal.setGoal("screw-on-pose");
                     goal.setParameters(Arrays.asList(new String[] {
-                            Long.toString(doc.getLong("poseId"))
+                            Long.toString(poseId)
                     }));
 
                     // print info
                     log.info("[GoizperEnvironmentCognitionMonitor] Publishing task planning request on topic \"" + TASKPLANNER_GOAL_TOPIC + "\":\n" +
                             "- ID: " + goal.getRequestId() + "\n" +
                             "- Component: " + goal.getComponent() + "\n" +
-                            "- Goal: " + goal.getGoal() + "\n");
-                    
+                            "- Goal: " + goal.getGoal() + "\n" +
+                            "- Parameters: " + goal.getParameters() + "\n");
+
                     // publish task planning request on topic
                     publisher.publish(goal);
-
                 }
-
 
                 // create task planning request from factory
                 task_planner_interface_msgs.TaskPlanningRequest terminate = factory.
