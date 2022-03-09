@@ -29,6 +29,7 @@ public class HRCTask {
      * @param horizon
      */
     protected HRCTask(Resource function, Resource type, long horizon) {
+
         // set type
         this.type = type;
         // set default name taking the name associated to the resource

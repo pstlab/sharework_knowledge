@@ -14,6 +14,7 @@ import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledgeDictionary;
 import it.cnr.istc.pst.sharework.authoring.ProductionKnowledgeAuthoring;
 import it.cnr.istc.pst.sharework.knowledge.ex.ProductionKnowledgeException;
 import org.apache.commons.logging.Log;
+import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
@@ -204,8 +205,8 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
      */
     @Override
     protected synchronized String doCompile()
-            throws InterruptedException, ProductionKnowledgeAuthoringException
-    {
+            throws InterruptedException, ProductionKnowledgeAuthoringException {
+
         // set DDL
         String ddl = null;
         // prepare a new HRC model
@@ -228,6 +229,35 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
             ddl = "DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {\n\n" +
                     "\tTEMPORAL_MODULE temporal_module = [0, " + this.horizon + "], 100;\n\n";
 
+            String comps = "";
+
+
+            // get binary resources
+            List<Resource> bins = this.knowledge.getBinaryResources();
+            // index labels
+            for (Resource bin : bins) {
+
+                // get resource label
+                Property prop = this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "hasLabel");
+                String label = bin.getProperty(prop).getString();
+
+
+                // add SV description
+                ddl += "\tCOMP_TYPE SingletonStateVariable " + label + "Type (Free(), Busy()) {\n" +
+                        "\t\tVALUE Free() [1, +INF]\n" +
+                        "\t\tMEETS {\n" +
+                        "\t\t\tBusy();\n" +
+                        "\t\t}\n\n" +
+                        "\t\tVALUE Busy() [1, +INF]\n" +
+                        "\t\tMEETS {\n" +
+                        "\t\t\tFree();\n" +
+                        "\t\t}\n\n" +
+                        "\t}\n\n";
+
+                comps += "\tCOMPONENT " + label + " {FLEXIBLE " + label.toLowerCase() + "_state(primitive)} : " + label + "Type;\n";
+            }
+
+
             // get production goals
             List<Resource> goals = this.knowledge.getProductionGoals();
             // index goals
@@ -238,7 +268,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
             // add SV description
             ddl += this.sv("GoalVariableType", goals, false);
             // prepare also component declaration
-            String comps = "\tCOMPONENT Goal {FLEXIBLE goals(functional)} : GoalVariableType;\n";
+            comps += "\tCOMPONENT Goal {FLEXIBLE goals(functional)} : GoalVariableType;\n";
 
 
             // get workers
@@ -248,6 +278,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 throw new ProductionKnowledgeAuthoringException("No individual of SOHO:WorkOperator found into the Knowledge Base!");
             }
 
+            System.out.println(">>> Extracting knowledge about worker's functions");
 
             // get functions
             List<Resource> hFuncs = this.knowledge.getFunctionsByAgent(workers.get(0));
@@ -276,6 +307,8 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 throw new ProductionKnowledgeAuthoringException("No individual of SOHO:Cobot found into the Knowledge Base!");
             }
 
+            System.out.println(">>> Extracting knowledge about worker's collaborative robot");
+
             // get functions
             List<Resource> rFuncs = this.knowledge.getFunctionsByAgent(cobots.get(0));
             // index functions
@@ -290,11 +323,15 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 this.doRetrieveHRCTaskKnowledge(func, task);
             }
 
+
+
             // add SV description
             ddl += this.sv("CobotVariableType", rFuncs, true);
             // create also component declaration
             comps += "\tCOMPONENT Cobot {FLEXIBLE tasks(primitive)} : CobotVariableType;\n";
 
+
+            System.out.println(">>> Extracting knowledge about production hierarchical procedures");
 
             // get hierarchy
             List<List<Resource>> hierarchy = this.knowledge.getProductionHierarchy(goals.get(0));
@@ -311,7 +348,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 // get production values
                 ddl += this.sv("ProductionHierarchyL" + index + "Type", values, false);
                 // create also component declaration
-                comps += "\tCOMPONENT ProductionL" + index + " {FLEXIBLE tasks_l" + index + "(primitive)} : ProductionHierarchyL" + index + "Type;\n";
+                comps += "\tCOMPONENT ProductionL" + index + " {FLEXIBLE tasks_l" + index + "(functional)} : ProductionHierarchyL" + index + "Type;\n";
             }
 
             // add component declaration
@@ -347,6 +384,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
         // retrieve data properties
         List<Statement> stats = this.knowledge.getFunctionDataProperties(function);
+        // check data properties
         for (Statement stat : stats) {
 
             // check function name
@@ -366,19 +404,10 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 // set description
                 task.setDescription(desc);
             }
-
-            // check function goal
-            if (prop.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "hasGoal")) {
-                // get function goal
-                String goal = stat.getObject().asLiteral().getString();
-                // set goal
-                task.setGoal(goal);
-            }
-
             // check function duration
             if (prop.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "hasDuration")) {
                 // get function duration
-                long duration = stat.getObject().asLiteral().getLong();
+                long duration = (long) stat.getObject().asLiteral().getFloat();
                 // set duration
                 task.setDuration(duration);
             }
@@ -386,17 +415,41 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
             // check function uncertainty
             if (prop.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "hasDurationUncertainty")) {
                 // get function uncertainty
-                long uncertainty = stat.getObject().asLiteral().getLong();
+                long uncertainty = (long) stat.getObject().asLiteral().getFloat();
                 // set uncertainty
                 task.setUncertainty(uncertainty);
             }
-
         }
 
-        // get target
-        Resource target = this.knowledge.getFunctionTarget(function);
-        // set target
-        task.setTarget(target);
+        // retrieve object properties
+        stats = this.knowledge.getFunctionObjectProperties(function);
+        // check data properties
+        for (Statement stat : stats) {
+
+            // check function name
+            Property prop = stat.getPredicate();
+            // check goal/end location in case of SOHO:Channel functions
+            if (prop.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "requiresEndLocation")) {
+
+                // get location
+                Resource location = stat.getObject().asResource();
+                // retrieve label
+                Literal label = location.getProperty(
+                        this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "hasLabel")).getObject().asLiteral();
+
+                // set label of the goal
+                task.setGoal(location.getLocalName());
+            }
+
+            if (prop.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "hasTarget")) {
+
+                // set label of the goal
+                task.setTarget(stat.getObject().asResource());
+
+            }
+
+
+        }
     }
 
     /**
@@ -407,17 +460,12 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
         // create mongo client
         try (MongoClient client = MongoClients.create(this.prop2value.get(PROPERTY_KEY_MONGODB_HOST))) {
 
-            // get DB
-            MongoDatabase db = client.getDatabase(this.prop2value.get(PROPERTY_KEY_MONGODB_NAME));
-            // get collection concerning task properties
-            MongoCollection<Document> taskProperties = db.getCollection(this.prop2value.get(PROPERTY_KEY_MONGODB_COLLECTION_TASK_PROPERTIES));
-            // clear collection before entering data
-            taskProperties.drop();
-
             // index HRC functions
             Map<String, Set<HRCTask>> index = new HashMap<>();
             // get human functions (i.e., primitive tasks)
             for (HRCTask task : this.hrc.getHumanTasks()) {
+
+                System.out.println(">>> Indexing human task: \"" + task.getName() + "\"");
                 // check task name
                 if (!index.containsKey(task.getName())) {
                     // set index
@@ -430,6 +478,8 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
             // get robot functions (i.e., primitive tasks)
             for (HRCTask task : this.hrc.getRobotTasks()) {
+
+                System.out.println(">>> Indexing robot task: \"" + task.getName() + "\"");
                 // check task name
                 if (!index.containsKey(task.getName())) {
                     // set index
@@ -441,26 +491,39 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
             }
 
 
+
+            System.out.println(">>> Creating local DB about known properties of HRC tasks.");
+
+            // get DB
+            MongoDatabase db = client.getDatabase(this.prop2value.get(PROPERTY_KEY_MONGODB_NAME));
+            // get collection concerning task properties
+            MongoCollection<Document> taskProperties = db.getCollection(this.prop2value.get(PROPERTY_KEY_MONGODB_COLLECTION_TASK_PROPERTIES));
+            // clear collection before entering data
+            taskProperties.drop();
+
             // check index
             for (String taskName : index.keySet()) {
 
+
                 // get associated functions
-                Set<HRCTask> tasks = index.get(taskName);
+                List<HRCTask> tasks = new ArrayList<>(index.get(taskName));
+                System.out.println(">>> Persisting data about task \"" +  taskName  + "\"\n" +
+                        "Associated tasks: " + tasks + "\n");
 
                 // create document to insert
                 Document doc = new Document();
                 // set task name
                 doc.append("name", taskName.toLowerCase());
                 // set task type
-                Resource type = tasks.stream().findFirst().get().getType();;
+                Resource type = tasks.get(0).getType();;
                 doc.append("type", type.getLocalName() == null ? type.asNode().getBlankNodeLabel() : type.getLocalName());
                 // set task target
-                Resource target = tasks.stream().findFirst().get().getTarget();
+                Resource target = tasks.get(0).getTarget();
                 doc.append("target", target.getLocalName() == null ? target.asNode().getBlankNodeLabel() : target.getLocalName());
                 // set goal
-                doc.append("goal", tasks.stream().findFirst().get().getGoal());
+                doc.append("goal", tasks.get(0).getGoal());
                 // set description
-                doc.append("description", tasks.stream().findFirst().get().getDescription());
+                doc.append("description", tasks.get(0).getDescription());
 
                 // set agents
                 List<String> agents = new ArrayList<>();
@@ -475,6 +538,8 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 taskProperties.insertOne(doc);
             }
 
+
+            System.out.println(">>> Creating local DB about known duration data of HRC tasks.");
             // get collection concerning task duration
             MongoCollection<Document> taskDurations = db.getCollection(this.prop2value.get(PROPERTY_KEY_MONGODB_COLLECTION_TASK_DURATIONS));
             // clear collection before entering data
@@ -501,6 +566,8 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 taskDurations.insertOne(doc);
 
             }
+
+            System.out.println(">>> Initialize local DB about known risks of simultaneous human and robotic tasks.");
 
             // get collection concerning task duration
             MongoCollection<Document> dynamicRisk = db.getCollection(this.prop2value.get(PROPERTY_KEY_MONGODB_COLLECTION_RISK_MATRIX));
@@ -537,6 +604,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
     protected void prepare(String model) {
 
         try {
+
 
             // export knowledge to local (shared) DB
             this.export();
@@ -717,14 +785,14 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
      * @throws ProductionKnowledgeException
      */
     private String synchronizations(Map<Resource, String> value2component)
-            throws InterruptedException, ProductionKnowledgeAuthoringException, ProductionKnowledgeException
-    {
+            throws InterruptedException, ProductionKnowledgeAuthoringException, ProductionKnowledgeException {
+
         // map components to synchronization descriptions
         Map<String, String> comp2sync = new HashMap<>();
         // get production goals
         List<Resource> goals = this.knowledge.getProductionGoals();
-        for (Resource goal : goals)
-        {
+        for (Resource goal : goals) {
+
             // check if exists
             if (!value2component.containsKey(goal)) {
                 throw new ProductionKnowledgeAuthoringException("No component defined for predicate: " + goal.getLocalName() + "()");
@@ -734,8 +802,6 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
             String goalName = this.hrc.getHRCTask(goal) == null || this.hrc.getHRCTask(goal).getName() == null ?
                     goal.getLocalName() == null ? goal.asNode().getBlankNodeLabel() : goal.getLocalName() :
                     this.hrc.getHRCTask(goal).getName();
-
-
 
             // first connect goals to root nodes of the decomposition hierarchy
             List<List<Resource>> hierarchy = this.knowledge.getProductionHierarchy(goal);
@@ -796,11 +862,11 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                             this.hrc.getHRCTask(reference).getName();
 
                     // check if decomposition is empty
-                    if (!graph.get(reference).isEmpty())
-                    {
+                    if (!graph.get(reference).isEmpty()) {
+
                         // check if HRC (simple) task
-                        if (this.knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "HRCTask"))
-                        {
+                        if (this.knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "HRCTask")) {
+
                             // check possible HRC task types
                             if (this.knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "SimultaneousHRCTask")) {
                                 // TODO simultaneous constraint
@@ -885,11 +951,11 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                                     }
                                 }
 
-                            } else    // independent task
-                            {
+                            } else if (knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "IndependentHRCTask")) {
+
                                 // check possible decompositions
-                                for (Set<Resource> decomposition : graph.get(reference))
-                                {
+                                for (Set<Resource> decomposition : graph.get(reference)) {
+
                                     // check if synchronization description has been opened
                                     if (!comp2sync.containsKey(refComp)) {
                                         // open synchronization description
@@ -899,38 +965,71 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                                     // get component synchronization body
                                     String synchBody = comp2sync.get(refComp);
 
+
                                     // get target component
-                                    Resource predicate = decomposition.stream().findFirst().get();
+                                    Resource function = decomposition.stream().findFirst().get();
+                                    // get associated HRC task
+                                    HRCTask hrcTask = this.hrc.getHRCTask(function);
+
                                     // get predicate name
-                                    String predicateName = this.hrc.getHRCTask(predicate) == null || this.hrc.getHRCTask(predicate).getName() == null ?
-                                            predicate.getLocalName() == null ? predicate.asNode().getBlankNodeLabel() : predicate.getLocalName() :
-                                            this.hrc.getHRCTask(predicate).getName();
+                                    //String predicateName = this.hrc.getHRCTask(function) == null || this.hrc.getHRCTask(function).getName() == null ?
+                                    //        function.getLocalName() == null ? function.asNode().getBlankNodeLabel() : function.getLocalName() :
+                                    //        this.hrc.getHRCTask(function).getName();
 
 
                                     // get component
-                                    String predicateComponent = value2component.get(predicate);
+                                    String predicateComponent = value2component.get(function);
                                     // add value  synchronization
-                                    synchBody += "\t\tVALUE " + referenceName + "() {\n\n" +
-                                            "\t\t\td0 " + predicateComponent + "._" + predicateName + "();\n" +
-                                            "\t\t\tCONTAINS [0, +INF] [0, +INF] d0;\n" +
-                                            "\t\t}\n\n";
+                                    synchBody += "\t\tVALUE " + referenceName + "() {\n\n";
+
+                                    // add function decision
+                                    synchBody += "\t\t\td0 " + predicateComponent + "._" + hrcTask.getName() + "();\n" +
+                                            "\t\t\tCONTAINS [0, +INF] [0, +INF] d0;\n";
+
+
+                                    // check if goal
+                                    if (hrcTask.getGoal() != null && !hrcTask.getGoal().equals("")) {
+
+                                        // retrieve resource associated to goal
+                                        Resource gRes = function.getProperty(this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "requiresEndLocation"))
+                                                .getObject().asResource();
+
+                                        // check if binary resource
+                                        Resource type = this.knowledge.getResourceType(gRes);
+                                        if (type.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "BinaryProductionLocation")) {
+
+                                            // get label
+                                            String label = gRes.getProperty(this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "hasLabel")).getString();
+
+                                            synchBody += "\t\t\td1 " + label + "." + label.toLowerCase() + "_state.Busy();\n" +
+                                                    "\t\t\tDURING [0, +INF] [0, +INF] d1;\n";
+                                        }
+
+                                    }
+
+                                    synchBody += "\t\t}\n\n";
 
                                     // update description
                                     comp2sync.put(refComp, synchBody);
+
                                     // increment the number of synchronizations
                                     this.numberOfSynchronizations++;
                                     // increment the number of constraints
                                     this.numberOfConstraints++;
                                 }
+
+                            } else {
+                                // unknown
                             }
-                        } else // any other type of complex task
-                        {
+
+                        } else { // any other type of complex task
+
                             // check possible decomposition
-                            for (Set<Resource> decomposition : graph.get(reference))
-                            {
+                            for (Set<Resource> decomposition : graph.get(reference)) {
+
                                 // check if empty
-                                if (!decomposition.isEmpty())
-                                {
+                                if (!decomposition.isEmpty()) {
+
                                     // check if synchronization description has been opened
                                     if (!comp2sync.containsKey(refComp)) {
                                         // open synchronization description

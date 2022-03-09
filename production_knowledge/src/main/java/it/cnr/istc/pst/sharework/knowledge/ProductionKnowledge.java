@@ -1016,8 +1016,7 @@ public class ProductionKnowledge
      * @throws InterruptedException
      */
     public List<Resource> getProductionGoals()
-            throws InterruptedException
-    {
+            throws InterruptedException {
 
         // list of production goals
         List<Resource> goals = new ArrayList<>();
@@ -1037,6 +1036,33 @@ public class ProductionKnowledge
 
         // get the list
         return goals;
+    }
+
+    /**
+     *
+     * @return
+     * @throws InterruptedException
+     */
+    public List<Resource> getBinaryResources()
+            throws InterruptedException  {
+
+        // list of production goals
+        List<Resource> resources = new ArrayList<>();
+
+        // retrieve known individuals of SOHO:BinaryProductionLocation
+        List<Statement> list = this.listStatements(
+                null,
+                ProductionKnowledgeDictionary.RDF_NS + "type",
+                ProductionKnowledgeDictionary.SOHO_NS + "BinaryProductionLocation");
+
+        // get resource
+        for (Statement s : list) {
+            // add the subject of the statement
+            resources.add(s.getSubject());
+        }
+
+        // get the list
+        return resources;
     }
 
     /**
@@ -1176,8 +1202,8 @@ public class ProductionKnowledge
      * @throws InterruptedException
      */
     public List<Resource> getFunctionsByAgent(Resource agent)
-            throws InterruptedException
-    {
+            throws InterruptedException {
+
         // list of agents
         List<Resource> functions = new ArrayList<>();
 
@@ -1600,8 +1626,9 @@ public class ProductionKnowledge
      * @throws InterruptedException
      */
     public List<Statement> getFunctionDataProperties(Resource func)
-            throws InterruptedException
-    {
+            throws InterruptedException {
+
+
         // list statements
         List<Statement> list = new ArrayList<>();
         // add all statements
@@ -1609,6 +1636,13 @@ public class ProductionKnowledge
                 func.getURI() == null ? func.asNode().getBlankNodeLabel(): func.getURI(),
                 ProductionKnowledgeDictionary.SOHO_NS + "hasProcedureName",
                 null));
+
+        // add all statements
+        list.addAll(this.listStatements(
+                func.getURI() == null ? func.asNode().getBlankNodeLabel(): func.getURI(),
+                ProductionKnowledgeDictionary.SOHO_NS + "hasProcedureDescription",
+                null));
+
 
         // add all statements
         list.addAll(this.listStatements(
@@ -1629,12 +1663,39 @@ public class ProductionKnowledge
                 ProductionKnowledgeDictionary.SOHO_NS + "hasDurationUncertainty",
                 null));
 
+        // get statements
+        return list;
+    }
+
+    /**
+     *
+     * @param func
+     * @return
+     * @throws InterruptedException
+     */
+    public List<Statement> getFunctionObjectProperties(Resource func)
+            throws InterruptedException {
+
+        // list statements
+        List<Statement> list = new ArrayList<>();
         // add all statements
         list.addAll(this.listStatements(
                 func.getURI() == null ? func.asNode().getBlankNodeLabel(): func.getURI(),
-                ProductionKnowledgeDictionary.SOHO_NS + "hasGoal",
+                ProductionKnowledgeDictionary.SOHO_NS + "hasTarget",
                 null));
 
+        // add all statements
+        list.addAll(this.listStatements(
+                func.getURI() == null ? func.asNode().getBlankNodeLabel(): func.getURI(),
+                ProductionKnowledgeDictionary.SOHO_NS + "requiresStartLocation",
+                null));
+
+
+        // add all statements
+        list.addAll(this.listStatements(
+                func.getURI() == null ? func.asNode().getBlankNodeLabel(): func.getURI(),
+                ProductionKnowledgeDictionary.SOHO_NS + "requiresEndLocation",
+                null));
 
         // get statements
         return list;
