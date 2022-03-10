@@ -428,7 +428,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
             // check function name
             Property prop = stat.getPredicate();
-            // check goal/end location in case of SOHO:Channel functions
+            // check goal location in case of SOHO:Channel functions
             if (prop.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "requiresEndLocation")) {
 
                 // get location
@@ -441,6 +441,20 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 task.setGoal(location.getLocalName());
             }
 
+            // check start location in case of SOHO:Channel functions
+            if (prop.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "requiresStartLocation")) {
+
+                // get location
+                Resource location = stat.getObject().asResource();
+                // retrieve label
+                Literal label = location.getProperty(
+                        this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "hasLabel")).getObject().asLiteral();
+
+                // set label of the start
+                task.setStart(location.getLocalName());
+            }
+
+            // check target object
             if (prop.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "hasTarget")) {
 
                 // set label of the goal

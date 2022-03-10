@@ -1709,8 +1709,8 @@ public class ProductionKnowledge
      * @throws ProductionKnowledgeException
      */
     public Resource getResourceType(Resource resource)
-            throws InterruptedException, ProductionKnowledgeException
-    {
+            throws InterruptedException, ProductionKnowledgeException {
+
         // check RDF:type statement
         Statement statement = resource.getProperty(this.getProperty(ProductionKnowledgeDictionary.RDF_NS + "type"));
         // check if statement exists
@@ -1732,8 +1732,7 @@ public class ProductionKnowledge
      * @throws ProductionKnowledgeException
      */
     public Resource getFunctionTarget(Resource function)
-            throws InterruptedException, ProductionKnowledgeException
-    {
+            throws InterruptedException, ProductionKnowledgeException {
 
         // check SOHO:hasTarget statement
         Statement statement = function.getProperty(this.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "hasTarget"));

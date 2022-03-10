@@ -17,6 +17,7 @@ public class HRCTask {
     private String name;                    // unique name of the task
     private String description;             // task description
     private String goal;                    // label denoting the goal of the procedure
+    private String start;                   // label denoting the start of the procedure
     private String agent;                   // label of the agent that would perform the function
     private long duration;                  // known average duration of task execution
     private long uncertainty;               // known uncertainty about the duration of a task
@@ -93,11 +94,23 @@ public class HRCTask {
 
     /**
      *
+     * @param start
+     */
+    public void setStart(String start) { this.start = start; }
+
+    /**
+     *
      * @return
      */
     public String getGoal() {
         return goal;
     }
+
+    /**
+     *
+     * @return
+     */
+    public String getStart() { return start; }
 
     /**
      *
