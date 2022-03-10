@@ -337,9 +337,9 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
             List<List<Resource>> hierarchy = this.knowledge.getProductionHierarchy(goals.get(0));
             // create a SV for each hierarchical level
             for (int index = 0; index < hierarchy.size(); index++) {
+
                 // get values
                 List<Resource> values = hierarchy.get(index);
-
                 // index tasks
                 for (Resource val : values) {
                     vIndex.put(val, "ProductionL" + index + ".tasks_l" + index);
@@ -830,8 +830,8 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
             }
 
             // add goal synchronizations
-            for (Resource task : top)
-            {
+            for (Resource task : top)  {
+
                 // check if exists
                 if (!value2component.containsKey(task)) {
                     throw new ProductionKnowledgeAuthoringException("No component defined for predicate: " + task.getLocalName() + "()");
@@ -858,11 +858,11 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
             // get the decomposition graph
             List<Map<Resource, List<Set<Resource>>>> graphs = this.knowledge.getDecompositionGraph(goal);
             // check each possible decomposition - method
-            for (Map<Resource, List<Set<Resource>>> graph : graphs)
-            {
+            for (Map<Resource, List<Set<Resource>>> graph : graphs) {
+
                 // get reference predicates/values
-                for (Resource reference : graph.keySet())
-                {
+                for (Resource reference : graph.keySet()) {
+
                     // check if exists
                     if (!value2component.containsKey(reference)) {
                         throw new ProductionKnowledgeAuthoringException("No component defined for predicate: " + reference.getLocalName() + "()");
@@ -1038,9 +1038,30 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
                         } else { // any other type of complex task
 
+                            // set of associated norms
+                            Set<Resource> norms = new HashSet<>();
+                            // check production norms
+                            List<Statement> list = reference.listProperties(
+                                    this.knowledge.getProperty(ProductionKnowledgeDictionary.DUL_NS + "isDescribedBy")).toList();
+
+                            // extract norms
+                            for (Statement i : list) {
+
+                                // get object and check type
+                                Resource res = i.getObject().asResource();
+                                // check type
+                                if (this.knowledge.getResourceType(res).getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "PrecedenceConstraint")) {
+                                    // add to norms
+                                    norms.add(res);
+                                }
+                            }
+
+
                             // check possible decomposition
                             for (Set<Resource> decomposition : graph.get(reference)) {
 
+                                // create local index mapping resources to decisions
+                                Map<Resource, String> local = new HashMap<>();
                                 // check if empty
                                 if (!decomposition.isEmpty()) {
 
@@ -1063,8 +1084,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                                     this.numberOfSynchronizations++;
 
                                     int dIndex = 0;
-                                    for (Resource dec : decomposition)
-                                    {
+                                    for (Resource dec : decomposition) {
                                         // get decision name
                                         String decName = this.hrc.getHRCTask(dec) == null || this.hrc.getHRCTask(dec).getName() == null ?
                                                 dec.getLocalName() == null ? dec.asNode().getBlankNodeLabel() : dec.getLocalName() :
@@ -1079,8 +1099,34 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                                         // increment the number of constraints
                                         this.numberOfConstraints++;
 
+                                        // add index
+                                        local.put(dec, "d" + dIndex);
                                         // increment
                                         dIndex++;
+                                    }
+
+                                    // add constraints from norms
+                                    for (Resource norm : norms) {
+
+                                        // check type
+                                        Resource type = this.knowledge.getResourceType(norm);
+                                        if (type.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "PrecedenceConstraint")) {
+
+                                            // get first task/function
+                                            Resource first = norm.getProperty(
+                                                    this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS +  "isFirstTask")).getObject().asResource();
+                                            // get decision
+                                            String firstDec = local.get(first);
+
+                                            // get second task/function
+                                            Resource second = norm.getProperty(
+                                                    this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "isSecondTask")).getObject().asResource();
+                                            // get decision
+                                            String secondDec = local.get(second);
+
+                                            // add precedence constraint
+                                            synchBody += "\t\t\t" + firstDec + " BEFORE [0, +INF] " + secondDec + ";\n";
+                                        }
                                     }
 
                                     // close synchronization
