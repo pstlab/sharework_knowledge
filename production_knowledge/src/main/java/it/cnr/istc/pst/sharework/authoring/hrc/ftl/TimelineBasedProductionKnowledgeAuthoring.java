@@ -428,6 +428,20 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
             // check function name
             Property prop = stat.getPredicate();
+
+            // check goal location in case of SOHO:Channel functions
+            if (prop.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "requiresLocation")) {
+
+                // get location
+                Resource location = stat.getObject().asResource();
+                // retrieve label
+                Literal label = location.getProperty(
+                        this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "hasLabel")).getObject().asLiteral();
+
+                // set label of the goal
+                task.setGoal(location.getLocalName());
+            }
+
             // check goal location in case of SOHO:Channel functions
             if (prop.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "requiresEndLocation")) {
 
@@ -459,10 +473,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
                 // set label of the goal
                 task.setTarget(stat.getObject().asResource());
-
             }
-
-
         }
     }
 
@@ -530,14 +541,28 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 doc.append("name", taskName.toLowerCase());
                 // set task type
                 Resource type = tasks.get(0).getType();;
-                doc.append("type", type.getLocalName() == null ? type.asNode().getBlankNodeLabel() : type.getLocalName());
-                // set task target
-                Resource target = tasks.get(0).getTarget();
-                doc.append("target", target.getLocalName() == null ? target.asNode().getBlankNodeLabel() : target.getLocalName());
-                // set goal
-                doc.append("goal", tasks.get(0).getGoal());
+                String taskType = type.getLocalName() == null ? type.asNode().getBlankNodeLabel() : type.getLocalName();
+                doc.append("type", taskType);
                 // set description
                 doc.append("description", tasks.get(0).getDescription());
+
+                // set task target workpiece type
+                Resource target = tasks.get(0).getTarget();
+                doc.append("target", target.getLocalName() == null ? target.asNode().getBlankNodeLabel() : target.getLocalName());
+
+                // check task type
+                if (taskType.equalsIgnoreCase("pickplace")) {
+
+                    doc.append("pick_goal", tasks.get(0).getStart());
+                    doc.append("place_goal", tasks.get(0).getGoal());
+
+                } else {
+
+                    // set goal
+                    doc.append("goal", tasks.get(0).getGoal());
+                }
+
+
 
                 // set agents
                 List<String> agents = new ArrayList<>();
@@ -619,10 +644,8 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
         try {
 
-
             // export knowledge to local (shared) DB
             this.export();
-
             // write agent configuration properties
             File configFile = new File(ProductionKnowledge.SHAREWORK_KNOWLEDGE + "gen/agent.properties");
             try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(configFile), "UTF-8"))) {
@@ -742,8 +765,8 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
      */
     @Override
     protected synchronized boolean doValidate(String model)
-            throws ProductionKnowledgeAuthoringException
-    {
+            throws ProductionKnowledgeAuthoringException {
+
         // validity flag
         boolean valid = false;
         // set start time and update authoring time
@@ -908,8 +931,6 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                                     Resource first = null;
                                     Resource second = null;
 
-                                    // TODO : CHECK FUNCTION ORDERING FROM THE KNOWLEDGE
-
                                     // build synchronous task implementation
                                     while (it.hasNext() && second == null) {
 
@@ -1001,8 +1022,9 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                                             "\t\t\tCONTAINS [0, +INF] [0, +INF] d0;\n";
 
 
-                                    // check if goal
-                                    if (hrcTask.getGoal() != null && !hrcTask.getGoal().equals("")) {
+                                    // check if pick place tasks
+                                    //if (hrcTask.getGoal() != null && !hrcTask.getGoal().equals("")) {
+                                    if (hrcTask.getName().contains("pickplace")) {
 
                                         // retrieve resource associated to goal
                                         Resource gRes = function.getProperty(this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "requiresEndLocation"))

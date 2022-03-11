@@ -247,8 +247,8 @@ public abstract class ProductionKnowledgeAuthoring implements ProductionKnowledg
      * @throws ProductionKnowledgeAuthoringException
      */
     public boolean compileAndValidate()
-            throws InterruptedException, ProductionKnowledgeAuthoringException
-    {
+            throws InterruptedException, ProductionKnowledgeAuthoringException {
+
         // first compile
         String model = this.compile();
         // validate the model

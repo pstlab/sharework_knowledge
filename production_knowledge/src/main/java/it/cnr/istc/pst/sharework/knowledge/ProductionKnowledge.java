@@ -1697,6 +1697,12 @@ public class ProductionKnowledge
                 ProductionKnowledgeDictionary.SOHO_NS + "requiresEndLocation",
                 null));
 
+        // add all statements
+        list.addAll(this.listStatements(
+                func.getURI() == null ? func.asNode().getBlankNodeLabel(): func.getURI(),
+                ProductionKnowledgeDictionary.SOHO_NS + "requiresLocation",
+                null));
+
         // get statements
         return list;
     }
