@@ -996,8 +996,8 @@ public class ProductionKnowledge {
      * @throws InterruptedException
      */
     public Map<Resource, Set<Resource>> retrieveResourceStructure(Resource resource)
-            throws InterruptedException
-    {
+            throws InterruptedException {
+
         // set result structure
         HashMap<Resource, Set<Resource>> structure = new HashMap<>();
         // navigate knowledge to extract structure
@@ -1033,6 +1033,60 @@ public class ProductionKnowledge {
             goals.add(s.getSubject());
         }
 
+
+        // get the list
+        return goals;
+    }
+
+    /**
+     *
+     * @return
+     * @throws InterruptedException
+     */
+    public List<Resource> getCompoundGoals()
+            throws InterruptedException {
+
+        // list of production goals
+        List<Resource> goals = new ArrayList<>();
+
+        // retrieve known individuals of SOHO:ProductionGoal
+        List<Statement> list = this.listStatements(
+                null,
+                ProductionKnowledgeDictionary.RDF_NS + "type",
+                ProductionKnowledgeDictionary.SOHO_NS + "CompoundProductionGoal");
+
+        // get resource
+        for (Statement s : list) {
+            // add the subject of the statement
+            goals.add(s.getSubject());
+        }
+
+
+        // get the list
+        return goals;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public List<Resource> getProductionSubGoals(Resource goal)
+            throws InterruptedException {
+
+        // list of production goals
+        List<Resource> goals = new ArrayList<>();
+
+        // retrieve known individuals of SOHO:ProductionGoal
+        List<Statement> list = this.listStatements(
+                goal.getURI(),
+                ProductionKnowledgeDictionary.DUL_NS + "hasConstituent",
+                null);
+
+        // get resource
+        for (Statement s : list) {
+            // add the subject of the statement
+            goals.add(s.getObject().asResource());
+        }
 
         // get the list
         return goals;
@@ -1373,7 +1427,7 @@ public class ProductionKnowledge {
         }
 
         // initialize the hierarchy
-        List<List<Resource>> hierarchy = new ArrayList<>();
+        //List<List<Resource>> hierarchy = new ArrayList<>();
         // get production dependency
         Map<Resource, Set<Resource>> graph = this.getDependencyGraph(pGoal);
         System.out.println(">>> Extracted dependency graph for goal \"" + pGoal.getURI() + "\" (graph.size() = " + graph.size() + ")");
