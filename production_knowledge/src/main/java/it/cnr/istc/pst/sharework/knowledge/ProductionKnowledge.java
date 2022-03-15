@@ -15,8 +15,8 @@ import java.util.*;
 /**
  * Apache Jena-based implementation of Production Knowledge interface
  */
-public class ProductionKnowledge
-{
+public class ProductionKnowledge {
+
     public static final String SHAREWORK_KNOWLEDGE = System.getenv("SHAREWORK_KNOWLEDGE") != null ?
             System.getenv("SHAREWORK_KNOWLEDGE") + "/" : "";
 
@@ -49,8 +49,8 @@ public class ProductionKnowledge
      * @param ontoFile
      * @param ruleFile
      */
-    public ProductionKnowledge(String ontoFile, String ruleFile)
-    {
+    public ProductionKnowledge(String ontoFile, String ruleFile) {
+
         // load model
         this.doLoad(ontoFile, ruleFile);
         // set default state
@@ -143,8 +143,8 @@ public class ProductionKnowledge
      * @throws Exception
      */
     public void load(String ontoFile, String ruleFile)
-            throws Exception
-    {
+            throws Exception {
+
         synchronized (lock) {
             while (!this.state.equals(ProductionKnowledgeState.NONE)) {
                 lock.wait();
@@ -154,16 +154,16 @@ public class ProductionKnowledge
             this.state = ProductionKnowledgeState.WRITE_MODE;
         }
 
-        try
-        {
+        try {
+
             // load ontological model
             this.doLoad(ontoFile, ruleFile);
             // update internal reference
             this.ontoFile = ontoFile;
             this.ruleFile = ruleFile;
-        }
-        finally
-        {
+
+        }  finally {
+
             // release the lock
             synchronized (lock) {
 
@@ -1240,8 +1240,8 @@ public class ProductionKnowledge
      *
      */
     public List<Map<Resource, List<Set<Resource>>>> getDecompositionGraph(Resource pGoal)
-            throws InterruptedException, ProductionKnowledgeException
-    {
+            throws InterruptedException, ProductionKnowledgeException {
+
         // check parameter type
         if (!this.hasResourceType(pGoal, ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal")) {
             // wrong parameter type
@@ -1257,6 +1257,8 @@ public class ProductionKnowledge
                 pGoal.getURI() == null ? pGoal.asNode().getBlankNodeLabel() : pGoal.getURI(),
                 ProductionKnowledgeDictionary.DUL_NS + "hasConstituent",
                 null);
+
+        System.out.println(">>> Extracted statements associating goal to production methods graph for goal \"" + ProductionKnowledgeDictionary.DUL_NS + "hasConstituent\" (mStats.size() = " +  mStats.size() + ")");
 
         // extract production graphs
         for (Statement ms : mStats)
@@ -1313,8 +1315,8 @@ public class ProductionKnowledge
      * @throws ProductionKnowledgeException
      */
     public Map<Resource, Set<Resource>> getDependencyGraph(Resource pGoal)
-            throws InterruptedException, ProductionKnowledgeException
-    {
+            throws InterruptedException, ProductionKnowledgeException {
+
         // check parameter type
         if (!this.hasResourceType(pGoal, ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal")) {
             // wrong parameter type
@@ -1326,11 +1328,13 @@ public class ProductionKnowledge
         Map<Resource, Set<Resource>> dGraph = new HashMap<>();
         // get production graphs
         List<Map<Resource, List<Set<Resource>>>> graphs = this.getDecompositionGraph(pGoal);
+        System.out.println(">>> Extracted decomposition graphs for goal \"" + pGoal.getURI() + "\" (graphs.size() = " + graphs.size() + ")");
+
+
         // check graphs
-        for (Map<Resource, List<Set<Resource>>> graph : graphs)
-        {
-            for (Resource key : graph.keySet())
-            {
+        for (Map<Resource, List<Set<Resource>>> graph : graphs) {
+            for (Resource key : graph.keySet()) {
+
                 // add key to the dependency graph
                 if (!dGraph.containsKey(key)) {
                     dGraph.put(key, new HashSet<Resource>());
@@ -1359,8 +1363,8 @@ public class ProductionKnowledge
      * @throws ProductionKnowledgeException
      */
     public List<List<Resource>> getProductionHierarchy(Resource pGoal)
-            throws InterruptedException, ProductionKnowledgeException
-    {
+            throws InterruptedException, ProductionKnowledgeException {
+
         // check parameter type
         if (!this.hasResourceType(pGoal, ProductionKnowledgeDictionary.SOHO_NS + "ProductionGoal")) {
             // wrong parameter type
@@ -1372,6 +1376,7 @@ public class ProductionKnowledge
         List<List<Resource>> hierarchy = new ArrayList<>();
         // get production dependency
         Map<Resource, Set<Resource>> graph = this.getDependencyGraph(pGoal);
+        System.out.println(">>> Extracted dependency graph for goal \"" + pGoal.getURI() + "\" (graph.size() = " + graph.size() + ")");
 
         // make a copy
         Map<Resource, Set<Resource>> copy = new HashMap<>(graph);

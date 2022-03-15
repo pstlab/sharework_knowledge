@@ -362,16 +362,16 @@ public class MosaicAuthoringTest
      *
      */
     @Test
-    public void authoringCompilationTest()
-    {
+    public void authoringCompilationTest() {
+
         System.out.println("*********************************************");
         System.out.println("***** Test: authoringCompilationTest() *****");
 
         // create production knowledge
-        TimelineBasedProductionKnowledgeAuthoring authoring = new TimelineBasedProductionKnowledgeAuthoring();
+        TimelineBasedProductionKnowledgeAuthoring authoring = new TimelineBasedProductionKnowledgeAuthoring(null);
         Assert.assertNotNull(authoring);
-        try
-        {
+        try {
+
             // load knowledge base
             authoring.setProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
             // get model
@@ -410,7 +410,7 @@ public class MosaicAuthoringTest
         System.out.println("***** Test: authoringCompilationAndValidationTest() *****");
 
         // create production knowledge
-        TimelineBasedProductionKnowledgeAuthoring authoring = new TimelineBasedProductionKnowledgeAuthoring();
+        TimelineBasedProductionKnowledgeAuthoring authoring = new TimelineBasedProductionKnowledgeAuthoring(null);
         Assert.assertNotNull(authoring);
         try
         {
@@ -451,7 +451,7 @@ public class MosaicAuthoringTest
         System.out.println("***** Test: authoringTest() *****");
 
         // create production knowledge
-        TimelineBasedProductionKnowledgeAuthoring authoring = new TimelineBasedProductionKnowledgeAuthoring();
+        TimelineBasedProductionKnowledgeAuthoring authoring = new TimelineBasedProductionKnowledgeAuthoring(null);
         Assert.assertNotNull(authoring);
         try
         {

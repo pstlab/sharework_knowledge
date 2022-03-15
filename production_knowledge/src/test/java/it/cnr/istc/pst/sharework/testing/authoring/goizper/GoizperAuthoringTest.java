@@ -372,7 +372,7 @@ public class GoizperAuthoringTest
         System.out.println("***** Test: authoringCompilationTest() *****");
 
         // create production knowledge
-        TimelineBasedProductionKnowledgeAuthoring authoring = new TimelineBasedProductionKnowledgeAuthoring();
+        TimelineBasedProductionKnowledgeAuthoring authoring = new TimelineBasedProductionKnowledgeAuthoring(null);
         Assert.assertNotNull(authoring);
         try
         {
@@ -414,7 +414,7 @@ public class GoizperAuthoringTest
         System.out.println("***** Test: authoringCompilationAndValidationTest() *****");
 
         // create production knowledge
-        TimelineBasedProductionKnowledgeAuthoring authoring = new TimelineBasedProductionKnowledgeAuthoring();
+        TimelineBasedProductionKnowledgeAuthoring authoring = new TimelineBasedProductionKnowledgeAuthoring(null);
         Assert.assertNotNull(authoring);
         try
         {
@@ -455,7 +455,7 @@ public class GoizperAuthoringTest
         System.out.println("***** Test: authoringTest() *****");
 
         // create production knowledge
-        TimelineBasedProductionKnowledgeAuthoring authoring = new TimelineBasedProductionKnowledgeAuthoring();
+        TimelineBasedProductionKnowledgeAuthoring authoring = new TimelineBasedProductionKnowledgeAuthoring(null);
         Assert.assertNotNull(authoring);
         try
         {

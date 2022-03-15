@@ -82,8 +82,8 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
     private void setup() {
         // index properties
         this.prop2value = new HashMap<>();
-        try
-        {
+        try {
+
             // read dataset property
             Properties properties = new Properties();
             try (InputStream in = new FileInputStream(new File(ProductionKnowledge.SHAREWORK_KNOWLEDGE + "etc/authoring.properties"))) {
@@ -332,30 +332,38 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
 
             System.out.println(">>> Extracting knowledge about production hierarchical procedures");
+            for (int gndex = 0; gndex < goals.size(); gndex++) {
 
-            // get hierarchy
-            List<List<Resource>> hierarchy = this.knowledge.getProductionHierarchy(goals.get(0));
-            // create a SV for each hierarchical level
-            for (int index = 0; index < hierarchy.size(); index++) {
+                // get goal
+                Resource goal  = goals.get(gndex);
+                System.out.println(">>> Extracting procedure for goal \"" + goal.getURI() + "\"");
+                // get hierarchy
+                List<List<Resource>> hierarchy = this.knowledge.getProductionHierarchy(goal);
+                System.out.println(">>> Adding components from hierarchical decomposition (hierarchy.size() = " + hierarchy.size() + ")");
+                // create a SV for each hierarchical level
+                for (int index = 0; index < hierarchy.size(); index++) {
 
-                // get values
-                List<Resource> values = hierarchy.get(index);
-                // index tasks
-                for (Resource val : values) {
-                    vIndex.put(val, "ProductionL" + index + ".tasks_l" + index);
+                    // get values
+                    List<Resource> values = hierarchy.get(index);
+                    // index tasks
+                    for (Resource val : values) {
+                        vIndex.put(val, "ProductionG" + gndex + "L" + index + ".tasks_g" + gndex + "_l" + index);
+                    }
+
+                    // get production values
+                    ddl += this.sv("ProductionHierarchyG" + gndex + "L" + index + "Type", values, false);
+                    // create also component declaration
+                    comps += "\tCOMPONENT ProductionG" + gndex + "L" + index + " {FLEXIBLE tasks_g" + gndex + "_l" + index + "(functional)} : ProductionHierarchyG" + gndex + "L" + index + "Type;\n";
+                    System.out.println("\tCOMPONENT ProductionG" + gndex + "L" + index + " {FLEXIBLE tasks_g" + gndex + "_l" + index + "(functional)} : ProductionHierarchyG" + gndex + "L" + index + "Type;\n");
                 }
 
-                // get production values
-                ddl += this.sv("ProductionHierarchyL" + index + "Type", values, false);
-                // create also component declaration
-                comps += "\tCOMPONENT ProductionL" + index + " {FLEXIBLE tasks_l" + index + "(functional)} : ProductionHierarchyL" + index + "Type;\n";
+                // add component declaration
+                ddl += "\n" + comps + "\n";
+
+                System.out.println(">>> Extracting synchronizations.... ");
+                // add synchronization description
+                ddl += this.synchronizations(goal, vIndex);
             }
-
-            // add component declaration
-            ddl += "\n" + comps + "\n";
-
-            // add synchronization description
-            ddl += this.synchronizations(vIndex);
 
             // close domain description
             ddl += "\n}\n\n";
@@ -434,12 +442,19 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
                 // get location
                 Resource location = stat.getObject().asResource();
+                // get location name
+                String locName = location.getLocalName() != null ? location.getLocalName() : location.asNode().getBlankNodeLabel();
+
                 // retrieve label
-                Literal label = location.getProperty(
-                        this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "hasLabel")).getObject().asLiteral();
+                Statement s = location.getProperty(
+                        this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "hasLabel"));
+                // check statement
+                if (s != null) {
+                    locName = s.getObject().asLiteral().getString();
+                }
 
                 // set label of the goal
-                task.setGoal(location.getLocalName());
+                task.setGoal(locName);
             }
 
             // check goal location in case of SOHO:Channel functions
@@ -447,12 +462,20 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
                 // get location
                 Resource location = stat.getObject().asResource();
+                // get location name
+                String locName = location.getLocalName() != null ? location.getLocalName() : location.asNode().getBlankNodeLabel();
+
+
                 // retrieve label
-                Literal label = location.getProperty(
-                        this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "hasLabel")).getObject().asLiteral();
+                Statement s = location.getProperty(
+                        this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "hasLabel"));
+                // check statement
+                if (s != null) {
+                    locName = s.getObject().asLiteral().getString();
+                }
 
                 // set label of the goal
-                task.setGoal(location.getLocalName());
+                task.setGoal(locName);
             }
 
             // check start location in case of SOHO:Channel functions
@@ -460,12 +483,18 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
                 // get location
                 Resource location = stat.getObject().asResource();
+                String locName = location.getLocalName() != null ? location.getLocalName() : location.asNode().getBlankNodeLabel();
+
                 // retrieve label
-                Literal label = location.getProperty(
-                        this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "hasLabel")).getObject().asLiteral();
+                Statement s = location.getProperty(
+                        this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "hasLabel"));
+                // check statement
+                if (s != null) {
+                    locName = s.getObject().asLiteral().getString();
+                }
 
                 // set label of the start
-                task.setStart(location.getLocalName());
+                task.setStart(locName);
             }
 
             // check target object
@@ -480,7 +509,8 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
     /**
      *
      */
-    public void export() {
+    public void export()
+            throws InterruptedException {
 
         // create mongo client
         try (MongoClient client = MongoClients.create(this.prop2value.get(PROPERTY_KEY_MONGODB_HOST))) {
@@ -548,7 +578,15 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
 
                 // set task target workpiece type
                 Resource target = tasks.get(0).getTarget();
-                doc.append("target", target.getLocalName() == null ? target.asNode().getBlankNodeLabel() : target.getLocalName());
+                String targetName = target.getLocalName() == null ? target.asNode().getBlankNodeLabel() : target.getLocalName();
+                // get label
+                Statement s = target.getProperty(this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS  + "hasLabel"));
+                if (s != null) {
+                    // get label
+                    targetName = s.getObject().asLiteral().getString();
+                }
+
+                doc.append("target", targetName);
 
                 // check task type
                 if (taskType.equalsIgnoreCase("pickplace")) {
@@ -561,8 +599,6 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                     // set goal
                     doc.append("goal", tasks.get(0).getGoal());
                 }
-
-
 
                 // set agents
                 List<String> agents = new ArrayList<>();
@@ -714,7 +750,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
             });
 
         }
-        catch (IOException ex) {
+        catch (InterruptedException | IOException ex) {
             System.err.println(ex.getMessage());
         }
     }
@@ -821,347 +857,347 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
      * @throws ProductionKnowledgeAuthoringException
      * @throws ProductionKnowledgeException
      */
-    private String synchronizations(Map<Resource, String> value2component)
+    private String synchronizations(Resource goal, Map<Resource, String> value2component)
             throws InterruptedException, ProductionKnowledgeAuthoringException, ProductionKnowledgeException {
 
         // map components to synchronization descriptions
         Map<String, String> comp2sync = new HashMap<>();
         // get production goals
-        List<Resource> goals = this.knowledge.getProductionGoals();
-        for (Resource goal : goals) {
+        //List<Resource> goals = this.knowledge.getProductionGoals();
+        //for (Resource goal : goals) {
+
+        // check if exists
+        if (!value2component.containsKey(goal)) {
+            throw new ProductionKnowledgeAuthoringException("No component defined for predicate: " + goal.getLocalName() + "()");
+        }
+
+        // get goal value names
+        String goalName = this.hrc.getHRCTask(goal) == null || this.hrc.getHRCTask(goal).getName() == null ?
+                goal.getLocalName() == null ? goal.asNode().getBlankNodeLabel() : goal.getLocalName() :
+                this.hrc.getHRCTask(goal).getName();
+
+        // first connect goals to root nodes of the decomposition hierarchy
+        List<List<Resource>> hierarchy = this.knowledge.getProductionHierarchy(goal);
+        // get top-level
+        List<Resource> top = hierarchy.get(0);
+        // get goal component
+        String goalComp = value2component.get(goal);
+        // check if synchronization description has been opened
+        if (!comp2sync.containsKey(goalComp)) {
+            // open synchronization description
+            comp2sync.put(goalComp, "\tSYNCHRONIZE " + goalComp + " {\n\n");
+        }
+
+        // add goal synchronizations
+        for (Resource task : top)  {
 
             // check if exists
-            if (!value2component.containsKey(goal)) {
-                throw new ProductionKnowledgeAuthoringException("No component defined for predicate: " + goal.getLocalName() + "()");
+            if (!value2component.containsKey(task)) {
+                throw new ProductionKnowledgeAuthoringException("No component defined for predicate: " + task.getLocalName() + "()");
             }
 
-            // get goal value names
-            String goalName = this.hrc.getHRCTask(goal) == null || this.hrc.getHRCTask(goal).getName() == null ?
-                    goal.getLocalName() == null ? goal.asNode().getBlankNodeLabel() : goal.getLocalName() :
-                    this.hrc.getHRCTask(goal).getName();
+            // get task name
+            String taskName = this.hrc.getHRCTask(task) == null || this.hrc.getHRCTask(task).getName() == null ?
+                    task.getLocalName() == null ? task.asNode().getBlankNodeLabel() : task.getLocalName() :
+                    this.hrc.getHRCTask(task).getName();
 
-            // first connect goals to root nodes of the decomposition hierarchy
-            List<List<Resource>> hierarchy = this.knowledge.getProductionHierarchy(goal);
-            // get top-level
-            List<Resource> top = hierarchy.get(0);
-            // get goal component
-            String goalComp = value2component.get(goal);
-            // check if synchronization description has been opened
-            if (!comp2sync.containsKey(goalComp)) {
-                // open synchronization description
-                comp2sync.put(goalComp, "\tSYNCHRONIZE " + goalComp + " {\n\n");
-            }
+            // get synchronization body
+            String body = comp2sync.get(goalComp);
+            // add synchronization constraints
+            body += "\t\tVALUE " + goalName+ "() {\n\n" +
+                    "\t\t\td0 " + value2component.get(task) + "." + taskName + "();\n" +
+                    "\t\t\tCONTAINS [0, +INF] [0, +INF] d0;\n" +
+                    "\t\t}\n\n";
 
-            // add goal synchronizations
-            for (Resource task : top)  {
+
+            // update description
+            comp2sync.put(goalComp, body);
+        }
+
+        // get the decomposition graph
+        List<Map<Resource, List<Set<Resource>>>> graphs = this.knowledge.getDecompositionGraph(goal);
+        // check each possible decomposition - method
+        for (Map<Resource, List<Set<Resource>>> graph : graphs) {
+
+            // get reference predicates/values
+            for (Resource reference : graph.keySet()) {
 
                 // check if exists
-                if (!value2component.containsKey(task)) {
-                    throw new ProductionKnowledgeAuthoringException("No component defined for predicate: " + task.getLocalName() + "()");
+                if (!value2component.containsKey(reference)) {
+                    throw new ProductionKnowledgeAuthoringException("No component defined for predicate: " + reference.getLocalName() + "()");
                 }
 
-                // get task name
-                String taskName = this.hrc.getHRCTask(task) == null || this.hrc.getHRCTask(task).getName() == null ?
-                        task.getLocalName() == null ? task.asNode().getBlankNodeLabel() : task.getLocalName() :
-                        this.hrc.getHRCTask(task).getName();
+                // get reference component
+                String refComp = value2component.get(reference);
+                // get reference value name
+                String referenceName = this.hrc.getHRCTask(reference) == null || this.hrc.getHRCTask(reference).getName() == null ?
+                        reference.getLocalName() == null ? reference.asNode().getBlankNodeLabel() : reference.getLocalName() :
+                        this.hrc.getHRCTask(reference).getName();
 
-                // get synchronization body
-                String body = comp2sync.get(goalComp);
-                // add synchronization constraints
-                body += "\t\tVALUE " + goalName+ "() {\n\n" +
-                        "\t\t\td0 " + value2component.get(task) + "." + taskName + "();\n" +
-                        "\t\t\tCONTAINS [0, +INF] [0, +INF] d0;\n" +
-                        "\t\t}\n\n";
+                // check if decomposition is empty
+                if (!graph.get(reference).isEmpty()) {
 
+                    // check if HRC (simple) task
+                    if (this.knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "HRCTask")) {
 
-                // update description
-                comp2sync.put(goalComp, body);
-            }
+                        // check possible HRC task types
+                        if (this.knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "SimultaneousHRCTask")) {
+                            // TODO simultaneous constraint
+                        } else if (knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "SupportiveHRCTask")) {
+                            // TODO supportive constraint
+                        } else if (knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "SynchronousHRCTask")) {
 
-            // get the decomposition graph
-            List<Map<Resource, List<Set<Resource>>>> graphs = this.knowledge.getDecompositionGraph(goal);
-            // check each possible decomposition - method
-            for (Map<Resource, List<Set<Resource>>> graph : graphs) {
+                            // check possible decompositions
+                            for (Set<Resource> decomposition : graph.get(reference)) {
 
-                // get reference predicates/values
-                for (Resource reference : graph.keySet()) {
+                                // check if synchronization description has been opened
+                                if (!comp2sync.containsKey(refComp)) {
+                                    // open synchronization description
+                                    comp2sync.put(refComp, "\tSYNCHRONIZE " + refComp + " {\n\n");
+                                }
 
-                    // check if exists
-                    if (!value2component.containsKey(reference)) {
-                        throw new ProductionKnowledgeAuthoringException("No component defined for predicate: " + reference.getLocalName() + "()");
-                    }
-
-                    // get reference component
-                    String refComp = value2component.get(reference);
-                    // get reference value name
-                    String referenceName = this.hrc.getHRCTask(reference) == null || this.hrc.getHRCTask(reference).getName() == null ?
-                            reference.getLocalName() == null ? reference.asNode().getBlankNodeLabel() : reference.getLocalName() :
-                            this.hrc.getHRCTask(reference).getName();
-
-                    // check if decomposition is empty
-                    if (!graph.get(reference).isEmpty()) {
-
-                        // check if HRC (simple) task
-                        if (this.knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "HRCTask")) {
-
-                            // check possible HRC task types
-                            if (this.knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "SimultaneousHRCTask")) {
-                                // TODO simultaneous constraint
-                            } else if (knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "SupportiveHRCTask")) {
-                                // TODO supportive constraint
-                            } else if (knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "SynchronousHRCTask")) {
-
-                                // check possible decompositions
-                                for (Set<Resource> decomposition : graph.get(reference)) {
-
-                                    // check if synchronization description has been opened
-                                    if (!comp2sync.containsKey(refComp)) {
-                                        // open synchronization description
-                                        comp2sync.put(refComp, "\tSYNCHRONIZE " + refComp + " {\n\n");
-                                    }
-
-                                    // get component synchronization body
-                                    String synchBody = comp2sync.get(refComp);
-                                    // add value  synchronization
-                                    synchBody += "\t\tVALUE " + referenceName + "() {\n\n";
+                                // get component synchronization body
+                                String synchBody = comp2sync.get(refComp);
+                                // add value  synchronization
+                                synchBody += "\t\tVALUE " + referenceName + "() {\n\n";
 
 
-                                    // get target components (two expected a human and a robot)
-                                    Iterator<Resource> it = decomposition.iterator();
-                                    Resource first = null;
-                                    Resource second = null;
+                                // get target components (two expected a human and a robot)
+                                Iterator<Resource> it = decomposition.iterator();
+                                Resource first = null;
+                                Resource second = null;
 
-                                    // build synchronous task implementation
-                                    while (it.hasNext() && second == null) {
+                                // build synchronous task implementation
+                                while (it.hasNext() && second == null) {
 
-                                        // get next target predicate
-                                        Resource predicate = it.next();
-                                        // get predicate name
-                                        String predicateName = this.hrc.getHRCTask(predicate) == null || this.hrc.getHRCTask(predicate).getName() == null ?
-                                                predicate.getLocalName() == null ? predicate.asNode().getBlankNodeLabel() : predicate.getLocalName() :
-                                                this.hrc.getHRCTask(predicate).getName();
+                                    // get next target predicate
+                                    Resource predicate = it.next();
+                                    // get predicate name
+                                    String predicateName = this.hrc.getHRCTask(predicate) == null || this.hrc.getHRCTask(predicate).getName() == null ?
+                                            predicate.getLocalName() == null ? predicate.asNode().getBlankNodeLabel() : predicate.getLocalName() :
+                                            this.hrc.getHRCTask(predicate).getName();
 
-                                        // get component
-                                        String predicateComponent = value2component.get(predicate);
-                                        // update first and second
-                                        if (first == null) {
+                                    // get component
+                                    String predicateComponent = value2component.get(predicate);
+                                    // update first and second
+                                    if (first == null) {
 
-                                            // add value  synchronization
-                                            synchBody += "\t\t\td0 " + predicateComponent + "._" + predicateName + "();\n" +
-                                                    "\t\t\tCONTAINS [0, +INF] [0, +INF] d0;\n";
-                                            // set variable
-                                            first = predicate;
-
-                                        } else {
-
-                                            // add value  synchronization
-                                            synchBody += "\t\t\td1 " + predicateComponent + "._" + predicateName + "();\n" +
-                                                    "\t\t\tCONTAINS [0, +INF] [0, +INF] d1;\n";
-                                            // set variable
-                                            second = predicate;
-                                        }
-
-                                    }
-
-                                    // check that both predicates have been set
-                                    if (first != null && second != null) {
-
-                                        // add precedence constraint
-                                        synchBody += "\t\t\td0 BEFORE [0, +INF] d1;\n";
-
-                                        // close synch
-                                        synchBody += "\t\t}\n\n";
-                                        // update description
-                                        comp2sync.put(refComp, synchBody);
-                                        // increment the number of synchronizations
-                                        this.numberOfSynchronizations++;
-                                        // increment the number of constraints
-                                        this.numberOfConstraints++;
+                                        // add value  synchronization
+                                        synchBody += "\t\t\td0 " + predicateComponent + "._" + predicateName + "();\n" +
+                                                "\t\t\tCONTAINS [0, +INF] [0, +INF] d0;\n";
+                                        // set variable
+                                        first = predicate;
 
                                     } else {
 
-                                        throw new ProductionKnowledgeAuthoringException("HRC pattern not satisfied for the following task declared as synchronous (SOHO:SynchronousHRCTask):\n" +
-                                                "\t- resource: " + referenceName + "\n" +
-                                                "\t- reference: " + refComp + "." + referenceName + "\n");
+                                        // add value  synchronization
+                                        synchBody += "\t\t\td1 " + predicateComponent + "._" + predicateName + "();\n" +
+                                                "\t\t\tCONTAINS [0, +INF] [0, +INF] d1;\n";
+                                        // set variable
+                                        second = predicate;
                                     }
+
                                 }
 
-                            } else if (knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "IndependentHRCTask")) {
+                                // check that both predicates have been set
+                                if (first != null && second != null) {
 
-                                // check possible decompositions
-                                for (Set<Resource> decomposition : graph.get(reference)) {
+                                    // add precedence constraint
+                                    synchBody += "\t\t\td0 BEFORE [0, +INF] d1;\n";
 
-                                    // check if synchronization description has been opened
-                                    if (!comp2sync.containsKey(refComp)) {
-                                        // open synchronization description
-                                        comp2sync.put(refComp, "\tSYNCHRONIZE " + refComp + " {\n\n");
-                                    }
-
-                                    // get component synchronization body
-                                    String synchBody = comp2sync.get(refComp);
-
-
-                                    // get target component
-                                    Resource function = decomposition.stream().findFirst().get();
-                                    // get associated HRC task
-                                    HRCTask hrcTask = this.hrc.getHRCTask(function);
-
-                                    // get predicate name
-                                    //String predicateName = this.hrc.getHRCTask(function) == null || this.hrc.getHRCTask(function).getName() == null ?
-                                    //        function.getLocalName() == null ? function.asNode().getBlankNodeLabel() : function.getLocalName() :
-                                    //        this.hrc.getHRCTask(function).getName();
-
-
-                                    // get component
-                                    String predicateComponent = value2component.get(function);
-                                    // add value  synchronization
-                                    synchBody += "\t\tVALUE " + referenceName + "() {\n\n";
-
-                                    // add function decision
-                                    synchBody += "\t\t\td0 " + predicateComponent + "._" + hrcTask.getName() + "();\n" +
-                                            "\t\t\tCONTAINS [0, +INF] [0, +INF] d0;\n";
-
-
-                                    // check if pick place tasks
-                                    //if (hrcTask.getGoal() != null && !hrcTask.getGoal().equals("")) {
-                                    if (hrcTask.getName().contains("pickplace")) {
-
-                                        // retrieve resource associated to goal
-                                        Resource gRes = function.getProperty(this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "requiresEndLocation"))
-                                                .getObject().asResource();
-
-                                        // check if binary resource
-                                        Resource type = this.knowledge.getResourceType(gRes);
-                                        if (type.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "BinaryProductionLocation")) {
-
-                                            // get label
-                                            String label = gRes.getProperty(this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "hasLabel")).getString();
-
-                                            synchBody += "\t\t\td1 " + label + "." + label.toLowerCase() + "_state.Busy();\n" +
-                                                    "\t\t\tDURING [0, +INF] [0, +INF] d1;\n";
-                                        }
-
-                                    }
-
+                                    // close synch
                                     synchBody += "\t\t}\n\n";
-
                                     // update description
                                     comp2sync.put(refComp, synchBody);
-
                                     // increment the number of synchronizations
                                     this.numberOfSynchronizations++;
                                     // increment the number of constraints
                                     this.numberOfConstraints++;
-                                }
 
-                            } else {
-                                // unknown
-                            }
+                                } else {
 
-                        } else { // any other type of complex task
-
-                            // set of associated norms
-                            Set<Resource> norms = new HashSet<>();
-                            // check production norms
-                            List<Statement> list = reference.listProperties(
-                                    this.knowledge.getProperty(ProductionKnowledgeDictionary.DUL_NS + "isDescribedBy")).toList();
-
-                            // extract norms
-                            for (Statement i : list) {
-
-                                // get object and check type
-                                Resource res = i.getObject().asResource();
-                                // check type
-                                if (this.knowledge.getResourceType(res).getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "PrecedenceConstraint")) {
-                                    // add to norms
-                                    norms.add(res);
+                                    throw new ProductionKnowledgeAuthoringException("HRC pattern not satisfied for the following task declared as synchronous (SOHO:SynchronousHRCTask):\n" +
+                                            "\t- resource: " + referenceName + "\n" +
+                                            "\t- reference: " + refComp + "." + referenceName + "\n");
                                 }
                             }
 
+                        } else if (knowledge.hasResourceType(reference, ProductionKnowledgeDictionary.SOHO_NS + "IndependentHRCTask")) {
 
-                            // check possible decomposition
+                            // check possible decompositions
                             for (Set<Resource> decomposition : graph.get(reference)) {
 
-                                // create local index mapping resources to decisions
-                                Map<Resource, String> local = new HashMap<>();
-                                // check if empty
-                                if (!decomposition.isEmpty()) {
-
-                                    // check if synchronization description has been opened
-                                    if (!comp2sync.containsKey(refComp)) {
-                                        // open synchronization description
-                                        comp2sync.put(refComp, "\tSYNCHRONIZE " + refComp + " {\n\n");
-                                    }
-
-                                    // get component synchronization body
-                                    String synchBody = comp2sync.get(refComp);
-                                    // get reference name
-                                    String refName = this.hrc.getHRCTask(reference) == null || this.hrc.getHRCTask(reference).getName() == null ?
-                                        reference.getLocalName() == null ? reference.asNode().getBlankNodeLabel() : reference.getLocalName() :
-                                        this.hrc.getHRCTask(reference).getName();
-
-                                    // add value synchronization
-                                    synchBody += "\t\t VALUE " + refName + "() {\n\n";
-                                    // increment the number of synchronization
-                                    this.numberOfSynchronizations++;
-
-                                    int dIndex = 0;
-                                    for (Resource dec : decomposition) {
-                                        // get decision name
-                                        String decName = this.hrc.getHRCTask(dec) == null || this.hrc.getHRCTask(dec).getName() == null ?
-                                                dec.getLocalName() == null ? dec.asNode().getBlankNodeLabel() : dec.getLocalName() :
-                                                this.hrc.getHRCTask(dec).getName();
-
-
-                                        // get decision component
-                                        String decComponent = value2component.get(dec);
-                                        // add decomposition description
-                                        synchBody += "\t\t\td" + dIndex + " " + decComponent + "." + decName + "();\n" +
-                                                "\t\t\tCONTAINS [0, +INF] [0, +INF] d" + dIndex + ";\n";
-                                        // increment the number of constraints
-                                        this.numberOfConstraints++;
-
-                                        // add index
-                                        local.put(dec, "d" + dIndex);
-                                        // increment
-                                        dIndex++;
-                                    }
-
-                                    // add constraints from norms
-                                    for (Resource norm : norms) {
-
-                                        // check type
-                                        Resource type = this.knowledge.getResourceType(norm);
-                                        if (type.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "PrecedenceConstraint")) {
-
-                                            // get first task/function
-                                            Resource first = norm.getProperty(
-                                                    this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS +  "isFirstTask")).getObject().asResource();
-                                            // get decision
-                                            String firstDec = local.get(first);
-
-                                            // get second task/function
-                                            Resource second = norm.getProperty(
-                                                    this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "isSecondTask")).getObject().asResource();
-                                            // get decision
-                                            String secondDec = local.get(second);
-
-                                            // add precedence constraint
-                                            synchBody += "\t\t\t" + firstDec + " BEFORE [0, +INF] " + secondDec + ";\n";
-                                        }
-                                    }
-
-                                    // close synchronization
-                                    synchBody += "\t\t}\n\n";
-                                    // update description
-                                    comp2sync.put(refComp, synchBody);
+                                // check if synchronization description has been opened
+                                if (!comp2sync.containsKey(refComp)) {
+                                    // open synchronization description
+                                    comp2sync.put(refComp, "\tSYNCHRONIZE " + refComp + " {\n\n");
                                 }
+
+                                // get component synchronization body
+                                String synchBody = comp2sync.get(refComp);
+
+
+                                // get target component
+                                Resource function = decomposition.stream().findFirst().get();
+                                // get associated HRC task
+                                HRCTask hrcTask = this.hrc.getHRCTask(function);
+
+                                // get predicate name
+                                //String predicateName = this.hrc.getHRCTask(function) == null || this.hrc.getHRCTask(function).getName() == null ?
+                                //        function.getLocalName() == null ? function.asNode().getBlankNodeLabel() : function.getLocalName() :
+                                //        this.hrc.getHRCTask(function).getName();
+
+
+                                // get component
+                                String predicateComponent = value2component.get(function);
+                                // add value  synchronization
+                                synchBody += "\t\tVALUE " + referenceName + "() {\n\n";
+
+                                // add function decision
+                                synchBody += "\t\t\td0 " + predicateComponent + "._" + hrcTask.getName() + "();\n" +
+                                        "\t\t\tCONTAINS [0, +INF] [0, +INF] d0;\n";
+
+
+                                // check if pick place tasks
+                                //if (hrcTask.getGoal() != null && !hrcTask.getGoal().equals("")) {
+                                if (hrcTask.getName().contains("pickplace")) {
+
+                                    // retrieve resource associated to goal
+                                    Resource gRes = function.getProperty(this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "requiresEndLocation"))
+                                            .getObject().asResource();
+
+                                    // check if binary resource
+                                    Resource type = this.knowledge.getResourceType(gRes);
+                                    if (type.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "BinaryProductionLocation")) {
+
+                                        // get label
+                                        String label = gRes.getProperty(this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "hasLabel")).getString();
+
+                                        synchBody += "\t\t\td1 " + label + "." + label.toLowerCase() + "_state.Busy();\n" +
+                                                "\t\t\tDURING [0, +INF] [0, +INF] d1;\n";
+                                    }
+
+                                }
+
+                                synchBody += "\t\t}\n\n";
+
+                                // update description
+                                comp2sync.put(refComp, synchBody);
+
+                                // increment the number of synchronizations
+                                this.numberOfSynchronizations++;
+                                // increment the number of constraints
+                                this.numberOfConstraints++;
+                            }
+
+                        } else {
+                            // unknown
+                        }
+
+                    } else { // any other type of complex task
+
+                        // set of associated norms
+                        Set<Resource> norms = new HashSet<>();
+                        // check production norms
+                        List<Statement> list = reference.listProperties(
+                                this.knowledge.getProperty(ProductionKnowledgeDictionary.DUL_NS + "isDescribedBy")).toList();
+
+                        // extract norms
+                        for (Statement i : list) {
+
+                            // get object and check type
+                            Resource res = i.getObject().asResource();
+                            // check type
+                            if (this.knowledge.getResourceType(res).getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "PrecedenceConstraint")) {
+                                // add to norms
+                                norms.add(res);
+                            }
+                        }
+
+
+                        // check possible decomposition
+                        for (Set<Resource> decomposition : graph.get(reference)) {
+
+                            // create local index mapping resources to decisions
+                            Map<Resource, String> local = new HashMap<>();
+                            // check if empty
+                            if (!decomposition.isEmpty()) {
+
+                                // check if synchronization description has been opened
+                                if (!comp2sync.containsKey(refComp)) {
+                                    // open synchronization description
+                                    comp2sync.put(refComp, "\tSYNCHRONIZE " + refComp + " {\n\n");
+                                }
+
+                                // get component synchronization body
+                                String synchBody = comp2sync.get(refComp);
+                                // get reference name
+                                String refName = this.hrc.getHRCTask(reference) == null || this.hrc.getHRCTask(reference).getName() == null ?
+                                    reference.getLocalName() == null ? reference.asNode().getBlankNodeLabel() : reference.getLocalName() :
+                                    this.hrc.getHRCTask(reference).getName();
+
+                                // add value synchronization
+                                synchBody += "\t\t VALUE " + refName + "() {\n\n";
+                                // increment the number of synchronization
+                                this.numberOfSynchronizations++;
+
+                                int dIndex = 0;
+                                for (Resource dec : decomposition) {
+                                    // get decision name
+                                    String decName = this.hrc.getHRCTask(dec) == null || this.hrc.getHRCTask(dec).getName() == null ?
+                                            dec.getLocalName() == null ? dec.asNode().getBlankNodeLabel() : dec.getLocalName() :
+                                            this.hrc.getHRCTask(dec).getName();
+
+
+                                    // get decision component
+                                    String decComponent = value2component.get(dec);
+                                    // add decomposition description
+                                    synchBody += "\t\t\td" + dIndex + " " + decComponent + "." + decName + "();\n" +
+                                            "\t\t\tCONTAINS [0, +INF] [0, +INF] d" + dIndex + ";\n";
+                                    // increment the number of constraints
+                                    this.numberOfConstraints++;
+
+                                    // add index
+                                    local.put(dec, "d" + dIndex);
+                                    // increment
+                                    dIndex++;
+                                }
+
+                                // add constraints from norms
+                                for (Resource norm : norms) {
+
+                                    // check type
+                                    Resource type = this.knowledge.getResourceType(norm);
+                                    if (type.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "PrecedenceConstraint")) {
+
+                                        // get first task/function
+                                        Resource first = norm.getProperty(
+                                                this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS +  "isFirstTask")).getObject().asResource();
+                                        // get decision
+                                        String firstDec = local.get(first);
+
+                                        // get second task/function
+                                        Resource second = norm.getProperty(
+                                                this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "isSecondTask")).getObject().asResource();
+                                        // get decision
+                                        String secondDec = local.get(second);
+
+                                        // add precedence constraint
+                                        synchBody += "\t\t\t" + firstDec + " BEFORE [0, +INF] " + secondDec + ";\n";
+                                    }
+                                }
+
+                                // close synchronization
+                                synchBody += "\t\t}\n\n";
+                                // update description
+                                comp2sync.put(refComp, synchBody);
                             }
                         }
                     }
                 }
             }
         }
+       // }
 
 
         // aggregate synchronization description

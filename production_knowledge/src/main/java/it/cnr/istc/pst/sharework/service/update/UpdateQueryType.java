@@ -9,8 +9,8 @@ import java.util.Arrays;
  * the associated parameters, when needed
  *
  */
-public enum UpdateQueryType
-{
+public enum UpdateQueryType {
+
     /**
      * Update the knowledge by loading a new ontological model from a given file path
      */

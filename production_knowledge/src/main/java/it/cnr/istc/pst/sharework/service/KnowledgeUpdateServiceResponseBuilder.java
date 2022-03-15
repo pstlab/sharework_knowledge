@@ -21,8 +21,8 @@ import java.util.List;
 /**
  *
  */
-public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBuilder<sharework_knowledge_msgs.KnowledgeRDFUpdatePointRequest, sharework_knowledge_msgs.KnowledgeRDFUpdatePointResponse>
-{
+public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBuilder<sharework_knowledge_msgs.KnowledgeRDFUpdatePointRequest, sharework_knowledge_msgs.KnowledgeRDFUpdatePointResponse> {
+
     private Log log;
     private KnowledgeService service;
     private ConnectedNode cNode;
@@ -61,8 +61,8 @@ public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBui
     @Override
     public void build(KnowledgeRDFUpdatePointRequest knowledgeRDFUpdatePointRequest,
                       KnowledgeRDFUpdatePointResponse knowledgeRDFUpdatePointResponse)
-            throws ServiceException
-    {
+            throws ServiceException {
+
         // check request type
         String updateType = knowledgeRDFUpdatePointRequest.getUpdateType();
         // get update query type
@@ -82,8 +82,8 @@ public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBui
         }
 
         // check type
-        switch (type)
-        {
+        switch (type) {
+
             // add assertion update
             case ADD_ASSERTION: {
 
@@ -330,6 +330,7 @@ public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBui
                         log.info("[ProductionKnowledge] Loading ontological model \"" + ontoFile + "\"");
                         // load ontological file
                         this.service.knowledge.load(ontoFile);
+                        log.info("[ProductionKnowledge] Ontological model successfully loaded...");
                     }
 
                     log.info("[ProductionKnowledge] Ontological model successfully updated!");
@@ -360,6 +361,7 @@ public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBui
 
                     try {
                         if (restore) {
+
                             // restore ontological model
                             this.service.knowledge.restore();
                         }

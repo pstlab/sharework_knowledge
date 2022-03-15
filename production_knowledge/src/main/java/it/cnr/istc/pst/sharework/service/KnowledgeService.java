@@ -52,8 +52,8 @@ public class KnowledgeService extends AbstractNodeMain {
         this.monitors = new ArrayList<>();
         // get system log
         this.log = connectedNode.getLog();
-        try
-        {
+        try {
+
             // create service instance for the knowledge api end-point
             connectedNode.newServiceServer(
                     "/sharework/knowledge/api",

@@ -18,28 +18,28 @@ import java.util.Set;
 public class CembreKnowledgeExtractionTest
 {
     // get a reference to the knowledge
-    private static final String ONTOLOGY_PATH = ProductionKnowledge.SHAREWORK_KNOWLEDGE +  "etc/ontologies/soho_cembre_v0.1.owl";
+    private static final String ONTOLOGY_PATH = ProductionKnowledge.SHAREWORK_KNOWLEDGE +  "etc/ontologies/soho_cembre_v0.4.owl";
     private static final String RULE_PATH = ProductionKnowledge.SHAREWORK_KNOWLEDGE +  "etc/ontologies/soho_rules_v1.0.rules";
 
     /**
      * Test the extraction of known production goals from knowledge
      */
     @Test
-    public void getProductionGoalsTest()
-    {
+    public void getProductionGoalsTest() {
+
         System.out.println("*********************************************");
         System.out.println("***** Test: getProductionGoalsTest() *****");
 
         // create production knowledge
         ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
         Assert.assertNotNull(knowledge);
-        try
-        {
+        try {
+
             // get the goals
             List<Resource> goals = knowledge.getProductionGoals();
             Assert.assertNotNull(goals);
             Assert.assertFalse(goals.isEmpty());
-            Assert.assertTrue(goals.size() == 1);       // expected one production goal
+            Assert.assertTrue(goals.size() >= 1);       // expected one production goal
 
             for (Resource goal : goals) {
                 Assert.assertNotNull(goal);
@@ -64,16 +64,16 @@ public class CembreKnowledgeExtractionTest
      * Test the extraction of known autonomous agents from knowledge
      */
     @Test
-    public void getAutonomousAgentsTest()
-    {
+    public void getAutonomousAgentsTest() {
+
         System.out.println("*********************************************");
         System.out.println("***** Test: getAutonomousAgentsTest() *****");
 
         // create production knowledge
         ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
         Assert.assertNotNull(knowledge);
-        try
-        {
+        try {
+
             // get the goals
             List<Resource> agents = knowledge.getAgents();
             Assert.assertNotNull(agents);
@@ -140,8 +140,9 @@ public class CembreKnowledgeExtractionTest
                 if (!stats.isEmpty()) {
                     System.out.println("\tFunction data properties:");
                     for (Statement stat : stats) {
+
                         Assert.assertNotNull(stat);
-                        String value = (String) stat.getObject().asNode().getLiteralValue();
+                        Object value = stat.getObject().asNode().getLiteralValue();
                         Assert.assertNotNull(value);
                         System.out.println("\t\t" + stat + " ---> [" + value + "]");
                     }
@@ -194,21 +195,20 @@ public class CembreKnowledgeExtractionTest
      * Test the extraction of the decomposition structure of production processes
      */
     @Test
-    public void getDecompositionGraphTest()
-    {
+    public void getDecompositionGraphTest() {
         System.out.println("*********************************************");
         System.out.println("***** Test: getDecompositionGraphTest() *****");
 
         // create production knowledge
         ProductionKnowledge knowledge = new ProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
         Assert.assertNotNull(knowledge);
-        try
-        {
+        try {
+
             // get production goals
             List<Resource> goals = knowledge.getProductionGoals();
             Assert.assertNotNull(goals);
             // only one goal expected
-            Assert.assertTrue(goals.size() == 1);
+            Assert.assertTrue(goals.size() >= 1);
 
             // get the goal
             Resource goal = goals.get(0);
@@ -216,27 +216,31 @@ public class CembreKnowledgeExtractionTest
             List<Map<Resource, List<Set<Resource>>>> graphs = knowledge.getDecompositionGraph(goal);
             // each graph is associated to a specific SOHO:ProductionMethod
             Assert.assertNotNull(graphs);
-            // only one graph expected for a single production method
-            Assert.assertTrue(graphs.size() == 1);
-            // get the graph
-            Map<Resource, List<Set<Resource>>> graph = graphs.get(0);
-            Assert.assertNotNull(graph);
 
-            // print retrieved production decomposition
-            System.out.println("(Hierarchical) Production process for goal " + goal.getLocalName() + " (" + goal.getURI() + ")");
-            // print graph structure
-            for (Resource key : graph.keySet()) {
-                // print key
-                System.out.println("> Task " + key.getLocalName() + " (" + key.getURI() + ") has " +  graph.get(key).size() +" disjunctions:");
-                int counter = 0;
-                for (Set<Resource> decomposition : graph.get(key)) {
-                    System.out.println("\t[" + counter +"] Possible decomposition:");
-                    for (Resource subtask : decomposition) {
-                        System.out.println("\t\tTask " + subtask.getLocalName() + " (" + subtask.getURI() + ")");
+            // ignore empty graph
+            if (!graphs.isEmpty()) {
+                // only one graph expected for a single production method
+                Assert.assertTrue(graphs.size() == 1);
+                // get the graph
+                Map<Resource, List<Set<Resource>>> graph = graphs.get(0);
+                Assert.assertNotNull(graph);
+
+                // print retrieved production decomposition
+                System.out.println("(Hierarchical) Production process for goal " + goal.getLocalName() + " (" + goal.getURI() + ")");
+                // print graph structure
+                for (Resource key : graph.keySet()) {
+                    // print key
+                    System.out.println("> Task " + key.getLocalName() + " (" + key.getURI() + ") has " + graph.get(key).size() + " disjunctions:");
+                    int counter = 0;
+                    for (Set<Resource> decomposition : graph.get(key)) {
+                        System.out.println("\t[" + counter + "] Possible decomposition:");
+                        for (Resource subtask : decomposition) {
+                            System.out.println("\t\tTask " + subtask.getLocalName() + " (" + subtask.getURI() + ")");
+                        }
+
+                        // increment decomposition counter
+                        counter++;
                     }
-
-                    // increment decomposition counter
-                    counter++;
                 }
             }
         }
@@ -271,7 +275,7 @@ public class CembreKnowledgeExtractionTest
             List<Resource> goals = knowledge.getProductionGoals();
             Assert.assertNotNull(goals);
             // only one goal expected
-            Assert.assertTrue(goals.size() == 1);
+            Assert.assertTrue(goals.size() >= 1);
 
             // get the goal
             Resource goal = goals.get(0);
@@ -323,7 +327,7 @@ public class CembreKnowledgeExtractionTest
             List<Resource> goals = knowledge.getProductionGoals();
             Assert.assertNotNull(goals);
             // only one goal expected
-            Assert.assertTrue(goals.size() == 1);
+            Assert.assertTrue(goals.size() >= 1);
 
             // get the goal
             Resource goal = goals.get(0);

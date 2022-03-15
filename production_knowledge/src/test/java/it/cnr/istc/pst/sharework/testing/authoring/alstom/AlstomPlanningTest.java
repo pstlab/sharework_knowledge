@@ -24,7 +24,7 @@ public class AlstomPlanningTest
     {
         try
         {
-            TimelineBasedProductionKnowledgeAuthoring authoring = new TimelineBasedProductionKnowledgeAuthoring(PDL);
+            TimelineBasedProductionKnowledgeAuthoring authoring = new TimelineBasedProductionKnowledgeAuthoring(null);
             // load knowledge base
             authoring.setProductionKnowledge(ONTOLOGY_PATH, RULE_PATH);
             // get plan database
