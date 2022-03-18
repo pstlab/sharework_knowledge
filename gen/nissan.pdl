@@ -1,4 +1,0 @@
-PROBLEM AUTHORING_NISSAN_PROB (DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN)
-{
-    g0 <goal> Goal.goals.nissan-case() AT [0, +INF] [0, +INF] [1, +INF];
-}
