@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ros>
+
+    <goal-topic
+            name="/sharework/taskplanner/goal"
+            msg="task_planner_interface_msgs/TaskPlanningRequest"
+            delegate="com.github.sharework_taskplanner.taskplanner.platform.TaskPlanningRequestListener" />
+
+    <command component="Cobot" name="*" exclude="idle">
+
+        <dispatch-topic
+                name="/sharework/test/stiima/motion"
+                msg="task_planner_interface_msgs/MotionTaskExecutionRequestArray"
+                publisher="com.github.sharework_taskplanner.taskplanner.platform.stiima.MotionTaskRequestPublisher" />
+
+        <feedback-topic
+                name="/sharework/test/stiima/motion/feedback"
+                msg="task_planner_interface_msgs/MotionTaskExecutionFeedback"
+                delegate="com.github.sharework_taskplanner.taskplanner.platform.stiima.MotionTaskFeedbackListener" />
+
+    </command>
+
+    <command component="Worker" name="*" exclude="idle">
+
+        <dispatch-topic
+                name="/sharework/test/stiima/human"
+                msg="task_planner_interface_msgs/MotionTaskExecutionRequestArray"
+                publisher="com.github.sharework_taskplanner.taskplanner.platform.stiima.MotionTaskRequestPublisher" />
+
+        <feedback-topic
+                name="/sharework/test/stiima/human/feedback"
+                msg="task_planner_interface_msgs/MotionTaskExecutionFeedback"
+                delegate="com.github.sharework_taskplanner.taskplanner.platform.stiima.MotionTaskFeedbackListener" />
+
+    </command>
+
+</ros>
