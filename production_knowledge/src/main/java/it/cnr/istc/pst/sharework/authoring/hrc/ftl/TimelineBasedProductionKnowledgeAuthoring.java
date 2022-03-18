@@ -693,7 +693,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 // print model file path
                 writer.write("model=" + this.ddlPath + "\n");
                 // print other configuration data
-                writer.write("display_plan=1\n");
+                writer.write("display_plan=0\n");
                 // set default task planner configuration
                 writer.write("planner=com.github.sharework_taskplanner.taskplanner.ShareworkPlanner\n");
                 writer.write("executive=com.github.sharework_taskplanner.taskplanner.ShareworkExecutive\n");
