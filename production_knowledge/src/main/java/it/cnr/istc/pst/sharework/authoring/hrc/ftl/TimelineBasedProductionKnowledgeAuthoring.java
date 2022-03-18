@@ -358,7 +358,6 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                         ddl += this.sv("ProductionHierarchyG" + gndex + "L" + index + "Type", values, false);
                         // create also component declaration
                         comps += "\tCOMPONENT ProductionG" + gndex + "L" + index + " {FLEXIBLE tasks_g" + gndex + "_l" + index + "(functional)} : ProductionHierarchyG" + gndex + "L" + index + "Type;\n";
-                        System.out.println("\tCOMPONENT ProductionG" + gndex + "L" + index + " {FLEXIBLE tasks_g" + gndex + "_l" + index + "(functional)} : ProductionHierarchyG" + gndex + "L" + index + "Type;\n");
                     }
 
                     // add component declaration
@@ -694,7 +693,7 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                 // print model file path
                 writer.write("model=" + this.ddlPath + "\n");
                 // print other configuration data
-                writer.write("display_plan=0\n");
+                writer.write("display_plan=1\n");
                 // set default task planner configuration
                 writer.write("planner=com.github.sharework_taskplanner.taskplanner.ShareworkPlanner\n");
                 writer.write("executive=com.github.sharework_taskplanner.taskplanner.ShareworkExecutive\n");
