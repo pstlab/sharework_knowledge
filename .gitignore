@@ -4,5 +4,5 @@
 .idea/*
 *.dot
 gradle.properties
-gen/agent.properties
-gen/prod_knowledge.ddl
+/gen/
+*/gen/*
