@@ -6,6 +6,8 @@ import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledgeUpdateSubscriber;
 import org.apache.commons.logging.Log;
 import org.ros.node.ConnectedNode;
 
+import java.util.logging.Logger;
+
 /**
  *
  */
@@ -26,7 +28,7 @@ public abstract class ProductionKnowledgeAuthoring implements ProductionKnowledg
     public ProductionKnowledgeAuthoring(ConnectedNode node) {
         this();
         this.node = node;
-        this.log = this.node.getLog();
+        this.log = this.node != null ? this.node.getLog() : null;
     }
 
     /**

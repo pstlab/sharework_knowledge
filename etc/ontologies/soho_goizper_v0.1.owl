@@ -2775,14 +2775,14 @@
 
     <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#rotary-table">
         <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#CompoundWorkPiece"/>
-        <DUL1:hasPart rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hole-1"/>
-        <DUL1:hasPart rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hole-2"/>
-        <DUL1:hasPart rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hole-3"/>
-        <DUL1:hasPart rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hole-4"/>
-        <DUL1:hasPart rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hole-5"/>
-        <DUL1:hasPart rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hole-6"/>
-        <DUL1:hasPart rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hole-7"/>
-        <DUL1:hasPart rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hole-8"/>
+        <DUL:hasPart rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hole-1"/>
+        <DUL:hasPart rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hole-2"/>
+        <DUL:hasPart rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hole-3"/>
+        <DUL:hasPart rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hole-4"/>
+        <DUL:hasPart rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hole-5"/>
+        <DUL:hasPart rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hole-6"/>
+        <DUL:hasPart rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hole-7"/>
+        <DUL:hasPart rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#hole-8"/>
     </owl:NamedIndividual>
     
 

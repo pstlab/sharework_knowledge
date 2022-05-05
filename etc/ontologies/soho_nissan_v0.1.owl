@@ -2412,7 +2412,7 @@
 
     <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#bed-area">
         <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionLocation"/>
-        <DUL1:hasLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#bed-env-area"/>
+        <DUL:hasLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#bed-env-area"/>
     </owl:NamedIndividual>
     
 
@@ -2481,7 +2481,7 @@
 
     <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#doorbuffer-area">
         <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionLocation"/>
-        <DUL1:hasLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doorbuffer-env-area"/>
+        <DUL:hasLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#doorbuffer-env-area"/>
     </owl:NamedIndividual>
     
 
@@ -2498,8 +2498,8 @@
 
     <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor">
         <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#SimpleWorkpiece"/>
-        <DUL1:hasLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor-current-location"/>
-        <DUL1:hasLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor-current-location"/>
+        <DUL:hasLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor-current-location"/>
+        <DUL:hasLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor-current-location"/>
     </owl:NamedIndividual>
     
 
@@ -2508,7 +2508,7 @@
 
     <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor-area">
         <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionLocation"/>
-        <DUL1:hasLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor-env-area"/>
+        <DUL:hasLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#frontdoor-env-area"/>
     </owl:NamedIndividual>
     
 
@@ -2834,7 +2834,7 @@
 
     <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor-area">
         <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionLocation"/>
-        <DUL1:hasLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor-env-area"/>
+        <DUL:hasLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#reardoor-env-area"/>
     </owl:NamedIndividual>
     
 
