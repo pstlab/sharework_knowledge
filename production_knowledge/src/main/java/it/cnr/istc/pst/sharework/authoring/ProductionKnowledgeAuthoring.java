@@ -6,7 +6,7 @@ import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledgeUpdateSubscriber;
 import org.apache.commons.logging.Log;
 import org.ros.node.ConnectedNode;
 
-import java.util.logging.Logger;
+
 
 /**
  *
