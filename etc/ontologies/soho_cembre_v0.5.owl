@@ -3685,6 +3685,1651 @@
         <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1610"/>
     </owl:NamedIndividual>
     
+    
+    
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+
+<!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p1_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p1_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1p3_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p2_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p2_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2p3_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1653_human"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1653_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1653_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1653_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_assemble_p1_a1653_human"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1653_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1653_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_assemble_p1_a1653_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_assemble_p2_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1653_human"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1653_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1653_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1653_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1pbox_a1653_human"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1653_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1653_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1pbox_a1653_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1653_human"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1653_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1653_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1653_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2pbox_a1653_human"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1653_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1653_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2pbox_a1653_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p0p1_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1p2_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1p2_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1p2_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p2_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p2_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p0p2_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_p1_a1653"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_p1p2_a1653"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_p2_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_p1_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_p1_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ConjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p1_a1653"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1653"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1653"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1_a1653"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1653"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1653"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm33"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm34"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm35"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm36"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm37"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_p1p2_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_p1p2_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ConjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p2_a1653"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1653"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1653"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1_a1653"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1p2_a1653"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1653"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1653"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm43"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm44"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm45"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm46"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm47"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm48"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_p2_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_p2_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ConjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p2_a1653"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1653"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1653"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p2_a1653"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1653"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p2_a1653"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm42"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm38"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm39"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm40"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm41"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1653_human"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1653_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1653_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1653_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1rbox_a1653_human"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1653_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1653_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1rbox_a1653_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1653_human"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1653_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1653_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1653_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2rbox_a1653_human"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1653_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1653_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2rbox_a1653_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1653_human"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1653_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1653_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1653_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_dissamble_p1_a1653_human"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1653_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1653_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_dissamble_p1_a1653_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p2_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p2_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_dissamble_p2_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_assemble_p1_a1653_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_assemble_p1_a1653_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Assemble"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1653"/>
+        <soho:requiresLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mount the pallet a1653 in position p1</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">0</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mount-p1-a1653-human</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_assemble_p1_a1653_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_assemble_p1_a1653_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Assemble"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1653"/>
+        <soho:requiresLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">23.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">3.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mount the pallet a1653 in position p1</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">1</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mount-p1-a1653-robot</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_assemble_p2_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_assemble_p2_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Assemble"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1653"/>
+        <soho:requiresLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position2"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mount the pallet a1653 in position p2</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">2</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mount-p2-a1653</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_dissamble_p1_a1653_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_dissamble_p1_a1653_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Dissamble"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1653"/>
+        <soho:requiresLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Unmount the pallet a1653 in position p1</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">3</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">unmount-p2-a1653-human</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_dissamble_p1_a1653_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_dissamble_p1_a1653_robot">
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1653"/>
+        <soho:requiresLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">23.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">3.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Unmount the pallet a1653 in position p1</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">4</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">unmount-p1-a1653-robot</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_dissamble_p2_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_dissamble_p2_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Dissamble"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1653"/>
+        <soho:requiresLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position2"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Unmount the pallet a1653 in position p2</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">5</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">unmount-p2-a1653</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p0p1_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p0p1_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1653"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position0"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1653 from position p0 to position p1</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">6</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p0-p1-a1653</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p0p2_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p0p2_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1653"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position2"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position0"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1653 from position p0 to position p2</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">7</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p0-p2-a1653</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1p2_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1p2_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1653"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position2"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1653 from position p1 to position p2</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">8</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p1-p2-a1653</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1p3_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1p3_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1653"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position3"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1653 from position p1 to position p3</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">9</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p1-p3-a1653</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1pbox_a1653_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1pbox_a1653_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1653"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#picking_box"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Take a new piece from the picking box and place it into the pallet a1653 in position p1</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">10</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-pbox-p1-a1653</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1pbox_a1653_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1pbox_a1653_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1653"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#picking_box"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">23.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">3.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Take a new piece from the picking box and place it into the pallet a1653 in position p1</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">11</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-pbox-p1-a1653-robot</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1rbox_a1653_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1rbox_a1653_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1653"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#placing_box"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Take the piece from pallet a1653 in position p1 and place it into the placing box</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">12</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p1-rbox-a1653-human</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1rbox_a1653_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1rbox_a1653_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1653"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#placing_box"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">23.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">3.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Take the piece from the pallet a1653 in position p1 and place it into the placing box</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">13</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p1-rbox-a1653-robot</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2p3_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2p3_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1653"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position3"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position2"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1653 from position p2 to position p3</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">14</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p2-p3-a1653</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2pbox_a1653_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2pbox_a1653_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1653"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position2"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#picking_box"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Take a new piece from picking box and place it into the pallet a1653 in position p2</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">15</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-pbox-p2-a1653-human</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2pbox_a1653_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2pbox_a1653_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1653"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position2"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#picking_box"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">23.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">3.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Take a new piece from the picking box and place it into the pallet a1653 in position p2</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">16</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-pbox-p2-a1653-robot</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2rbox_a1653_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2rbox_a1653_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1653"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#placing_box"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position2"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Take the piece from the pallet a1653 in position p2 and place it into the placing box</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">17</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p2-rbox-a1653-human</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2rbox_a1653_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2rbox_a1653_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1653"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#placing_box"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position2"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">23.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">3.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Take the piece from the pallet a1653 in position p2 and place it into the placing box</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">18</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p2-rbox-a1653-robot</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#goal_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#goal_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionGoal"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#method_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#method_a1653 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#method_a1653">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionMethod"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm33 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm33">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1_a1653"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1653"/>
+    </owl:NamedIndividual>
+    
+    
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm34 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm34">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1653"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm35 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm35">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1653"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm36 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm36">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1653"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm37 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm37">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1653"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p1_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm38 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm38">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p2_a1653"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p2_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm39 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm39">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p2_a1653"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm40 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm40">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1653"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm41 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm41">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1653"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm42 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm42">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1653"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p2_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm43 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm43">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1_a1653"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm44 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm44">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1653"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm45 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm45">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1653"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1p2_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm46 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm46">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1p2_a1653"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm47 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm47">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1653"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1653"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm48 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm48">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1653"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p2_a1653"/>
+    </owl:NamedIndividual>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p1_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p1_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1p3_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p2_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p2_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2p3_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1652_human"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1652_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1652_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1652_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_assemble_p1_a1652_human"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1652_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1652_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_assemble_p1_a1652_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_assemble_p2_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1652_human"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1652_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1652_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1652_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1pbox_a1652_human"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1652_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1652_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1pbox_a1652_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1652_human"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1652_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1652_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1652_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2pbox_a1652_human"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1652_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1652_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2pbox_a1652_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p0p1_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1p2_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1p2_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1p2_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p2_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p2_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p0p2_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_p1_a1652"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_p1p2_a1652"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_p2_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_p1_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_p1_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ConjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p1_a1652"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1652"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1652"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1_a1652"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1652"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1652"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm17"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm18"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm19"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm20"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm21"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_p1p2_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_p1p2_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ConjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p2_a1652"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1652"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1652"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1_a1652"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1p2_a1652"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1652"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1652"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm27"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm28"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm29"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm30"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm31"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm32"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_p2_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_p2_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ConjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p2_a1652"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1652"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1652"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p2_a1652"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1652"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p2_a1652"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm26"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm22"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm23"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm24"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm25"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1652_human"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1652_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1652_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1652_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1rbox_a1652_human"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1652_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1652_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1rbox_a1652_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1652_human"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1652_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1652_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1652_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2rbox_a1652_human"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1652_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1652_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2rbox_a1652_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#DisjunctiveComplexTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1652_human"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1652_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1652_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1652_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_dissamble_p1_a1652_human"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1652_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1652_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_dissamble_p1_a1652_robot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p2_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p2_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#IndependentHRCTask"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_dissamble_p2_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_assemble_p1_a1652_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_assemble_p1_a1652_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Assemble"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1652"/>
+        <soho:requiresLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mount the pallet a1652 in position p1</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">0</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mount-p1-a1652-human</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_assemble_p1_a1652_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_assemble_p1_a1652_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Assemble"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1652"/>
+        <soho:requiresLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">23.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">3.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mount the pallet a1652 in position p1</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">1</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mount-p1-a1652-robot</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_assemble_p2_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_assemble_p2_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Assemble"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1652"/>
+        <soho:requiresLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position2"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mount the pallet a1652 in position p2</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">2</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mount-p2-a1652</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_dissamble_p1_a1652_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_dissamble_p1_a1652_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Dissamble"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1652"/>
+        <soho:requiresLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Unmount the pallet a1652 in position p1</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">3</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">unmount-p2-a1652-human</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_dissamble_p1_a1652_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_dissamble_p1_a1652_robot">
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1652"/>
+        <soho:requiresLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">23.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">3.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Unmount the pallet a1652 in position p1</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">4</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">unmount-p1-a1652-robot</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_dissamble_p2_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_dissamble_p2_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#Dissamble"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1652"/>
+        <soho:requiresLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position2"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Unmount the pallet a1652 in position p2</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">5</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">unmount-p2-a1652</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p0p1_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p0p1_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1652"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position0"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1653 from position p0 to position p1</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">6</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p0-p1-a1652</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p0p2_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p0p2_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1652"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position2"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position0"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1652 from position p0 to position p2</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">7</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p0-p2-a1652</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1p2_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1p2_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1652"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position2"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1652 from position p1 to position p2</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">8</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p1-p2-a1652</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1p3_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1p3_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1652"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position3"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1652 from position p1 to position p3</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">9</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p1-p3-a1652</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1pbox_a1652_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1pbox_a1652_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1652"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#picking_box"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Take a new piece from the picking box and place it into the pallet a1652 in position p1</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">10</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-pbox-p1-a1652</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1pbox_a1652_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1pbox_a1652_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1652"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#picking_box"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">23.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">3.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Take a new piece from the picking box and place it into the pallet a1652 in position p1</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">11</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-pbox-p1-a1652-robot</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1rbox_a1652_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1rbox_a1652_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1652"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#placing_box"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Take the piece from pallet a1652 in position p1 and place it into the placing box</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">12</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p1-rbox-a1652-human</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1rbox_a1652_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p1rbox_a1652_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1652"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#placing_box"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position1"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">23.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">3.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Take the piece from the pallet a1652 in position p1 and place it into the placing box</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">13</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p1-rbox-a1652-robot</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2p3_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2p3_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1652"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position3"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position2"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1652 from position p2 to position p3</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">14</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p2-p3-a1652</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2pbox_a1652_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2pbox_a1652_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1652"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position2"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#picking_box"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Take a new piece from picking box and place it into the pallet a1652 in position p2</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">15</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-pbox-p2-a1652-human</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2pbox_a1652_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2pbox_a1652_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1652"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position2"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#picking_box"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">23.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">3.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Take a new piece from the picking box and place it into the pallet a1652 in position p2</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">16</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-pbox-p2-a1652-robot</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2rbox_a1652_human -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2rbox_a1652_human">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#worker"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1652"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#placing_box"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position2"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Take the piece from the pallet a1652 in position p2 and place it into the placing box</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">17</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p2-rbox-a1652-human</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2rbox_a1652_robot -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#f_pickplace_p2rbox_a1652_robot">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PickPlace"/>
+        <soho:canBePerformedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ur10"/>
+        <soho:hasEffectOn rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_location"/>
+        <soho:hasTarget rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#piece_a1652"/>
+        <soho:requiresEndLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#placing_box"/>
+        <soho:requiresStartLocation rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#position2"/>
+        <soho:hasDuration rdf:datatype="http://www.w3.org/2001/XMLSchema#float">23.0</soho:hasDuration>
+        <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">3.0</soho:hasDurationUncertainty>
+        <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Take the piece from the pallet a1652 in position p2 and place it into the placing box</soho:hasProcedureDescription>
+        <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">18</soho:hasProcedureId>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p2-rbox-a1652-robot</soho:hasProcedureName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#goal_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#goal_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionGoal"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#method_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#method_a1652 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#method_a1652">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionMethod"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm17 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm17">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1_a1652"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1652"/>
+    </owl:NamedIndividual>
+    
+    
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm18 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm18">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1652"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm19 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm19">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1652"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm20 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm20">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1652"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm21 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm21">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1652"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p1_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm22 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm22">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p2_a1652"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p2_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm23 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm23">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p2_a1652"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm24 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm24">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1652"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm25 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm25">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1652"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm26 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm26">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1652"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p2_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm27 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm27">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1_a1652"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm28 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm28">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1652"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm29 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm29">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1652"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1p2_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm30 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm30">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1p2_a1652"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm31 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm31">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1652"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm32 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm32">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1652"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p2_a1652"/>
+    </owl:NamedIndividual>
+    
+
+
+    
+
+
+
+
+
+
+
+
+
+
 
 
     <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#picking_box -->
