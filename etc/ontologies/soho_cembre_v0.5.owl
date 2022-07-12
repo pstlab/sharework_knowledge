@@ -3038,6 +3038,11 @@
         <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1_a1610"/>
         <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1610"/>
         <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1610"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm1"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm2"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm3"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm4"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm5"/>
     </owl:NamedIndividual>
     
 
@@ -3047,11 +3052,18 @@
     <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_p1p2_a1610">
         <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ConjunctiveComplexTask"/>
         <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p2_a1610"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1610"/>
+        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1610"/>
         <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1_a1610"/>
         <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1p2_a1610"/>
         <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1610"/>
         <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1610"/>
-        <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p2_a1610"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm11"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm12"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm13"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm14"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm15"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm16"/>
     </owl:NamedIndividual>
     
 
@@ -3066,6 +3078,11 @@
         <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p2_a1610"/>
         <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1610"/>
         <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p2_a1610"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm10"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm6"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm7"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm8"/>
+        <DUL:isDescribedBy rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm9"/>
     </owl:NamedIndividual>
     
 
@@ -3506,6 +3523,166 @@
     <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#method_a1610">
         <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#ProductionMethod"/>
         <DUL:hasConstituent rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_process_a1610"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm1 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm1">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1_a1610"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1610"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm10 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm10">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1610"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p2_a1610"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm11 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm11">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1_a1610"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1610"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm12 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm12">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1610"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1610"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm13 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm13">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1610"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1p2_a1610"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm14 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm14">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p1p2_a1610"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1610"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm15 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm15">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1610"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1610"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm16 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm16">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1610"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p2_a1610"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm2 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm2">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p1_a1610"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1610"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm3 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm3">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p1_a1610"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1610"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm4 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm4">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p1_a1610"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1610"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm5 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm5">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p1_a1610"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_finish_p1_a1610"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm6 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm6">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_place_p2_a1610"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p2_a1610"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm7 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm7">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_unmount_p2_a1610"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1610"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm8 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm8">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_release_p2_a1610"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1610"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://pst.istc.cnr.it/ontologies/2019/01/soho#norm9 -->
+
+    <owl:NamedIndividual rdf:about="http://pst.istc.cnr.it/ontologies/2019/01/soho#norm9">
+        <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#PrecedenceConstraint"/>
+        <soho:isFirstTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_pick_p2_a1610"/>
+        <soho:isSecondTask rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#do_mount_p2_a1610"/>
     </owl:NamedIndividual>
     
 
