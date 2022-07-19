@@ -1138,6 +1138,22 @@ public class TimelineBasedProductionKnowledgeAuthoring extends ProductionKnowled
                                                     "\t\t\tDURING [0, +INF] [0, +INF] d1;\n";
                                         }
 
+                                    } else {
+
+                                        // retrieve resource associated to goal
+                                        Resource gRes = function.getProperty(this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "requiresLocation"))
+                                                .getObject().asResource();
+
+                                        // check if binary resource
+                                        Resource type = this.knowledge.getResourceType(gRes);
+                                        if (type.getURI().equals(ProductionKnowledgeDictionary.SOHO_NS + "BinaryProductionLocation")) {
+
+                                            // get label
+                                            String label = gRes.getProperty(this.knowledge.getProperty(ProductionKnowledgeDictionary.SOHO_NS + "hasLabel")).getString();
+
+                                            synchBody += "\t\t\td1 " + label + "." + label.toLowerCase() + "_state.Busy();\n" +
+                                                    "\t\t\tDURING [0, +INF] [0, +INF] d1;\n";
+                                        }
                                     }
 
                                     synchBody += "\t\t}\n\n";
