@@ -3,6 +3,7 @@ package it.cnr.istc.pst.sharework.testing.authoring.mosaic;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledge;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledgeDictionary;
 import it.cnr.istc.pst.sharework.authoring.hrc.ftl.TimelineBasedProductionKnowledgeAuthoring;
+import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,7 +18,7 @@ import java.util.Set;
 public class MosaicAuthoringTest
 {
     // get a reference to the knowledge
-    private static final String ONTOLOGY_PATH = ProductionKnowledge.SHAREWORK_KNOWLEDGE +  "etc/ontologies/soho_mosaic_v0.5.owl";
+    private static final String ONTOLOGY_PATH = ProductionKnowledge.SHAREWORK_KNOWLEDGE +  "etc/ontologies/soho_cembre_v0.6.owl";
     private static final String RULE_PATH = ProductionKnowledge.SHAREWORK_KNOWLEDGE +  "etc/ontologies/soho_rules_v1.0.rules";
 
     /**
@@ -119,6 +120,13 @@ public class MosaicAuthoringTest
 
             // get functions
             List<Resource> hFuncs = knowledge.getFunctionsByAgent(workers.get(0));
+            for (Resource hf : hFuncs) {
+                // check retrieved resource type
+                Resource type = knowledge.getResourceType(hf);
+                System.out.println(">> " + hf.getURI() + " type:" + type.getURI());
+            }
+
+
             // prepare agent SV description
             String hSV = prepareStandardStateVariable("WorkerVariableType", hFuncs);
             // print worker state variable

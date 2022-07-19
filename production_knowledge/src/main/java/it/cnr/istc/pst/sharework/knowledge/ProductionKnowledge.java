@@ -1776,8 +1776,22 @@ public class ProductionKnowledge {
     public Resource getResourceType(Resource resource)
             throws InterruptedException, ProductionKnowledgeException {
 
+        // statement "type"
+        Statement statement = null;
+        // get property
+        Property prop = this.getProperty(ProductionKnowledgeDictionary.RDF_NS + "type");
+
         // check RDF:type statement
-        Statement statement = resource.getProperty(this.getProperty(ProductionKnowledgeDictionary.RDF_NS + "type"));
+        Iterator<Statement> sit = resource.listProperties(prop);
+        while (sit.hasNext()) {
+            Statement s = sit.next();
+            if (!s.getObject().asResource().getLocalName().equalsIgnoreCase("namedindividual")) {
+                statement = s;
+                break;
+            }
+        }
+
+
         // check if statement exists
         if (statement == null) {
             // throw exception

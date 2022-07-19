@@ -80,49 +80,49 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 	}
 
-	COMP_TYPE SingletonStateVariable WorkerVariableType(_unscrew-p1-a1653-human(), _pickplace-p0-p1-a1610(), _screw-p2-a1610-human(), _pickplace-p0-p2-a1652(), _screw-p1-a1652-human(), _pickplace-p2-p3-a1653(), _screw-p1-a1610-human(), _pickplace-p0-p1-a1652(), _mount-p2-a1652(), _unscrew-p2-a1610-human(), _unmount-p2-a1652(), _pickplace-p0-p2-a1653(), _mount-p1-a1652-human(), _unscrew-p2-a1652-human(), _screw-p2-a1653-human(), _mount-p2-a1653(), _pickplace-p1-p3-a1610(), _unmount-p2-a1653(), _unscrew-p1-a1610-human(), _pickplace-p2-p3-a1652(), _mount-p1-a1610-human(), _pickplace-p1-p2-a1653(), _unmount-p2-a1653-human(), _pickplace-p1-p2-a1610(), _unmount-p2-a1652-human(), _unmount-p2-a1610-human(), _unscrew-p2-a1653-human(), _unscrew-p1-a1652-human(), _screw-p1-a1653-human(), _pickplace-p1-p3-a1652(), _pickplace-p1-p2-a1652(), _pickplace-p0-p2-a1610(), _mount-p2-a1610(), _unmount-p2-a1610(), _pickplace-p1-p3-a1653(), _pickplace-p0-p1-a1653(), _mount-p1-a1653-human(), _screw-p2-a1652-human(), _pickplace-p2-p3-a1610(),  Idle()) {
+	COMP_TYPE SingletonStateVariable WorkerVariableType(_unscrew-p1-a1653-human(), _pickplace-p0-p1-a1610-human(), _screw-p2-a1610-human(), _pickplace-p0-p2-a1652-human(), _screw-p1-a1652-human(), _pickplace-p2-p3-a1653-human(), _screw-p1-a1610-human(), _pickplace-p0-p1-a1652-human(), _mount-p2-a1652-human(), _unscrew-p2-a1610-human(), _unmount-p2-a1652-human(), _pickplace-p0-p2-a1653-human(), _mount-p1-a1652-human(), _unscrew-p2-a1652-human(), _screw-p2-a1653-human(), _mount-p2-a1653-human(), _pickplace-p1-p3-a1610-human(), _unmount-p2-a1653-human(), _unscrew-p1-a1610-human(), _pickplace-p2-p3-a1652-human(), _mount-p1-a1610-human(), _pickplace-p1-p2-a1653-human(), _unmount-p2-a1653-human(), _pickplace-p1-p2-a1610-human(), _unmount-p2-a1652-human(), _unmount-p2-a1610-human(), _unscrew-p2-a1653-human(), _unscrew-p1-a1652-human(), _screw-p1-a1653-human(), _pickplace-p1-p3-a1652-human(), _pickplace-p1-p2-a1652-human(), _pickplace-p0-p2-a1610-human(), _mount-p2-a1610-human(), _unmount-p2-a1610-human(), _pickplace-p1-p3-a1653-human(), _pickplace-p0-p1-a1653-human(), _mount-p1-a1653-human(), _screw-p2-a1652-human(), _pickplace-p2-p3-a1610-human(),  Idle()) {
 
 		VALUE Idle() [1, +INF]
 		MEETS {
 			_unscrew-p1-a1653-human();
-			_pickplace-p0-p1-a1610();
+			_pickplace-p0-p1-a1610-human();
 			_screw-p2-a1610-human();
-			_pickplace-p0-p2-a1652();
+			_pickplace-p0-p2-a1652-human();
 			_screw-p1-a1652-human();
-			_pickplace-p2-p3-a1653();
+			_pickplace-p2-p3-a1653-human();
 			_screw-p1-a1610-human();
-			_pickplace-p0-p1-a1652();
-			_mount-p2-a1652();
+			_pickplace-p0-p1-a1652-human();
+			_mount-p2-a1652-human();
 			_unscrew-p2-a1610-human();
-			_unmount-p2-a1652();
-			_pickplace-p0-p2-a1653();
+			_unmount-p2-a1652-human();
+			_pickplace-p0-p2-a1653-human();
 			_mount-p1-a1652-human();
 			_unscrew-p2-a1652-human();
 			_screw-p2-a1653-human();
-			_mount-p2-a1653();
-			_pickplace-p1-p3-a1610();
-			_unmount-p2-a1653();
-			_unscrew-p1-a1610-human();
-			_pickplace-p2-p3-a1652();
-			_mount-p1-a1610-human();
-			_pickplace-p1-p2-a1653();
+			_mount-p2-a1653-human();
+			_pickplace-p1-p3-a1610-human();
 			_unmount-p2-a1653-human();
-			_pickplace-p1-p2-a1610();
+			_unscrew-p1-a1610-human();
+			_pickplace-p2-p3-a1652-human();
+			_mount-p1-a1610-human();
+			_pickplace-p1-p2-a1653-human();
+			_unmount-p2-a1653-human();
+			_pickplace-p1-p2-a1610-human();
 			_unmount-p2-a1652-human();
 			_unmount-p2-a1610-human();
 			_unscrew-p2-a1653-human();
 			_unscrew-p1-a1652-human();
 			_screw-p1-a1653-human();
-			_pickplace-p1-p3-a1652();
-			_pickplace-p1-p2-a1652();
-			_pickplace-p0-p2-a1610();
-			_mount-p2-a1610();
-			_unmount-p2-a1610();
-			_pickplace-p1-p3-a1653();
-			_pickplace-p0-p1-a1653();
+			_pickplace-p1-p3-a1652-human();
+			_pickplace-p1-p2-a1652-human();
+			_pickplace-p0-p2-a1610-human();
+			_mount-p2-a1610-human();
+			_unmount-p2-a1610-human();
+			_pickplace-p1-p3-a1653-human();
+			_pickplace-p0-p1-a1653-human();
 			_mount-p1-a1653-human();
 			_screw-p2-a1652-human();
-			_pickplace-p2-p3-a1610();
+			_pickplace-p2-p3-a1610-human();
 		}
 
 		VALUE _unscrew-p1-a1653-human() [10, 20]
@@ -130,7 +130,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 			Idle();
 		}
 
-		VALUE _pickplace-p0-p1-a1610() [10, 20]
+		VALUE _pickplace-p0-p1-a1610-human() [10, 20]
 		MEETS {
 			Idle();
 		}
@@ -140,7 +140,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 			Idle();
 		}
 
-		VALUE _pickplace-p0-p2-a1652() [10, 20]
+		VALUE _pickplace-p0-p2-a1652-human() [10, 20]
 		MEETS {
 			Idle();
 		}
@@ -150,7 +150,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 			Idle();
 		}
 
-		VALUE _pickplace-p2-p3-a1653() [10, 20]
+		VALUE _pickplace-p2-p3-a1653-human() [10, 20]
 		MEETS {
 			Idle();
 		}
@@ -160,12 +160,12 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 			Idle();
 		}
 
-		VALUE _pickplace-p0-p1-a1652() [10, 20]
+		VALUE _pickplace-p0-p1-a1652-human() [10, 20]
 		MEETS {
 			Idle();
 		}
 
-		VALUE _mount-p2-a1652() [10, 20]
+		VALUE _mount-p2-a1652-human() [10, 20]
 		MEETS {
 			Idle();
 		}
@@ -175,12 +175,12 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 			Idle();
 		}
 
-		VALUE _unmount-p2-a1652() [10, 20]
+		VALUE _unmount-p2-a1652-human() [10, 20]
 		MEETS {
 			Idle();
 		}
 
-		VALUE _pickplace-p0-p2-a1653() [10, 20]
+		VALUE _pickplace-p0-p2-a1653-human() [10, 20]
 		MEETS {
 			Idle();
 		}
@@ -200,37 +200,12 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 			Idle();
 		}
 
-		VALUE _mount-p2-a1653() [10, 20]
+		VALUE _mount-p2-a1653-human() [10, 20]
 		MEETS {
 			Idle();
 		}
 
-		VALUE _pickplace-p1-p3-a1610() [10, 20]
-		MEETS {
-			Idle();
-		}
-
-		VALUE _unmount-p2-a1653() [10, 20]
-		MEETS {
-			Idle();
-		}
-
-		VALUE _unscrew-p1-a1610-human() [10, 20]
-		MEETS {
-			Idle();
-		}
-
-		VALUE _pickplace-p2-p3-a1652() [10, 20]
-		MEETS {
-			Idle();
-		}
-
-		VALUE _mount-p1-a1610-human() [10, 20]
-		MEETS {
-			Idle();
-		}
-
-		VALUE _pickplace-p1-p2-a1653() [10, 20]
+		VALUE _pickplace-p1-p3-a1610-human() [10, 20]
 		MEETS {
 			Idle();
 		}
@@ -240,7 +215,32 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 			Idle();
 		}
 
-		VALUE _pickplace-p1-p2-a1610() [10, 20]
+		VALUE _unscrew-p1-a1610-human() [10, 20]
+		MEETS {
+			Idle();
+		}
+
+		VALUE _pickplace-p2-p3-a1652-human() [10, 20]
+		MEETS {
+			Idle();
+		}
+
+		VALUE _mount-p1-a1610-human() [10, 20]
+		MEETS {
+			Idle();
+		}
+
+		VALUE _pickplace-p1-p2-a1653-human() [10, 20]
+		MEETS {
+			Idle();
+		}
+
+		VALUE _unmount-p2-a1653-human() [10, 20]
+		MEETS {
+			Idle();
+		}
+
+		VALUE _pickplace-p1-p2-a1610-human() [10, 20]
 		MEETS {
 			Idle();
 		}
@@ -270,37 +270,37 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 			Idle();
 		}
 
-		VALUE _pickplace-p1-p3-a1652() [10, 20]
+		VALUE _pickplace-p1-p3-a1652-human() [10, 20]
 		MEETS {
 			Idle();
 		}
 
-		VALUE _pickplace-p1-p2-a1652() [10, 20]
+		VALUE _pickplace-p1-p2-a1652-human() [10, 20]
 		MEETS {
 			Idle();
 		}
 
-		VALUE _pickplace-p0-p2-a1610() [10, 20]
+		VALUE _pickplace-p0-p2-a1610-human() [10, 20]
 		MEETS {
 			Idle();
 		}
 
-		VALUE _mount-p2-a1610() [10, 20]
+		VALUE _mount-p2-a1610-human() [10, 20]
 		MEETS {
 			Idle();
 		}
 
-		VALUE _unmount-p2-a1610() [10, 20]
+		VALUE _unmount-p2-a1610-human() [10, 20]
 		MEETS {
 			Idle();
 		}
 
-		VALUE _pickplace-p1-p3-a1653() [10, 20]
+		VALUE _pickplace-p1-p3-a1653-human() [10, 20]
 		MEETS {
 			Idle();
 		}
 
-		VALUE _pickplace-p0-p1-a1653() [10, 20]
+		VALUE _pickplace-p0-p1-a1653-human() [10, 20]
 		MEETS {
 			Idle();
 		}
@@ -315,7 +315,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 			Idle();
 		}
 
-		VALUE _pickplace-p2-p3-a1610() [10, 20]
+		VALUE _pickplace-p2-p3-a1610-human() [10, 20]
 		MEETS {
 			Idle();
 		}
@@ -795,7 +795,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_place_p2_a1653() {
 
-			d0 Worker.operations._pickplace-p0-p2-a1653();
+			d0 Worker.operations._pickplace-p0-p2-a1653-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p2.p2_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -803,7 +803,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_finish_p2_a1653() {
 
-			d0 Worker.operations._pickplace-p2-p3-a1653();
+			d0 Worker.operations._pickplace-p2-p3-a1653-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p3.p3_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -811,7 +811,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_finish_p2_a1653() {
 
-			d0 Worker.operations._pickplace-p2-p3-a1653();
+			d0 Worker.operations._pickplace-p2-p3-a1653-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p3.p3_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -819,7 +819,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_finish_p1_a1653() {
 
-			d0 Worker.operations._pickplace-p1-p3-a1653();
+			d0 Worker.operations._pickplace-p1-p3-a1653-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p3.p3_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -827,7 +827,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_place_p1_a1653() {
 
-			d0 Worker.operations._pickplace-p0-p1-a1653();
+			d0 Worker.operations._pickplace-p0-p1-a1653-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p1.p1_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -835,7 +835,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_place_p1_a1653() {
 
-			d0 Worker.operations._pickplace-p0-p1-a1653();
+			d0 Worker.operations._pickplace-p0-p1-a1653-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p1.p1_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -843,7 +843,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_mount_p2_a1653() {
 
-			d0 Worker.operations._mount-p2-a1653();
+			d0 Worker.operations._mount-p2-a1653-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p2.p2_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -851,7 +851,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_mount_p2_a1653() {
 
-			d0 Worker.operations._mount-p2-a1653();
+			d0 Worker.operations._mount-p2-a1653-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p2.p2_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -859,7 +859,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_place_p1p2_a1653() {
 
-			d0 Worker.operations._pickplace-p1-p2-a1653();
+			d0 Worker.operations._pickplace-p1-p2-a1653-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p2.p2_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -879,7 +879,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_unmount_p2_a1653() {
 
-			d0 Worker.operations._unmount-p2-a1653();
+			d0 Worker.operations._unmount-p2-a1653-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p2.p2_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -1472,7 +1472,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_finish_p2_a1652() {
 
-			d0 Worker.operations._pickplace-p2-p3-a1652();
+			d0 Worker.operations._pickplace-p2-p3-a1652-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p3.p3_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -1480,7 +1480,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_finish_p2_a1652() {
 
-			d0 Worker.operations._pickplace-p2-p3-a1652();
+			d0 Worker.operations._pickplace-p2-p3-a1652-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p3.p3_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -1488,7 +1488,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_place_p2_a1652() {
 
-			d0 Worker.operations._pickplace-p0-p2-a1652();
+			d0 Worker.operations._pickplace-p0-p2-a1652-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p2.p2_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -1496,7 +1496,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_finish_p1_a1652() {
 
-			d0 Worker.operations._pickplace-p1-p3-a1652();
+			d0 Worker.operations._pickplace-p1-p3-a1652-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p3.p3_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -1504,7 +1504,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_place_p1_a1652() {
 
-			d0 Worker.operations._pickplace-p0-p1-a1652();
+			d0 Worker.operations._pickplace-p0-p1-a1652-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p1.p1_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -1512,7 +1512,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_place_p1_a1652() {
 
-			d0 Worker.operations._pickplace-p0-p1-a1652();
+			d0 Worker.operations._pickplace-p0-p1-a1652-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p1.p1_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -1544,7 +1544,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_place_p1p2_a1652() {
 
-			d0 Worker.operations._pickplace-p1-p2-a1652();
+			d0 Worker.operations._pickplace-p1-p2-a1652-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p2.p2_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -1564,7 +1564,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_mount_p2_a1652() {
 
-			d0 Worker.operations._mount-p2-a1652();
+			d0 Worker.operations._mount-p2-a1652-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p2.p2_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -1572,7 +1572,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_mount_p2_a1652() {
 
-			d0 Worker.operations._mount-p2-a1652();
+			d0 Worker.operations._mount-p2-a1652-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p2.p2_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -1580,7 +1580,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_unmount_p2_a1652() {
 
-			d0 Worker.operations._unmount-p2-a1652();
+			d0 Worker.operations._unmount-p2-a1652-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p2.p2_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -2221,7 +2221,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_place_p2_a1610() {
 
-			d0 Worker.operations._pickplace-p0-p2-a1610();
+			d0 Worker.operations._pickplace-p0-p2-a1610-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p2.p2_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -2229,7 +2229,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_finish_p1_a1610() {
 
-			d0 Worker.operations._pickplace-p1-p3-a1610();
+			d0 Worker.operations._pickplace-p1-p3-a1610-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p3.p3_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -2237,7 +2237,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_finish_p2_a1610() {
 
-			d0 Worker.operations._pickplace-p2-p3-a1610();
+			d0 Worker.operations._pickplace-p2-p3-a1610-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p3.p3_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -2245,7 +2245,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_finish_p2_a1610() {
 
-			d0 Worker.operations._pickplace-p2-p3-a1610();
+			d0 Worker.operations._pickplace-p2-p3-a1610-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p3.p3_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -2253,7 +2253,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_mount_p2_a1610() {
 
-			d0 Worker.operations._mount-p2-a1610();
+			d0 Worker.operations._mount-p2-a1610-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p2.p2_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -2261,7 +2261,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_mount_p2_a1610() {
 
-			d0 Worker.operations._mount-p2-a1610();
+			d0 Worker.operations._mount-p2-a1610-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p2.p2_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -2269,7 +2269,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_place_p1_a1610() {
 
-			d0 Worker.operations._pickplace-p0-p1-a1610();
+			d0 Worker.operations._pickplace-p0-p1-a1610-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p1.p1_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -2277,7 +2277,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_place_p1_a1610() {
 
-			d0 Worker.operations._pickplace-p0-p1-a1610();
+			d0 Worker.operations._pickplace-p0-p1-a1610-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p1.p1_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -2297,7 +2297,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_place_p1p2_a1610() {
 
-			d0 Worker.operations._pickplace-p1-p2-a1610();
+			d0 Worker.operations._pickplace-p1-p2-a1610-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p2.p2_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;
@@ -2305,7 +2305,7 @@ DOMAIN KNOWLEDGE_PRODUCTION_AUTHORING_GEN {
 
 		VALUE do_unmount_p2_a1610() {
 
-			d0 Worker.operations._unmount-p2-a1610();
+			d0 Worker.operations._unmount-p2-a1610-human();
 			CONTAINS [0, +INF] [0, +INF] d0;
 			d1 p2.p2_state.Busy();
 			DURING [0, +INF] [0, +INF] d1;

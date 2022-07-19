@@ -3865,7 +3865,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mount the pallet a1610 in position p2</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">2</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mount-p2-a1610</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mount-p2-a1610-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -3881,7 +3881,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mount the pallet a1652 in position p2</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">2</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mount-p2-a1652</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mount-p2-a1652-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -3897,7 +3897,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mount the pallet a1653 in position p2</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">2</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mount-p2-a1653</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mount-p2-a1653-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -4009,7 +4009,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Unmount the pallet a1610 in position p2</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">5</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">unmount-p2-a1610</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">unmount-p2-a1610-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -4025,7 +4025,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Unmount the pallet a1652 in position p2</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">5</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">unmount-p2-a1652</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">unmount-p2-a1652-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -4041,7 +4041,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Unmount the pallet a1653 in position p2</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">5</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">unmount-p2-a1653</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">unmount-p2-a1653-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -4059,7 +4059,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move pallet from position p0 to position p1</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">6</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p0-p1-a1610</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p0-p1-a1610-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -4077,7 +4077,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1653 from position p0 to position p1</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">6</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p0-p1-a1652</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p0-p1-a1652-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -4095,7 +4095,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1653 from position p0 to position p1</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">6</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p0-p1-a1653</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p0-p1-a1653-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -4113,7 +4113,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1610 from position p0 to position p2</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">7</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p0-p2-a1610</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p0-p2-a1610-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -4131,7 +4131,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1652 from position p0 to position p2</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">7</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p0-p2-a1652</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p0-p2-a1652-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -4149,7 +4149,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1653 from position p0 to position p2</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">7</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p0-p2-a1653</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p0-p2-a1653-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -4167,7 +4167,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1610 from position p1 to position p2</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">8</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p1-p2-a1610</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p1-p2-a1610-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -4185,7 +4185,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1652 from position p1 to position p2</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">8</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p1-p2-a1652</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p1-p2-a1652-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -4203,7 +4203,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1653 from position p1 to position p2</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">8</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p1-p2-a1653</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p1-p2-a1653-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -4221,7 +4221,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1610 from position p1 to position p3</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">9</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p1-p3-a1610</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p1-p3-a1610-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -4239,7 +4239,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1652 from position p1 to position p3</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">9</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p1-p3-a1652</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p1-p3-a1652-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -4257,7 +4257,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1653 from position p1 to position p3</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">9</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p1-p3-a1653</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p1-p3-a1653-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -4275,7 +4275,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1610 from position p2 to position p3</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">14</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p2-p3-a1610</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p2-p3-a1610-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -4293,7 +4293,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1652 from position p2 to position p3</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">14</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p2-p3-a1652</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p2-p3-a1652-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -4311,7 +4311,7 @@
         <soho:hasDurationUncertainty rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.0</soho:hasDurationUncertainty>
         <soho:hasProcedureDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move the pallet a1653 from position p2 to position p3</soho:hasProcedureDescription>
         <soho:hasProcedureId rdf:datatype="http://www.w3.org/2001/XMLSchema#long">14</soho:hasProcedureId>
-        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p2-p3-a1653</soho:hasProcedureName>
+        <soho:hasProcedureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pickplace-p2-p3-a1653-human</soho:hasProcedureName>
     </owl:NamedIndividual>
     
 
@@ -5455,10 +5455,13 @@
         <rdf:type rdf:resource="http://pst.istc.cnr.it/ontologies/2019/01/soho#WorkerBodyPart"/>
     </owl:NamedIndividual>
     <rdf:Description>
-        <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
     </rdf:Description>
     <rdf:Description>
         <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </rdf:Description>
+    <rdf:Description>
+        <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
     </rdf:Description>
     <rdf:Description>
         <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:minQualifiedCardinality>
@@ -5468,6 +5471,18 @@
     </rdf:Description>
     <rdf:Description>
         <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </rdf:Description>
+    <rdf:Description>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </rdf:Description>
+    <rdf:Description>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </rdf:Description>
+    <rdf:Description>
+        <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+    </rdf:Description>
+    <rdf:Description>
+        <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
     </rdf:Description>
     <rdf:Description>
         <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
@@ -5488,13 +5503,13 @@
         <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
     </rdf:Description>
     <rdf:Description>
-        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-    </rdf:Description>
-    <rdf:Description>
-        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-    </rdf:Description>
-    <rdf:Description>
         <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+    </rdf:Description>
+    <rdf:Description>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </rdf:Description>
+    <rdf:Description>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
     </rdf:Description>
     <rdf:Description>
         <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
@@ -5509,12 +5524,12 @@
         <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
     </rdf:Description>
     <rdf:Description>
+        <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+    </rdf:Description>
+    <rdf:Description>
         <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:minQualifiedCardinality>
     </rdf:Description>
     <rdf:Description>
-        <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
-    </rdf:Description>
-    <rdf:Description>
         <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
     </rdf:Description>
     <rdf:Description>
@@ -5522,21 +5537,6 @@
     </rdf:Description>
     <rdf:Description>
         <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-    </rdf:Description>
-    <rdf:Description>
-        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-    </rdf:Description>
-    <rdf:Description>
-        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-    </rdf:Description>
-    <rdf:Description>
-        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-    </rdf:Description>
-    <rdf:Description>
-        <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
-    </rdf:Description>
-    <rdf:Description>
-        <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
     </rdf:Description>
     <rdf:Description>
         <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
