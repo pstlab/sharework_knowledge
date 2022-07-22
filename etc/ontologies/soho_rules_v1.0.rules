@@ -5,4 +5,3 @@
 @prefix soho:	<http://pst.istc.cnr.it/ontologies/2019/01/soho#>.
 
 @include <owlmicro>.
-
