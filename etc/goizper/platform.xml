@@ -3,7 +3,7 @@
 <ros>
 
 	<goal-topic
-			name="/sharework/taskplanner/request"
+			name="/sharework/taskplanner/goal"
 			msg="task_planner_interface_msgs/TaskPlanningRequest"
 			delegate="com.github.sharework_taskplanner.taskplanner.platform.TaskPlanningRequestListener" />
 
@@ -24,7 +24,7 @@
 	<command component="CobotScrewDriver" name="*" exclude="idle">
 
 		<dispatch-topic
-				name="/sharework/taskplanner/goal"
+				name="/sharework/taskplanner/screwdriver/goal"
 				msg="task_planner_interface_msgs/TaskExecutionRequest"
 				publisher="com.github.sharework_taskplanner.taskplanner.platform.TaskExecutionRequestPublisher" />
 

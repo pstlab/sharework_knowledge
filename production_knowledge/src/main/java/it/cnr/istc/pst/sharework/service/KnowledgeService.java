@@ -113,7 +113,7 @@ public class KnowledgeService extends AbstractNodeMain {
     }
 
     /**
-     * Register a monitor into the knowldege service
+     * Register a monitor into the knowledge service
      *
      * @param monitor
      */

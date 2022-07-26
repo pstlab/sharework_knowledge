@@ -1,5 +1,6 @@
 package it.cnr.istc.pst.sharework.service;
 
+import it.cnr.istc.pst.sharework.cognition.CembreEnvironmentCognitionMonitor;
 import it.cnr.istc.pst.sharework.cognition.EnvironmentCognitionMonitor;
 import it.cnr.istc.pst.sharework.cognition.GoizperEnvironmentCognitionMonitor;
 import it.cnr.istc.pst.sharework.knowledge.ProductionKnowledgeDictionary;
@@ -334,15 +335,26 @@ public class KnowledgeUpdateServiceResponseBuilder implements ServiceResponseBui
                     }
 
                     log.info("[ProductionKnowledge] Ontological model successfully updated!");
+
                     // load environment monitor
-                    if (ontoFile.contains("goizper")) {
-                        // create environment monitor
-                        log.info("[ProductionKnowledge] Starting environment monitor...");
-                        // create monitor
-                        EnvironmentCognitionMonitor monitor = EnvironmentCognitionMonitor.create(GoizperEnvironmentCognitionMonitor.class, this.cNode);
-                        // register monitor
-                        this.service.register(monitor);
-                    }
+                    //if (ontoFile.contains("goizper")) {
+
+
+                    // create environment monitor
+                    log.info("[ProductionKnowledge] Load environment monitor for GOIZPER ...");
+                    // create monitor
+                    EnvironmentCognitionMonitor monitor = EnvironmentCognitionMonitor.create(GoizperEnvironmentCognitionMonitor.class, this.cNode);
+                    // register monitor
+                    this.service.register(monitor);
+
+
+                    //}
+
+                    log.info("[ProductionKnowledge] Load environment monitor for CEMBRE ...");
+                    // create monitor
+                    monitor = EnvironmentCognitionMonitor.create(CembreEnvironmentCognitionMonitor.class, this.cNode);
+                    // register monitor
+                    this.service.register(monitor);
 
                     // set (successful) empty response
                     knowledgeRDFUpdatePointResponse.setResult(new ArrayList<KnowledgeRDFTriple>());

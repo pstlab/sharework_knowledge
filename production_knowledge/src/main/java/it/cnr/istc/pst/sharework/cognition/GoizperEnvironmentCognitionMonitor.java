@@ -26,10 +26,9 @@ import static com.mongodb.client.model.Filters.eq;
  */
 public class GoizperEnvironmentCognitionMonitor extends EnvironmentCognitionMonitor {
 
-    private static final AtomicLong RequestIdCounter = new AtomicLong(0);
     private static final AtomicLong PoseIdCounter = new AtomicLong(1);                  // pose 0 is reserved for default
     private static final String ENVIRONMENT_TOPIC = "/screw_detector/screw_to_be_tightened";
-    private static final String TASKPLANNER_GOAL_TOPIC = "/sharework/taskplanner/request";
+
     private Subscriber<DetectionResult> subscriber;
     private Publisher<task_planner_interface_msgs.TaskPlanningRequest> publisher;
     private Log log;

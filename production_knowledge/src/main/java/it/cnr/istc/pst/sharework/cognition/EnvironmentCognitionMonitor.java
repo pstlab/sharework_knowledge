@@ -6,15 +6,20 @@ import org.bson.Document;
 import org.ros.node.ConnectedNode;
 
 import java.lang.reflect.Constructor;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  *
  */
 public abstract class EnvironmentCognitionMonitor {
 
+    protected static final AtomicLong RequestIdCounter = new AtomicLong(0);
+
     protected final ConnectedNode connectedNode;
     protected MongoClient client;
     protected MongoCollection<Document> dataset;
+
+    protected static final String TASKPLANNER_GOAL_TOPIC = "/sharework/taskplanner/goal";
 
     /**
      *
